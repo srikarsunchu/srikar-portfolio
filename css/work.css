@@ -1,0 +1,151 @@
+.slider {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  background-color: var(--base-100);
+  color: var(--base-100);
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+}
+
+.slide-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100vw - 1.75rem);
+  height: calc(100svh - 1.75rem);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px dashed var(--base-300);
+}
+
+.slide-img img {
+  will-change: transform;
+}
+
+.slide-img::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  background: linear-gradient(
+    0deg,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(10, 10, 10, 0) 100%
+  );
+}
+
+.slide {
+  will-change: transform;
+}
+
+.slide-header {
+  position: absolute;
+  bottom: 4rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  z-index: 1;
+}
+
+.slide-header h2 {
+  line-height: 1;
+}
+
+.slide-description {
+  width: 60%;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.slide-link a {
+  text-decoration: none;
+}
+
+.slide-link a .line {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--base-100);
+  font-family: "DM Mono";
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.025);
+  border: 1px dashed var(--base-secondary-dark);
+  border-radius: 6px;
+}
+
+.slide-info {
+  position: absolute;
+  left: 0;
+  bottom: 4rem;
+  width: 100vw;
+  padding: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.slide-tags {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-index-wrapper {
+  display: flex;
+}
+
+.slide-index-wrapper p {
+  text-align: center;
+  width: 2rem;
+}
+
+.slide-tags p:first-child {
+  margin-bottom: 1rem;
+}
+
+.line,
+.word {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (max-width: 1000px) {
+  .slide-header {
+    top: 50%;
+    bottom: unset;
+    transform: translate(-50%, -50%);
+    width: 90%;
+  }
+
+  .slide-description {
+    width: 85%;
+  }
+
+  .slide-title h2 {
+    font-size: 3rem;
+  }
+
+  .slide-info {
+    padding: 0 3rem;
+    bottom: 3rem;
+  }
+}

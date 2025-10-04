@@ -1,0 +1,627 @@
+.about-hero {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Grain texture overlay */
+.about-hero-grain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 25%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* Scanning line effect */
+.about-hero-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+  opacity: 0.3;
+  z-index: 2;
+  pointer-events: none;
+  animation: scan 4s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 0.3; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.about-hero .container {
+  position: relative;
+  z-index: 3;
+}
+
+.about-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: var(--base-100);
+}
+
+.about-hero-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.about-hero-meta p {
+  font-size: 0.75rem;
+  color: var(--base-secondary);
+  letter-spacing: 0.1em;
+}
+
+.about-hero-name {
+  overflow: hidden;
+}
+
+.hero-name-line {
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(135deg, var(--base-100) 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: slideInGlitch 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-name-line:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.hero-name-line:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+@keyframes slideInGlitch {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5%);
+  }
+  75% {
+    transform: translateY(2%) translateX(-2px);
+  }
+  85% {
+    transform: translateY(-1%) translateX(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.about-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.9s forwards;
+}
+
+.hero-role {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--base-100);
+}
+
+.hero-location {
+  font-size: 0.875rem;
+  color: var(--base-secondary);
+  letter-spacing: 0.1em;
+}
+
+.about-hero-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 1.1s forwards;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(var(--accent-2-rgb, 78, 205, 196), 0.7);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 10px rgba(var(--accent-2-rgb, 78, 205, 196), 0);
+  }
+}
+
+.about-hero-status p {
+  font-size: 0.75rem;
+  color: var(--base-secondary);
+  letter-spacing: 0.1em;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anime-text-container {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.anime-text-container .copy-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.anime-text-container .anime-text {
+  width: 60%;
+}
+
+.anime-text-container .anime-text p {
+  color: var(--base-300);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.anime-text-container .anime-text .word {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
+  padding: 0.1rem 0.2rem;
+  border-radius: 8px;
+  will-change: background-color, opacity;
+}
+
+.anime-text-container .anime-text .word.keyword-wrapper {
+  margin: 0 0.4rem 0.2rem 0.2rem;
+}
+
+.anime-text-container .anime-text .word span {
+  position: relative;
+}
+
+.anime-text-container .anime-text .word span.keyword {
+  border-radius: 2rem;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 0.1rem 0;
+  color: var(--base-300);
+}
+
+.anime-text-container .anime-text .word span.keyword::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 1rem);
+  height: calc(100% + 0.1rem);
+  background-color: var(--base-300);
+  border-radius: 8px;
+  z-index: -1;
+  border: 1px dashed var(--base-300);
+}
+
+.anime-text-container .anime-text .word span.keyword.adobe::before,
+.anime-text-container .anime-text .word span.keyword.interfaces::before {
+  background-color: var(--accent-1);
+}
+
+.anime-text-container .anime-text .word span.keyword.films::before,
+.anime-text-container .anime-text .word span.keyword.jazz::before,
+.anime-text-container .anime-text .word span.keyword.espresso::before {
+  background-color: var(--accent-2);
+}
+
+.anime-text-container .anime-text .word span.keyword.addict::before,
+.anime-text-container .anime-text .word span.keyword.typography::before,
+.anime-text-container .anime-text .word span.keyword.invisible::before,
+.anime-text-container .anime-text .word span.keyword.honest::before,
+.anime-text-container .anime-text .word span.keyword.intention::before,
+.anime-text-container .anime-text .word span.keyword.craft::before,
+.anime-text-container .anime-text .word span.keyword.obsessing::before {
+  background-color: var(--accent-3);
+}
+
+.anime-text-container .anime-text .word,
+.anime-text-container .anime-text .word span {
+  opacity: 0;
+}
+
+.about-skills {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-color: var(--base-300);
+  color: var(--base-100);
+}
+
+.about-skills .container {
+  display: flex;
+  gap: 2rem;
+}
+
+.about-skills .about-skills-col {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+
+.about-skills .about-skills-col:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.about-skills .about-skills-col:nth-child(1) h3 {
+  width: 80%;
+}
+
+.about-skills .about-skills-col .object-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #101010;
+  border: 1px dashed var(--base-secondary-fade);
+  border-radius: 16px;
+}
+
+.about-skills .object-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.about-skills .object-container .object {
+  position: absolute;
+  width: max-content;
+  font-size: 2rem;
+  font-weight: 500;
+  background-color: var(--base-100);
+  color: var(--base-300);
+  padding: 2rem 4rem;
+  border-radius: 10px;
+  user-select: none;
+  pointer-events: auto;
+  z-index: 2;
+  border: 2px solid #101010;
+}
+
+.about-skills .object-container .os-1 {
+  background-color: var(--accent-1);
+}
+
+.about-skills .object-container .os-2 {
+  background-color: var(--accent-2);
+}
+
+.about-skills .object-container .os-3 {
+  background-color: var(--accent-3);
+}
+
+.about-skills-copy-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-film-gallery {
+  position: relative;
+  width: 100vw;
+  min-height: 100svh;
+  padding: 6rem 0;
+  background-color: var(--base-100);
+  color: var(--base-300);
+}
+
+.film-gallery-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.film-gallery-header h3 {
+  margin-bottom: 1rem;
+}
+
+.film-gallery-header p.mono {
+  font-size: 0.875rem;
+  color: var(--base-secondary);
+  letter-spacing: 0.1em;
+}
+
+.film-gallery-container {
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.film-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: filmCardFadeIn 0.8s ease-out forwards;
+}
+
+.film-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.film-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+@keyframes filmCardFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.film-card-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.film-card-video:hover {
+  transform: scale(1.01);
+}
+
+.film-card-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.film-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.film-card-video.playing .film-play-overlay {
+  opacity: 0;
+}
+
+.film-card-video:hover .film-play-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.film-play-button {
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.film-card-video:hover .film-play-button {
+  transform: scale(1.1);
+}
+
+.film-play-button svg {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.film-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.film-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.film-title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--base-300);
+}
+
+.film-status {
+  font-size: 0.75rem;
+  color: var(--accent-2);
+  letter-spacing: 0.1em;
+}
+
+.film-specs {
+  font-size: 0.75rem;
+  color: var(--base-secondary);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 1000px) {
+  .film-gallery-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 3rem;
+  }
+
+  .film-card-video {
+    border-radius: 12px;
+  }
+
+  .film-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .anime-text-container .copy-container h1 {
+    width: 90%;
+    font-size: 2rem;
+  }
+
+  .anime-text-container .anime-text {
+    width: 100%;
+  }
+
+  .anime-text-container .anime-text p {
+    font-size: 1.3rem;
+  }
+
+  .anime-text-container .anime-text .word {
+    margin-right: 0.1rem;
+    margin-bottom: 0.15rem;
+    padding: 0.05rem 0.125rem;
+  }
+
+  .anime-text-container .anime-text .word.keyword-wrapper {
+    margin: 0 0.2rem 0.1rem 0.1rem;
+  }
+
+  .anime-text-container .anime-text .word span.keyword::before {
+    width: calc(100% + 0.35rem);
+    height: calc(100% + 0.075rem);
+  }
+
+  .about-hero-content {
+    gap: 1.5rem;
+  }
+
+  .hero-name-line {
+    font-size: clamp(3rem, 18vw, 6rem);
+  }
+
+  .hero-role {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+  }
+
+  .about-hero-meta,
+  .about-hero-status {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .about-skills {
+    height: 100svh;
+  }
+
+  .about-skills .about-skills-col:nth-child(1) h3 {
+    width: 100%;
+  }
+
+  .about-skills .container {
+    flex-direction: column;
+  }
+
+  .about-skills .about-skills-col:nth-child(1) {
+    justify-content: flex-start;
+    gap: 4rem;
+  }
+
+  .skills-playground {
+    flex: 2 !important;
+  }
+
+  .about-skills .object-container .object {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    user-select: none;
+    pointer-events: auto;
+    z-index: 2;
+    border: 2px solid #101010;
+  }
+}

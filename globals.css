@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+
+:root {
+  --base-100: #f9f4eb;
+  --base-200: #efece5;
+  --base-300: #0a0a0a;
+  --base-secondary-dark: #686560;
+  --base-secondary-fade: rgba(249, 244, 235, 0.15);
+  --accent-1: #b1c1ef;
+  --accent-2: #f2acac;
+  --accent-3: #ffdd94;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Host Grotesk";
+  background-color: var(--base-100);
+  color: var(--base-300);
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: uppercase;
+  font-family: "Barlow Condensed";
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.02rem;
+}
+
+h1 {
+  font-size: 12rem;
+}
+
+h2 {
+  font-size: 8rem;
+}
+
+h3 {
+  font-size: 6rem;
+}
+
+h4 {
+  font-size: 2.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: "Host Grotesk";
+  font-size: 1.1rem;
+}
+
+p.md {
+  font-size: 1.3rem;
+}
+
+p.lg {
+  font-size: 1.5rem;
+}
+
+p.mono {
+  text-transform: uppercase;
+  font-family: "DM Mono";
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+p.mono span,
+a span {
+  position: relative;
+  top: -0.1rem;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 2.75rem;
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.symbols-container {
+  display: flex;
+  gap: 0.5rem;
+  height: 1.125rem;
+  z-index: 1;
+}
+
+.symbols-container .symbol {
+  width: 1.125rem;
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 6rem;
+  }
+  h2 {
+    font-size: 5rem;
+  }
+
+  h3 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  p.md {
+    font-size: 1.125rem;
+  }
+
+  p.lg {
+    font-size: 1.25rem;
+  }
+
+  p.mono {
+    font-size: 0.8rem;
+  }
+
+  .container {
+    padding: 2rem;
+  }
+}

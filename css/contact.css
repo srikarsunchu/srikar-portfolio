@@ -1,0 +1,97 @@
+.contact {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-color: var(--base-300);
+  color: var(--base-100);
+}
+
+.contact-callout a {
+  color: #00ff00;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.3s ease;
+}
+
+.contact-callout a:hover {
+  opacity: 0.7;
+}
+
+.home-spotlight-bottom-bar a {
+  color: #00ff00;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.home-spotlight-bottom-bar a:hover {
+  opacity: 0.7;
+}
+
+.contact .container {
+  display: flex;
+  align-items: center;
+}
+
+.contact .container .contact-header {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact .contact-animation {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  z-index: 0;
+  width: 31%;
+  aspect-ratio: 5/3.5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+.home-spotlight-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.home-spotlight-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.home-spotlight-top-bar .container,
+.home-spotlight-bottom-bar .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 1000px) {
+  .contact .contact-animation {
+    right: unset;
+    top: 35svh;
+    width: calc(100% - 4rem);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+  }
+
+  .contact .container .contact-header {
+    position: absolute;
+    bottom: 6rem;
+    z-index: 1;
+    width: 95%;
+  }
+
+  .contact .home-spotlight-bottom-bar p:nth-child(2),
+  .contact .home-spotlight-bottom-bar p:nth-child(3) {
+    display: none;
+  }
+}

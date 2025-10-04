@@ -1,0 +1,65 @@
+.transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  pointer-events: none;
+}
+
+.transition-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleY(1);
+  transform-origin: top;
+  will-change: transform;
+}
+
+.transition-overlay.overlay {
+  background-color: var(--base-300);
+}
+
+.transition-logo {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.transition-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mask-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  pointer-events: none;
+  display: none;
+}
+
+.mask-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99998;
+  background-color: var(--base-100);
+  opacity: 0.3;
+  pointer-events: none;
+  display: none;
+}
