@@ -394,71 +394,347 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const outroHeader = document.querySelector(".outro h3");
-  let outroSplit = null;
+  // Bookshelf generation and animation
+  function generateBookshelf(books) {
+    const booksWrapper = document.getElementById("books-wrapper");
+    const descriptionsContainer = document.getElementById("book-descriptions");
+    const overlayText = document.querySelector(".book-title-text");
+    
+    let activeBookIndex = null;
+    let activeTimeline = null;
+    const bookTimelines = [];
 
-  if (outroHeader) {
-    outroSplit = SplitText.create(outroHeader, {
-      type: "words",
-      wordsClass: "outro-word",
+    // Clear existing content
+    booksWrapper.innerHTML = "";
+    descriptionsContainer.innerHTML = "";
+
+    // Generate books
+    books.forEach((book, index) => {
+      // Create book HTML
+      const bookHTML = `
+        <div class="books__item">
+          <div class="books__container">
+            <div class="books__cover">
+              <div class="books__back-cover"></div>
+              <div class="books__inside">
+                <div class="books__page"></div>
+                <div class="books__page"></div>
+                <div class="books__page"></div>
+              </div>
+              <div class="books__image">
+                <img src="${book.coverUrl}" alt="${book.title}" />
+                <div class="books__effect"></div>
+                <div class="books__light"></div>
+              </div>
+              <div class="books__hitbox" data-book-index="${index}" data-book-title="${book.title}"></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Create description HTML
+      const descHTML = `
+        <div class="book-description ${book.defaultOpen ? 'active' : ''}" data-book-index="${index}">
+          <h3>${book.title}</h3>
+          <div class="author">by ${book.author}</div>
+          <p>${book.description}</p>
+        </div>
+      `;
+
+      booksWrapper.innerHTML += bookHTML;
+      descriptionsContainer.innerHTML += descHTML;
     });
 
-    gsap.set(outroSplit.words, { opacity: 0 });
-  }
+    // Initialize animations after a brief delay
+    setTimeout(() => {
+      const bookItems = document.querySelectorAll(".books__item");
+      const descriptions = document.querySelectorAll(".book-description");
+      const bookShadows = document.querySelectorAll(".book-shadow__item");
 
-  const outroStrips = document.querySelectorAll(".outro-strip");
-  const stripSpeeds = [0.3, 0.4, 0.25, 0.35, 0.2, 0.25];
+      bookItems.forEach((book, index) => {
+        const hitbox = book.querySelector(".books__hitbox");
+        const bookImage = book.querySelector(".books__image");
+        const bookEffect = book.querySelector(".books__effect");
+        const pages = book.querySelectorAll(".books__page");
+        const bookLight = book.querySelector(".books__light");
+        const bookTitle = hitbox.getAttribute("data-book-title");
+        const bookShadow = bookShadows[index];
 
-  ScrollTrigger.create({
-    trigger: ".outro",
-    start: "top top",
-    end: `+=${window.innerHeight * 3}px`,
-    pin: true,
-    pinSpacing: true,
-    scrub: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
+        // Set initial states
+        gsap.set(bookImage, {
+          boxShadow: "rgba(0, 0, 0, 0.2) 10px -5px 20px, rgba(0, 0, 0, 0.15) 20px 0px 30px"
+        });
 
-      if (outroSplit && outroSplit.words.length > 0) {
-        if (progress >= 0.25 && progress <= 0.75) {
-          const textProgress = (progress - 0.25) / 0.5;
-          const totalWords = outroSplit.words.length;
+        gsap.set(bookLight, {
+          opacity: 0.1
+        });
 
-          outroSplit.words.forEach((word, index) => {
-            const wordRevealProgress = index / totalWords;
+        gsap.set(pages, {
+          x: 0
+        });
 
-            if (textProgress >= wordRevealProgress) {
-              gsap.set(word, { opacity: 1 });
-            } else {
-              gsap.set(word, { opacity: 0 });
-            }
+        // Create hover timeline
+        const hoverIn = gsap.timeline({
+          paused: true,
+          defaults: {
+            duration: 0.7,
+            ease: "power2.out"
+          }
+        });
+
+        hoverIn.to(bookImage, {
+          translateX: -10,
+          scaleX: 0.96,
+          boxShadow: "rgba(0, 0, 0, 0.35) 20px 5px 20px, rgba(0, 0, 0, 0.2) 30px 0px 30px"
+        }, 0);
+
+        hoverIn.to(bookShadow, {
+          width: 130,
+          opacity: 0.8
+        }, 0);
+
+        hoverIn.to(bookEffect, {
+          marginLeft: 10
+        }, 0);
+
+        hoverIn.to(bookLight, {
+          opacity: 0.2
+        }, 0);
+
+        if (pages.length) {
+          hoverIn.to(pages[0], {
+            x: "2px",
+            ease: "power1.inOut"
+          }, 0);
+
+          hoverIn.to(pages[1], {
+            x: "0px",
+            ease: "power1.inOut"
+          }, 0);
+
+          hoverIn.to(pages[2], {
+            x: "-2px",
+            ease: "power1.inOut"
+          }, 0);
+        }
+
+        bookTimelines[index] = hoverIn;
+
+        // Hover events
+        hitbox.addEventListener("mouseenter", () => {
+          if (activeBookIndex !== null && activeBookIndex !== index && activeTimeline) {
+            activeTimeline.reverse();
+          }
+
+          activeBookIndex = index;
+          activeTimeline = hoverIn;
+          hoverIn.play();
+
+          overlayText.textContent = bookTitle;
+          updateDescription(index);
+        });
+      });
+
+      // Set default open book
+      const defaultIndex = books.findIndex(b => b.defaultOpen);
+      if (defaultIndex !== -1) {
+        activeBookIndex = defaultIndex;
+        activeTimeline = bookTimelines[defaultIndex];
+        bookTimelines[defaultIndex].play();
+        overlayText.textContent = books[defaultIndex].title;
+      }
+
+      // Handle mouse leaving bookshelf
+      document.querySelector(".bookshelf-container").addEventListener("mouseleave", () => {
+        if (defaultIndex !== -1 && activeBookIndex !== defaultIndex && activeTimeline) {
+          activeTimeline.reverse();
+        }
+
+        activeBookIndex = defaultIndex;
+        if (defaultIndex !== -1) {
+          activeTimeline = bookTimelines[defaultIndex];
+          bookTimelines[defaultIndex].play();
+          overlayText.textContent = books[defaultIndex].title;
+          updateDescription(defaultIndex);
+        }
+      });
+
+      // Initialize SplitType for descriptions
+      descriptions.forEach((desc) => {
+        const titleElement = desc.querySelector("h3");
+        const authorElement = desc.querySelector(".author");
+        const textElement = desc.querySelector("p");
+
+        if (window.SplitType) {
+          try {
+            new SplitType(titleElement, {
+              types: "lines",
+              lineClass: "line"
+            });
+
+            new SplitType(authorElement, {
+              types: "lines",
+              lineClass: "line"
+            });
+
+            new SplitType(textElement, {
+              types: "lines",
+              lineClass: "line"
+            });
+
+            desc.querySelectorAll(".line").forEach((line) => {
+              const content = line.innerHTML;
+              line.innerHTML = `<span class="line-inner">${content}</span>`;
+            });
+          } catch (e) {
+            console.error("Error with SplitType:", e);
+          }
+        }
+
+        const bookIndex = parseInt(desc.getAttribute("data-book-index"));
+        if (books[bookIndex] && !books[bookIndex].defaultOpen) {
+          gsap.set(desc.querySelectorAll(".line-inner"), {
+            yPercent: 100,
+            opacity: 0
           });
-        } else if (progress < 0.25) {
-          gsap.set(outroSplit.words, { opacity: 0 });
-        } else if (progress > 0.75) {
-          gsap.set(outroSplit.words, { opacity: 1 });
+        } else {
+          gsap.set(desc.querySelectorAll(".line-inner"), {
+            yPercent: 0,
+            opacity: 1
+          });
+        }
+      });
+
+      // Description update function
+      function updateDescription(bookIndex) {
+        descriptions.forEach((desc) => {
+          const descIndex = parseInt(desc.getAttribute("data-book-index"));
+
+          if (descIndex !== bookIndex && desc.classList.contains("active")) {
+            desc.classList.remove("active");
+            gsap.to(desc.querySelectorAll(".line-inner"), {
+              yPercent: 100,
+              opacity: 0,
+              duration: 0.4,
+              ease: "power1.in",
+              stagger: 0.03
+            });
+          }
+        });
+
+        const activeDescription = descriptions[bookIndex];
+        if (activeDescription) {
+          activeDescription.classList.add("active");
+          gsap.fromTo(
+            activeDescription.querySelectorAll(".line-inner"),
+            { yPercent: 100, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power1.out"
+            }
+          );
         }
       }
+
+      // Initialize default description
+      if (defaultIndex !== -1) {
+        updateDescription(defaultIndex);
+      }
+    }, 100);
+  }
+
+  // Fetch and populate Currently data
+  async function loadCurrentlyData() {
+    try {
+      const response = await fetch("/currently.json");
+      const data = await response.json();
+
+      // Learning
+      document.getElementById("learning-title").textContent = data.learning.title;
+      document.getElementById("learning-desc").textContent =
+        data.learning.description;
+      document.getElementById("learning-progress").style.width =
+        data.learning.progress + "%";
+      document.getElementById("learning-percent").textContent =
+        data.learning.progress + "%";
+
+      // Listening
+      document.getElementById("listening-title").textContent =
+        data.listening.title;
+      document.getElementById("listening-artist").textContent =
+        data.listening.artist;
+
+      // Create Spotify embed
+      const trackId = data.listening.spotifyUrl.split("/track/")[1].split("?")[0];
+      const spotifyEmbed = document.getElementById("spotify-embed");
+      spotifyEmbed.innerHTML = `<iframe style="border-radius:8px" src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+
+      // Obsessing
+      document.getElementById("obsessing-title").textContent =
+        data.obsessing.title;
+      document.getElementById("obsessing-desc").textContent =
+        data.obsessing.description;
+
+      // Coffee
+      document.getElementById("coffee-order").textContent = data.coffee.order;
+      document.getElementById("coffee-desc").textContent =
+        data.coffee.description;
+
+      // Exploring
+      document.getElementById("exploring-location").textContent =
+        data.exploring.location;
+      document.getElementById("exploring-desc").textContent =
+        data.exploring.description;
+
+      // Reading - Generate bookshelf
+      generateBookshelf(data.reading);
+
+      // Watching
+      const watchingList = document.getElementById("watching-list");
+      watchingList.innerHTML = data.watching
+        .map(
+          (show) =>
+            `<h3 class="currently-title" style="margin-bottom: 0.5rem;">${show}</h3>`
+        )
+        .join("");
+    } catch (error) {
+      console.error("Error loading currently data:", error);
+    }
+  }
+
+  loadCurrentlyData();
+
+  // Currently section scroll animations
+  ScrollTrigger.create({
+    trigger: ".currently",
+    start: "top bottom",
+    once: true,
+    onEnter: () => {
+      gsap.from(".currently-card", {
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
     },
   });
 
+  // Gallery scroll animations
   ScrollTrigger.create({
-    trigger: ".outro",
-    start: "top bottom",
-    end: `+=${window.innerHeight * 6}px`,
-    scrub: 1,
-    onUpdate: (self) => {
-      const progress = self.progress;
-
-      outroStrips.forEach((strip, index) => {
-        if (stripSpeeds[index] !== undefined) {
-          const speed = stripSpeeds[index];
-          const movement = progress * 100 * speed;
-
-          gsap.set(strip, {
-            x: `${movement}%`,
-          });
-        }
+    trigger: ".life-gallery",
+    start: "top 80%",
+    once: true,
+    onEnter: () => {
+      gsap.from(".gallery-item", {
+        y: 40,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
       });
     },
   });

@@ -57,21 +57,30 @@
       <div class="about-hero-scan-line"></div>
       <div class="container">
         <div class="about-hero-content">
-          <div class="about-hero-meta">
-            <p class="mono"><span>&#9654;</span> PROFILE.MD</p>
-            <p class="mono">v2025.10</p>
+          <div class="about-hero-left">
+            <div class="about-hero-meta">
+              <p class="mono"><span>&#9654;</span> PROFILE.MD</p>
+              <p class="mono">v2025.10</p>
+            </div>
+            <div class="about-hero-name">
+              <h1 class="hero-name-line">SRIKAR</h1>
+              <h1 class="hero-name-line">SUNCHU</h1>
+            </div>
+            <div class="about-hero-info">
+              <p class="hero-role">DESIGN ENGINEER</p>
+              <p class="hero-location mono">SAN FRANCISCO, CA</p>
+            </div>
+            <div class="about-hero-status">
+              <div class="status-indicator"></div>
+              <p class="mono">AVAILABLE FOR PROJECTS</p>
+            </div>
           </div>
-          <div class="about-hero-name">
-            <h1 class="hero-name-line">SRIKAR</h1>
-            <h1 class="hero-name-line">SUNCHU</h1>
-          </div>
-          <div class="about-hero-info">
-            <p class="hero-role">DESIGN ENGINEER</p>
-            <p class="hero-location mono">SAN FRANCISCO, CA</p>
-          </div>
-          <div class="about-hero-status">
-            <div class="status-indicator"></div>
-            <p class="mono">AVAILABLE FOR PROJECTS</p>
+          <div class="about-hero-portrait-small">
+            <div class="portrait-frame">
+              <img src="/gallery-images/BioPic.jpg" alt="Srikar Sunchu" />
+              <div class="portrait-grain"></div>
+              <div class="portrait-scan"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -306,55 +315,149 @@
       </div>
     </section>
 
-    <section class="outro">
+    <section class="currently">
       <div class="container">
-        <h3>A Seriously Good Design Engineer</h3>
-      </div>
-      <div class="outro-strips">
-        <div class="outro-strip os-1">
-          <div class="skill skill-var-1"><p class="mono">Frontend Development</p></div>
-          <div class="skill skill-var-2"><p class="mono">Motion Design</p></div>
-          <div class="skill skill-var-3"><p class="mono">React & TypeScript</p></div>
-          <div class="skill skill-var-1"><p class="mono">Pixel Perfect</p></div>
-          <div class="skill skill-var-3"><p class="mono">UI Development</p></div>
-          <div class="skill skill-var-1"><p class="mono">Clean Code</p></div>
+        <div class="currently-header">
+          <h2 class="mono"><span>&#9654;</span> CURRENTLY_EXECUTING</h2>
         </div>
-        <div class="outro-strip os-2">
-          <div class="skill skill-var-2"><p class="mono">GSAP Animations</p></div>
-          <div class="skill skill-var-3"><p class="mono">Responsive Design</p></div>
-          <div class="skill skill-var-1"><p class="mono">User Experience</p></div>
-        </div>
-        <div class="outro-strip os-3">
-          <div class="skill skill-var-2"><p class="mono">Attention to Detail</p></div>
-          <div class="skill skill-var-3"><p class="mono">Creative Code</p></div>
-          <div class="skill skill-var-1"><p class="mono">Web Performance</p></div>
-          <div class="skill skill-var-2"><p class="mono">Design Systems</p></div>
-          <div class="skill skill-var-3"><p class="mono">Scroll Storytelling</p></div>
-          <div class="skill skill-var-3"><p class="mono">CSS Mastery</p></div>
-          <div class="skill skill-var-1"><p class="mono">Modern JavaScript</p></div>
-        </div>
-        <div class="outro-strip os-4">
-          <div class="skill skill-var-1"><p class="mono">Component Architecture</p></div>
-          <div class="skill skill-var-2"><p class="mono">Smooth Interactions</p></div>
-          <div class="skill skill-var-3">
-            <p class="mono">Visual Polish</p>
+        <div class="currently-grid">
+          <!-- Learning -->
+          <div class="currently-card">
+            <p class="currently-label mono">LEARNING:</p>
+            <h3 class="currently-title" id="learning-title">Loading...</h3>
+            <p class="currently-desc" id="learning-desc"></p>
+            <div class="progress-bar">
+              <div class="progress-fill" id="learning-progress"></div>
+              <span class="progress-text mono" id="learning-percent">0%</span>
+            </div>
+          </div>
+
+          <!-- Listening -->
+          <div class="currently-card">
+            <p class="currently-label mono">LISTENING:</p>
+            <h3 class="currently-title" id="listening-title">Loading...</h3>
+            <p class="currently-desc" id="listening-artist"></p>
+            <div class="spotify-embed" id="spotify-embed"></div>
+          </div>
+
+          <!-- Obsessing -->
+          <div class="currently-card">
+            <p class="currently-label mono">OBSESSING OVER:</p>
+            <h3 class="currently-title" id="obsessing-title">Loading...</h3>
+            <p class="currently-desc" id="obsessing-desc"></p>
+          </div>
+
+          <!-- Coffee -->
+          <div class="currently-card">
+            <p class="currently-label mono">LATEST BREW:</p>
+            <h3 class="currently-title" id="coffee-order">Loading...</h3>
+            <p class="currently-desc" id="coffee-desc"></p>
+          </div>
+
+          <!-- Exploring -->
+          <div class="currently-card">
+            <p class="currently-label mono">EXPLORING:</p>
+            <h3 class="currently-title" id="exploring-location">Loading...</h3>
+            <p class="currently-desc" id="exploring-desc"></p>
+          </div>
+
+          <!-- Watching -->
+          <div class="currently-card">
+            <p class="currently-label mono">WATCHING:</p>
+            <div id="watching-list"></div>
+          </div>
+
+          <!-- Reading - Full Width Bookshelf -->
+          <div class="currently-card currently-card-bookshelf">
+            <div class="terminal-window">
+              <div class="terminal-header">
+                <div class="terminal-controls">
+                  <span class="terminal-dot"></span>
+                  <span class="terminal-dot"></span>
+                  <span class="terminal-dot"></span>
+                </div>
+                <p class="terminal-title mono">READING:</p>
+              </div>
+              
+              <div class="bookshelf-container">
+                <div class="book-title-overlay">
+                  <div class="book-title-text">LOADING...</div>
+                </div>
+
+                <div class="shelf-wrapper">
+                  <div class="book-shadow">
+                    <div class="book-shadow__item"></div>
+                    <div class="book-shadow__item"></div>
+                    <div class="book-shadow__item"></div>
+                    <div class="book-shadow__item"></div>
+                  </div>
+
+                  <div class="shelf"></div>
+
+                  <div class="books-wrapper" id="books-wrapper">
+                    <!-- Books will be dynamically generated -->
+                  </div>
+                </div>
+
+                <div class="book-descriptions" id="book-descriptions">
+                  <!-- Descriptions will be dynamically generated -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="outro-strip os-5">
-          <div class="skill skill-var-1"><p class="mono">Interactive Experiences</p></div>
-          <div class="skill skill-var-2"><p class="mono">Problem Solving</p></div>
-          <div class="skill skill-var-3"><p class="mono">Animation Enthusiast</p></div>
-          <div class="skill skill-var-1"><p class="mono">Accessible Design</p></div>
-          <div class="skill skill-var-2"><p class="mono">Production Ready</p></div>
-          <div class="skill skill-var-3"><p class="mono">Cross-Browser</p></div>
-          <div class="skill skill-var-1"><p class="mono">Code & Craft</p></div>
-          <div class="skill skill-var-2"><p class="mono">Semantic HTML</p></div>
+      </div>
+    </section>
+
+    <section class="life-gallery">
+      <div class="container">
+        <div class="gallery-header">
+          <h2 class="mono"><span>&#9654;</span> LIFE.LOG</h2>
+          <p class="mono">Moments in frames</p>
         </div>
-        <div class="outro-strip os-6">
-          <div class="skill skill-var-3"><p class="mono">API Integration</p></div>
-          <div class="skill skill-var-1"><p class="mono">Continuous Learning</p></div>
-          <div class="skill skill-var-2"><p class="mono">Collaboration</p></div>
-          <div class="skill skill-var-3"><p class="mono">Mobile First</p></div>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/LaFerrari.jpg" alt="Monterey Car Week" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">Monterey Car Week</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/selfie.jpg" alt="9M" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">9M</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/groupski.jpg" alt="Joey's Restaurant, Santana Row" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">Joey's Restaurant, Santana Row</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/apartment.jpg" alt="My view" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">My view</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/sushi.jpg" alt="Sushi" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">Sushi</p>
+          </div>
+          <div class="gallery-item">
+            <div class="gallery-frame">
+              <img src="/gallery-images/singapore.jpg" alt="Singapore" />
+              <div class="gallery-overlay"></div>
+            </div>
+            <p class="gallery-caption mono">Singapore</p>
+          </div>
         </div>
       </div>
     </section>
@@ -420,6 +523,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
     <script type="module" src="/script/lenis-scroll.js"></script>
     <script type="module" src="/script/transition.js"></script>
     <script type="module" src="/script/menu.js"></script>

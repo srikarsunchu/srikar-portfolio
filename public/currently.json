@@ -1,0 +1,56 @@
+{
+  "learning": {
+    "title": "WebGPU",
+    "description": "Exploring GPU-accelerated graphics on the web",
+    "progress": 63
+  },
+  "listening": {
+    "title": "Lady Brown",
+    "artist": "Nujabes",
+    "spotifyUrl": "https://open.spotify.com/track/0JL9TZip7mL7iwC5EOkALS"
+  },
+  "obsessing": {
+    "title": "Sufism",
+    "description": "Mystical dimensions of Islamic philosophy"
+  },
+  "coffee": {
+    "order": "Black coffee, straight",
+    "description": "No cream, no sugar, pure energy"
+  },
+  "exploring": {
+    "location": "Singapore",
+    "description": "The City of Dreams"
+  },
+  "reading": [
+    {
+      "title": "Man and His Symbols",
+      "author": "Carl Jung",
+      "coverUrl": "/gallery-images/manandhissymbols.jpg",
+      "description": "Jung's exploration of dreams, symbols, and the unconscious mind through art and analysis.",
+      "defaultOpen": true
+    },
+    {
+      "title": "The Book of Five Rings",
+      "author": "Miyamoto Musashi",
+      "coverUrl": "/gallery-images/thebookoffiverings.jpg",
+      "description": "Ancient samurai wisdom on strategy, combat, and the way of the warrior."
+    },
+    {
+      "title": "Grid Systems in Graphic Design",
+      "author": "Josef Müller-Brockmann",
+      "coverUrl": "/gallery-images/gridsystems.jpg",
+      "description": "The definitive guide to grid-based design systems and Swiss typography."
+    },
+    {
+      "title": "Autobiography of a Yogi",
+      "author": "Paramahansa Yogananda",
+      "coverUrl": "/gallery-images/yogi.jpg",
+      "description": "A spiritual journey through yoga, meditation, and Eastern philosophy."
+    }
+  ],
+  "watching": [
+    "Severance",
+    "Succession"
+  ]
+}
+
