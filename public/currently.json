@@ -1,7 +1,7 @@
 {
   "learning": {
     "title": "WebGPU",
-    "description": "Exploring GPU-accelerated graphics on the web",
+    "description": "Building a browser-based game with GPU-accelerated rendering",
     "progress": 63
   },
   "listening": {
