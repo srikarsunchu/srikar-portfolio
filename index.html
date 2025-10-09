@@ -550,13 +550,26 @@
           <div class="footer-col">
             <p class="mono"><span>&#9654;</span> Get in touch</p>
             <div class="footer-email-container">
-              <div class="footer-email-row">
-                <input type="text" placeholder="your@email.com" />
-                <button>
+              <form id="footer-email-form" class="footer-email-row">
+                <label for="footer-email" class="visually-hidden">Email address</label>
+                <input 
+                  type="email" 
+                  id="footer-email"
+                  name="email"
+                  placeholder="your@email.com" 
+                  required
+                  aria-label="Enter your email address"
+                />
+                <button type="submit" aria-label="Submit email">
                   <img src="/global/footer-right-arrow.png" alt="" />
                 </button>
-              </div>
+              </form>
+              <div class="footer-email-feedback" id="footer-email-feedback" role="status" aria-live="polite"></div>
             </div>
+            <p class="footer-email-helper">
+              Stay updated on new projects and ideas. For project inquiries, 
+              <a href="/contact" class="footer-contact-link">let's talk →</a>
+            </p>
           </div>
           <div class="footer-col"></div>
         </div>
@@ -608,5 +621,6 @@
     <script type="module" src="/script/transition.js"></script>
     <script type="module" src="/script/menu.js"></script>
     <script type="module" src="/script/home.js"></script>
+    <script type="module" src="/script/footer.js"></script>
   </body>
 </html>
