@@ -80,7 +80,7 @@
                 data-animate-type="line-reveal"
                 data-animate-delay="0.25"
               >
-              I co-founded 9M Holdings and spent time figuring out what users actually want at Adobe. I design and develop things that work. Simple as that.
+              I co-founded 9M Holdings and spent time figuring out what users actually want at Adobe. Designing and developing things that feel as good as they function.
               </p>
             </div>
             <div class="hero-footer-tags">
@@ -399,8 +399,8 @@
       </div>
     </section>
 
-    <section class="home-spotlight">
-      <div class="home-spotlight-top-bar">
+    <section class="home-featured-work">
+      <div class="home-featured-work-top-bar">
         <div class="container">
           <div class="symbols-container">
             <div class="symbol">
@@ -409,14 +409,8 @@
             <div class="symbol">
               <img src="/symbols/s2-light.png" alt="Symbol" />
             </div>
-            <div class="symbol">
-              <img src="/symbols/s3-light.png" alt="Symbol" />
-            </div>
           </div>
           <div class="symbols-container">
-            <div class="symbol">
-              <img src="/symbols/s3-light.png" alt="Symbol" />
-            </div>
             <div class="symbol">
               <img src="/symbols/s2-light.png" alt="Symbol" />
             </div>
@@ -426,7 +420,71 @@
           </div>
         </div>
       </div>
-      <div class="home-spotlight-bottom-bar">
+
+      <div class="container">
+        <div class="featured-work-header">
+          <h2 class="featured-work-title-animate">
+            Selected Works
+          </h2>
+        </div>
+
+        <div class="featured-projects-grid">
+          <!-- Project 01: 9M Holdings -->
+          <article class="featured-project-card" data-project="01">
+            <a href="/9m-holdings.html" class="featured-project-link-wrapper">
+              <div class="featured-project-image-wrapper">
+                <img
+                  src="/gallery-images/9MThumbnail.png"
+                  alt="9M Holdings brand identity and website"
+                  class="featured-project-image"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="featured-project-content">
+                <h3 class="featured-project-title">9M Holdings</h3>
+                <div class="project-metadata">
+                  <span class="project-role">Co-Founder, Brand & Development</span>
+                  <span class="project-divider">|</span>
+                  <span class="project-year">2024</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 02: Nerv Studios -->
+          <article class="featured-project-card" data-project="02">
+            <a href="/nerv-studios.html" class="featured-project-link-wrapper">
+              <div class="featured-project-image-wrapper">
+                <img
+                  src="/gallery-images/NervStudios.png"
+                  alt="Nerv Studios visual identity and web design"
+                  class="featured-project-image"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="featured-project-content">
+                <h3 class="featured-project-title">Nerv Studios</h3>
+                <div class="project-metadata">
+                  <span class="project-role">Visual Identity & Web Experience</span>
+                  <span class="project-divider">|</span>
+                  <span class="project-year">2024</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <!-- See All Link -->
+        <div class="featured-work-link">
+          <a href="/work.html" class="see-all-link">
+            See all works →
+          </a>
+        </div>
+      </div>
+
+      <div class="home-featured-work-bottom-bar">
         <div class="container">
           <p
             class="mono"
@@ -434,7 +492,7 @@
             data-animate-delay="0.2"
             data-animate-on-scroll="true"
           >
-            <span>&#9654;</span> Visual logs
+            <span>&#9654;</span> Selected Work
           </p>
           <p
             class="mono"
@@ -446,50 +504,84 @@
           </p>
         </div>
       </div>
-      <div class="container">
-        <div class="spotlight-intro-header">
-          <h3
-            data-animate-type="line-reveal"
-            data-animate-delay="0.3"
-            data-animate-on-scroll="true"
-          >
-            Form Follows Function
-          </h3>
-        </div>
-      </div>
-      <div class="home-spotlight-images">
-        <div class="home-spotlight-images-row">
-          <div class="home-spotlight-image image-holder" id="rampensau-1"></div>
-          <div class="home-spotlight-image image-holder" id="typography-1"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image"></div>
-        </div>
-        <div class="home-spotlight-images-row">
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image image-holder" id="swiss-grid-1"></div>
-          <div class="home-spotlight-image image-holder" id="geometric-shapes-1"></div>
-        </div>
-        <div class="home-spotlight-images-row">
-          <div class="home-spotlight-image image-holder" id="rampensau-2"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image image-holder" id="color-block-1"></div>
-          <div class="home-spotlight-image"></div>
-        </div>
-        <div class="home-spotlight-images-row">
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image image-holder" id="line-pattern-1"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image image-holder" id="rampensau-3"></div>
-        </div>
-        <div class="home-spotlight-images-row">
-          <div class="home-spotlight-image image-holder" id="rampensau-4"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image"></div>
-          <div class="home-spotlight-image"></div>
-        </div>
-      </div>
     </section>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contact-modal" aria-hidden="true">
+      <div class="modal-overlay" id="modal-overlay"></div>
+      <div class="modal-window" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-header">
+          <div class="window-controls">
+            <button class="window-dot dot-red" id="close-modal" aria-label="Close"></button>
+          </div>
+          <h3 id="modal-title">Let's Build Something</h3>
+        </div>
+        <div class="modal-body">
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/myzndvlb" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-name" class="mono">Your Name</label>
+                <input 
+                  type="text" 
+                  id="contact-name" 
+                  name="name" 
+                  required 
+                  aria-required="true"
+                />
+                <span class="form-error" id="name-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="mono">Email Address</label>
+                <input 
+                  type="email" 
+                  id="contact-email" 
+                  name="email" 
+                  required 
+                  aria-required="true"
+                />
+                <span class="form-error" id="email-error"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group form-group-full">
+                <label for="contact-project-type" class="mono">Project Type</label>
+                <select id="contact-project-type" name="project_type" required aria-required="true">
+                  <option value="">Select project type</option>
+                  <option value="brand-design">Brand Design</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="both">Both</option>
+                </select>
+                <span class="form-error" id="project-type-error"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group form-group-full">
+                <label for="contact-message" class="mono">Tell me about your project</label>
+                <textarea 
+                  id="contact-message" 
+                  name="message" 
+                  rows="6" 
+                  required 
+                  aria-required="true"
+                ></textarea>
+                <span class="form-error" id="message-error"></span>
+              </div>
+            </div>
+
+            <div class="form-submit">
+              <button type="submit" class="contact-form-button" id="submit-button">
+                <span class="button-text">Submit</span>
+              </button>
+            </div>
+
+            <div class="form-feedback" id="form-feedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <section class="outro">
       <div class="container">
@@ -568,7 +660,7 @@
             </div>
             <p class="footer-email-helper">
               Stay updated on new projects and ideas. For project inquiries, 
-              <a href="/contact" class="footer-contact-link">let's talk →</a>
+              <button class="footer-contact-button" id="footer-contact-modal">Get in touch →</button>
             </p>
           </div>
           <div class="footer-col"></div>

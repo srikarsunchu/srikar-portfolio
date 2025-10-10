@@ -152,14 +152,20 @@ footer .footer-email-helper {
   line-height: 1.5;
 }
 
-footer .footer-contact-link {
+footer .footer-contact-button {
+  background: none;
+  border: none;
   color: #00ff00;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
+  font-family: "Host Grotesk";
+  font-size: 0.9rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  padding: 0;
+  text-decoration: none;
 }
 
-footer .footer-contact-link:hover {
+footer .footer-contact-button:hover {
   opacity: 0.7;
   text-decoration: underline;
 }

@@ -13,13 +13,167 @@
     "title": "Swiss Design and the Bauhaus Movement",
     "description": "Amazing how one tiny region set the standard for international typography and design"
   },
-  "coffee": {
-    "order": "Black coffee, straight",
-    "description": "No cream, no sugar, pure energy"
+  "building": {
+    "title": "Restaurant Management System",
+    "description": "Real-time POS, inventory, and analytics platform",
+    "stack": ["React", "Node.js", "PostgreSQL", "WebSocket"],
+    "status": "IN PRODUCTION"
   },
-  "exploring": {
-    "location": "Singapore",
-    "description": "The City of Dreams, so much to see and do in such a small space"
+  "terminal": {
+    "commands": {
+      "help": {
+        "output": [
+          "Available commands:",
+          "  help      - Show this message",
+          "  hire      - View availability & hiring info",
+          "  contact   - Get in touch",
+          "  coffee    - Schedule coffee in SF",
+          "  skills    - List technical skills",
+          "  stack     - Current tech stack",
+          "  clear     - Clear terminal",
+          "",
+          "Try typing a command..."
+        ]
+      },
+      "hire": {
+        "output": [
+          "AVAILABILITY STATUS:",
+          "",
+          "> Full-time roles: Available",
+          "> Seeking: Design studios, startups, product companies",
+          "> Start date: Flexible",
+          "> Location: San Francisco, CA (open to remote)",
+          "> Response time: <24 hours",
+          "",
+          "> Interested in:",
+          "  • Design Engineer roles",
+          "  • Frontend/Full-stack positions",
+          "  • Design system work",
+          "  • Select freelance projects"
+        ]
+      },
+      "contact": {
+        "output": [
+          "GET IN TOUCH:",
+          "",
+          "> Email: srikarsunchu@gmail.com",
+          "> LinkedIn: linkedin.com/in/srikar-sunchu-651314220",
+          "> Twitter: @srikarsunchu",
+          "> Instagram: @sunchusrikar",
+          "",
+          "> Response time: <24 hours",
+          "> Let's build something great together ↗"
+        ]
+      },
+      "coffee": {
+        "output": [
+          "COFFEE IN SF:",
+          "",
+          "> Location: San Francisco, CA",
+          "> Available: Yes, always down for coffee",
+          "> Favorite spots: Blue Bottle, Sightglass",
+          "",
+          "> Shoot me an email to schedule:",
+          "> srikarsunchu@gmail.com"
+        ]
+      },
+      "skills": {
+        "output": [
+          "TECHNICAL SKILLS:",
+          "",
+          "> Frontend:",
+          "  HTML, CSS, JavaScript, React, Next.js",
+          "",
+          "> Animation & Interaction:",
+          "  GSAP, ScrollTrigger, Lenis, WebGL, Three.js",
+          "",
+          "> Backend:",
+          "  Node.js, PostgreSQL, WebSocket",
+          "",
+          "> Design:",
+          "  Figma, Adobe Creative Suite, Typography",
+          "",
+          "> Currently learning: WebGPU (63% complete)"
+        ]
+      },
+      "stack": {
+        "output": [
+          "CURRENT TECH STACK:",
+          "",
+          "> Building: Restaurant Management System",
+          "> Technologies:",
+          "  • React - Frontend framework",
+          "  • Node.js - Backend runtime",
+          "  • PostgreSQL - Database",
+          "  • WebSocket - Real-time updates",
+          "",
+          "> Status: IN PRODUCTION"
+        ]
+      },
+      "clear": {
+        "action": "clear"
+      }
+    },
+    "easterEggs": {
+      "sudo hire": {
+        "output": [
+          "🔓 Permission granted.",
+          "",
+          "> Initiating hiring protocol...",
+          "> Let's talk: srikarsunchu@gmail.com"
+        ]
+      },
+      "rm -rf doubts": {
+        "output": [
+          "💥 Deleting doubts...",
+          "",
+          "> doubts: removed",
+          "> confidence: restored",
+          "> ready_to_ship: true"
+        ]
+      },
+      "hack": {
+        "output": [
+          "🔒 Access denied.",
+          "",
+          "> Nice try though.",
+          "> Type 'hire' for legitimate access."
+        ]
+      },
+      "ls": {
+        "output": [
+          "projects/",
+          "  9m-holdings/",
+          "  nerv-studios/",
+          "  design-ledger/",
+          "  roshan-studios/",
+          "  restaurant-pos/",
+          "",
+          "See work.html for details ↗"
+        ]
+      },
+      "whoami": {
+        "output": [
+          "You're visiting Srikar Sunchu's portfolio.",
+          "",
+          "> Design Engineer",
+          "> San Francisco, CA",
+          "> Currently: Available for hire",
+          "",
+          "Type 'help' to learn more."
+        ]
+      },
+      "exit": {
+        "output": [
+          "Nice try, but you can't leave that easily...",
+          "",
+          "> This terminal is your home now.",
+          "> Type 'help' to continue exploring.",
+          "",
+          "(Just kidding, scroll away anytime)"
+        ]
+      }
+    }
   },
   "reading": [
     {
@@ -47,10 +201,6 @@
       "coverUrl": "/gallery-images/yogi.jpg",
       "description": "A spiritual journey through yoga, meditation, and Eastern philosophy."
     }
-  ],
-  "watching": [
-    "Severance",
-    "Succession"
   ]
 }
 

@@ -646,6 +646,173 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
+  // Terminal Interface Initialization
+  function initTerminal(terminalData) {
+    const terminalOutput = document.getElementById("terminal-output");
+    const terminalInput = document.getElementById("terminal-input");
+    const terminalCursor = document.getElementById("terminal-cursor");
+    
+    let commandHistory = [];
+    let historyIndex = -1;
+    let isTyping = false;
+
+    // Combine regular commands and easter eggs
+    const allCommands = {
+      ...terminalData.commands,
+      ...terminalData.easterEggs
+    };
+
+    // Type text with animation
+    function typeText(text, callback) {
+      isTyping = true;
+      const line = document.createElement("div");
+      line.classList.add("terminal-line");
+      terminalOutput.appendChild(line);
+      
+      let charIndex = 0;
+      const typeInterval = setInterval(() => {
+        if (charIndex < text.length) {
+          line.textContent += text[charIndex];
+          charIndex++;
+          scrollToBottom();
+        } else {
+          clearInterval(typeInterval);
+          isTyping = false;
+          if (callback) callback();
+        }
+      }, 10);
+    }
+
+    // Add output lines
+    function addOutput(lines) {
+      lines.forEach((line, index) => {
+        setTimeout(() => {
+          const lineElement = document.createElement("div");
+          lineElement.classList.add("terminal-line");
+          lineElement.textContent = line;
+          terminalOutput.appendChild(lineElement);
+          scrollToBottom();
+        }, index * 30);
+      });
+    }
+
+    // Show command in terminal
+    function showCommand(command) {
+      const commandLine = document.createElement("div");
+      commandLine.classList.add("terminal-command");
+      commandLine.innerHTML = `<span class="terminal-prompt">$</span> ${command}`;
+      terminalOutput.appendChild(commandLine);
+      scrollToBottom();
+    }
+
+    // Execute command
+    function executeCommand(command) {
+      const trimmedCommand = command.trim().toLowerCase();
+      
+      if (!trimmedCommand) return;
+
+      showCommand(command);
+      commandHistory.push(command);
+      historyIndex = commandHistory.length;
+
+      const commandData = allCommands[trimmedCommand];
+
+      if (commandData) {
+        if (commandData.action === "clear") {
+          terminalOutput.innerHTML = "";
+        } else if (commandData.output) {
+          addOutput(commandData.output);
+        }
+      } else {
+        addOutput([
+          `Command not found: ${trimmedCommand}`,
+          "Type 'help' to see available commands."
+        ]);
+      }
+
+      terminalInput.value = "";
+      scrollToBottom();
+    }
+
+    // Scroll terminal to bottom
+    function scrollToBottom() {
+      const terminalBody = document.getElementById("terminal-body");
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    // Auto-demo on load
+    function runAutoDemo() {
+      setTimeout(() => {
+        // Show $ help being typed
+        const helpCommand = "help";
+        let charIndex = 0;
+        
+        const commandLine = document.createElement("div");
+        commandLine.classList.add("terminal-command");
+        commandLine.innerHTML = `<span class="terminal-prompt">$</span> `;
+        terminalOutput.appendChild(commandLine);
+        
+        const typingInterval = setInterval(() => {
+          if (charIndex < helpCommand.length) {
+            commandLine.innerHTML = `<span class="terminal-prompt">$</span> ${helpCommand.substring(0, charIndex + 1)}`;
+            charIndex++;
+            scrollToBottom();
+          } else {
+            clearInterval(typingInterval);
+            // Show help output
+            setTimeout(() => {
+              addOutput(terminalData.commands.help.output);
+              // Focus input after demo (preventScroll to avoid jumping)
+              setTimeout(() => {
+                terminalInput.focus({ preventScroll: true });
+                terminalCursor.classList.add("active");
+              }, 500);
+            }, 300);
+          }
+        }, 80);
+      }, 1000);
+    }
+
+    // Handle Enter key
+    terminalInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !isTyping) {
+        executeCommand(terminalInput.value);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          terminalInput.value = commandHistory[historyIndex];
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          terminalInput.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = commandHistory.length;
+          terminalInput.value = "";
+        }
+      }
+    });
+
+    // Show/hide cursor based on focus
+    terminalInput.addEventListener("focus", () => {
+      terminalCursor.classList.add("active");
+    });
+
+    terminalInput.addEventListener("blur", () => {
+      terminalCursor.classList.remove("active");
+    });
+
+    // Click terminal to focus input
+    document.getElementById("terminal-body").addEventListener("click", () => {
+      terminalInput.focus({ preventScroll: true });
+    });
+
+    // Run auto-demo
+    runAutoDemo();
+  }
+
   // Fetch and populate Currently data
   async function loadCurrentlyData() {
     try {
@@ -678,28 +845,23 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("obsessing-desc").textContent =
         data.obsessing.description;
 
-      // Coffee
-      document.getElementById("coffee-order").textContent = data.coffee.order;
-      document.getElementById("coffee-desc").textContent =
-        data.coffee.description;
+      // Building
+      document.getElementById("building-title").textContent = data.building.title;
+      document.getElementById("building-desc").textContent = data.building.description;
+      
+      const stackContainer = document.getElementById("building-stack");
+      stackContainer.innerHTML = data.building.stack
+        .map((tech) => `<span class="tech-tag mono">${tech}</span>`)
+        .join("");
+      
+      document.getElementById("building-status").innerHTML = 
+        `<span class="status-dot"></span><span class="mono">${data.building.status}</span>`;
 
-      // Exploring
-      document.getElementById("exploring-location").textContent =
-        data.exploring.location;
-      document.getElementById("exploring-desc").textContent =
-        data.exploring.description;
+      // Terminal Interface
+      initTerminal(data.terminal);
 
       // Reading - Generate bookshelf
       generateBookshelf(data.reading);
-
-      // Watching
-      const watchingList = document.getElementById("watching-list");
-      watchingList.innerHTML = data.watching
-        .map(
-          (show) =>
-            `<h3 class="currently-title" style="margin-bottom: 0.5rem;">${show}</h3>`
-        )
-        .join("");
     } catch (error) {
       console.error("Error loading currently data:", error);
     }
@@ -707,21 +869,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCurrentlyData();
 
-  // Currently section scroll animations
+  // Currently section scroll animations - Enhanced
   ScrollTrigger.create({
     trigger: ".currently",
-    start: "top bottom",
+    start: "top 80%",
     once: true,
     onEnter: () => {
-      gsap.from(".currently-card", {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
+      const cards = gsap.utils.toArray(".currently-card");
+      
+      cards.forEach((card, index) => {
+        // Alternate entrance directions
+        const fromLeft = index % 2 === 0;
+        
+        gsap.fromTo(card, 
+          {
+            x: fromLeft ? -60 : 60,
+            y: 40,
+            opacity: 0,
+          },
+          {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "power2.out",
+          }
+        );
       });
+
+      // Animate header separately
+      gsap.fromTo(".currently-header h2",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      );
     },
   });
+
+  // Add individual card micro-interactions (removed scale to avoid conflicts)
 
   // Gallery scroll animations
   ScrollTrigger.create({

@@ -2,28 +2,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { initAnimations } from "./anime";
-import { createRampenSau } from "./rampensau";
-import { createTypographySpecimen } from "./typography-specimen";
-import { createSwissGrid } from "./swiss-grid";
-import { createGeometricShapes } from "./geometric-shapes";
-import { createColorBlock } from "./color-block";
-import { createLinePattern } from "./line-pattern";
 
 document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
 
   gsap.registerPlugin(ScrollTrigger, SplitText);
-
-  // Initialize Bauhaus geometric components
-  createRampenSau("#rampensau-1", { size: 200, autoRotate: true, rotateInterval: 5000 });
-  createTypographySpecimen("#typography-1", { size: 200, letter: 'S' });
-  createSwissGrid("#swiss-grid-1", { size: 200, gridSize: 4 });
-  createGeometricShapes("#geometric-shapes-1", { size: 200 });
-  createRampenSau("#rampensau-2", { size: 200, autoRotate: true, rotateInterval: 6000 });
-  createColorBlock("#color-block-1", { size: 200, autoRotate: true, rotateInterval: 3500 });
-  createLinePattern("#line-pattern-1", { size: 200, lineCount: 8, orientation: 'vertical' });
-  createRampenSau("#rampensau-3", { size: 200, autoRotate: true, rotateInterval: 4500 });
-  createRampenSau("#rampensau-4", { size: 200, autoRotate: true, rotateInterval: 5500 });
 
   gsap.set(".hero .hero-cards .card", { transformOrigin: "center center" });
 
@@ -236,105 +219,212 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const spotlightImages = document.querySelector(".home-spotlight-images");
-  const containerHeight = spotlightImages.offsetHeight;
-  const viewportHeight = window.innerHeight;
-
-  const initialOffset = containerHeight * 0.05;
-  const totalMovement = containerHeight + initialOffset + viewportHeight;
-
-  const spotlightHeader = document.querySelector(".spotlight-mask-header h3");
-  let headerSplit = null;
-
-  if (spotlightHeader) {
-    headerSplit = SplitText.create(spotlightHeader, {
-      type: "words",
-      wordsClass: "spotlight-word",
+  // Featured Work Title Animation
+  const featuredTitle = document.querySelector(".featured-work-title-animate");
+  
+  if (featuredTitle) {
+    gsap.to(featuredTitle, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: featuredTitle,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
+      },
     });
-
-    gsap.set(headerSplit.words, { opacity: 0 });
   }
 
-  ScrollTrigger.create({
-    trigger: ".home-spotlight",
-    start: "top top",
-    end: `+=${window.innerHeight * 7}px`,
-    pin: true,
-    pinSpacing: true,
-    scrub: 0.5,
-    onUpdate: (self) => {
-      const progress = self.progress;
+  // Featured Work Animations
+  const projectCards = document.querySelectorAll(".featured-project-card");
 
-      if (progress <= 0.5) {
-        const animationProgress = progress / 0.5;
+  projectCards.forEach((card, index) => {
+    const wrapper = card.querySelector(".featured-project-link-wrapper");
+    const image = card.querySelector(".featured-project-image");
+    const content = card.querySelector(".featured-project-content");
 
-        const startY = 5;
-        const endY = -(totalMovement / containerHeight) * 100;
-
-        const currentY = startY + (endY - startY) * animationProgress;
-
-        gsap.set(spotlightImages, {
-          y: `${currentY}%`,
-        });
-      }
-
-      const maskContainer = document.querySelector(
-        ".spotlight-mask-image-container"
-      );
-      const maskImage = document.querySelector(".spotlight-mask-image");
-
-      if (maskContainer && maskImage) {
-        if (progress >= 0.25 && progress <= 0.75) {
-          const maskProgress = (progress - 0.25) / 0.5;
-          const maskSize = `${maskProgress * 475}%`;
-
-          const imageScale = 1.25 - maskProgress * 0.25;
-
-          maskContainer.style.setProperty("-webkit-mask-size", maskSize);
-          maskContainer.style.setProperty("mask-size", maskSize);
-
-          gsap.set(maskImage, {
-            scale: imageScale,
-          });
-        } else if (progress < 0.25) {
-          maskContainer.style.setProperty("-webkit-mask-size", "0%");
-          maskContainer.style.setProperty("mask-size", "0%");
-
-          gsap.set(maskImage, {
-            scale: 1.25,
-          });
-        } else if (progress > 0.75) {
-          maskContainer.style.setProperty("-webkit-mask-size", "475%");
-          maskContainer.style.setProperty("mask-size", "475%");
-
-          gsap.set(maskImage, {
-            scale: 1,
-          });
-        }
-      }
-
-      if (headerSplit && headerSplit.words.length > 0) {
-        if (progress >= 0.75 && progress <= 0.95) {
-          const textProgress = (progress - 0.75) / 0.2;
-          const totalWords = headerSplit.words.length;
-
-          headerSplit.words.forEach((word, index) => {
-            const wordRevealProgress = index / totalWords;
-
-            if (textProgress >= wordRevealProgress) {
-              gsap.set(word, { opacity: 1 });
-            } else {
-              gsap.set(word, { opacity: 0 });
-            }
-          });
-        } else if (progress < 0.75) {
-          gsap.set(headerSplit.words, { opacity: 0 });
-        } else if (progress > 0.95) {
-          gsap.set(headerSplit.words, { opacity: 1 });
-        }
-      }
-    },
+    // Main entrance animation
+    gsap.to(card, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
+      },
+    });
   });
+
+  // Modal Functions
+  const modal = document.getElementById("contact-modal");
+  const footerContactBtn = document.getElementById("footer-contact-modal");
+  const closeModalBtn = document.getElementById("close-modal");
+  const modalOverlay = document.getElementById("modal-overlay");
+  const contactForm = document.getElementById("contact-form");
+  const submitButton = document.getElementById("submit-button");
+  const formFeedback = document.getElementById("form-feedback");
+
+  // Open modal from footer button
+  if (footerContactBtn) {
+    footerContactBtn.addEventListener("click", () => {
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    });
+  }
+
+  // Close modal function
+  function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    clearErrors();
+    if (contactForm) contactForm.reset();
+  }
+
+  // Red dot - Close
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", closeModal);
+  }
+
+  // Click outside to close
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", closeModal);
+  }
+
+  // ESC key to close
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
+
+  // Form Handling
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Clear previous errors
+      clearErrors();
+
+      // Get form data
+      const formData = new FormData(contactForm);
+      const name = formData.get("name").trim();
+      const email = formData.get("email").trim();
+      const projectType = formData.get("project_type");
+      const message = formData.get("message").trim();
+
+      // Validate
+      let isValid = true;
+
+      if (!name) {
+        showError("name-error", "Name is required");
+        isValid = false;
+      }
+
+      if (!email) {
+        showError("email-error", "Email is required");
+        isValid = false;
+      } else if (!isValidEmail(email)) {
+        showError("email-error", "Please enter a valid email");
+        isValid = false;
+      }
+
+      if (!projectType) {
+        showError("project-type-error", "Please select a project type");
+        isValid = false;
+      }
+
+      if (!message) {
+        showError("message-error", "Please tell us about your project");
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.classList.add("loading");
+
+      try {
+        // Submit to Formspree
+        const response = await fetch(contactForm.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Success
+          showFeedback("success", "Thanks! I'll get back to you within 24 hours.");
+          contactForm.reset();
+          
+          // Auto-close after 3 seconds
+          setTimeout(() => {
+            closeModal();
+          }, 3000);
+        } else {
+          // Error
+          showFeedback("error", "Oops! Something went wrong. Please try again.");
+        }
+      } catch (error) {
+        showFeedback("error", "Connection error. Please check your internet and try again.");
+      } finally {
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.classList.remove("loading");
+      }
+    });
+  }
+
+  function clearErrors() {
+    const errorElements = document.querySelectorAll(".form-error");
+    const inputElements = document.querySelectorAll(".form-group input, .form-group select, .form-group textarea");
+    
+    errorElements.forEach(el => {
+      el.classList.remove("visible");
+      el.textContent = "";
+    });
+    
+    inputElements.forEach(el => {
+      el.classList.remove("error");
+    });
+
+    if (formFeedback) {
+      formFeedback.classList.remove("visible", "success", "error");
+    }
+  }
+
+  function showError(errorId, message) {
+    const errorElement = document.getElementById(errorId);
+    const inputId = errorId.replace("-error", "");
+    const inputElement = document.getElementById(inputId);
+
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.classList.add("visible");
+    }
+
+    if (inputElement) {
+      inputElement.classList.add("error");
+    }
+  }
+
+  function showFeedback(type, message) {
+    if (formFeedback) {
+      formFeedback.textContent = message;
+      formFeedback.classList.add("visible", type);
+    }
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
   const outroHeader = document.querySelector(".outro h3");
   let outroSplit = null;
