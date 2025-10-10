@@ -2,6 +2,11 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// Prevent browser scroll restoration globally
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   let isMobile = window.innerWidth <= 900;
 

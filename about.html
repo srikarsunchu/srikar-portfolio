@@ -349,24 +349,42 @@
             <p class="currently-desc" id="obsessing-desc"></p>
           </div>
 
-          <!-- Coffee -->
-          <div class="currently-card">
-            <p class="currently-label mono">LATEST BREW:</p>
-            <h3 class="currently-title" id="coffee-order">Loading...</h3>
-            <p class="currently-desc" id="coffee-desc"></p>
+          <!-- Building -->
+          <div class="currently-card currently-card-building">
+            <p class="currently-label mono">BUILDING:</p>
+            <h3 class="currently-title" id="building-title">Loading...</h3>
+            <p class="currently-desc" id="building-desc"></p>
+            <div class="tech-stack" id="building-stack"></div>
+            <div class="status-badge" id="building-status"></div>
           </div>
 
-          <!-- Exploring -->
-          <div class="currently-card">
-            <p class="currently-label mono">EXPLORING:</p>
-            <h3 class="currently-title" id="exploring-location">Loading...</h3>
-            <p class="currently-desc" id="exploring-desc"></p>
-          </div>
-
-          <!-- Watching -->
-          <div class="currently-card">
-            <p class="currently-label mono">WATCHING:</p>
-            <div id="watching-list"></div>
+          <!-- Terminal Interface -->
+          <div class="currently-card currently-card-terminal">
+            <div class="terminal-window-hire">
+              <div class="terminal-header-hire">
+                <div class="terminal-controls-hire">
+                  <span class="terminal-dot-hire"></span>
+                  <span class="terminal-dot-hire"></span>
+                  <span class="terminal-dot-hire"></span>
+                </div>
+                <p class="terminal-title-hire mono">OPEN_TO</p>
+              </div>
+              <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output"></div>
+                <div class="terminal-input-line">
+                  <span class="terminal-prompt mono">$</span>
+                  <input 
+                    type="text" 
+                    class="terminal-input mono" 
+                    id="terminal-input"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="Type 'help' to start..."
+                  />
+                  <span class="terminal-cursor" id="terminal-cursor">_</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Reading - Full Width Bookshelf -->
