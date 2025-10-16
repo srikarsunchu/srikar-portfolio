@@ -10,6 +10,10 @@ export default defineConfig({
         work: resolve(__dirname, "work.html"),
         project: resolve(__dirname, "project.html"),
         contact: resolve(__dirname, "contact.html"),
+        "9m-holdings": resolve(__dirname, "9m-holdings.html"),
+        "nerv-studios": resolve(__dirname, "nerv-studios.html"),
+        "design-ledger": resolve(__dirname, "design-ledger.html"),
+        "roshan-studios": resolve(__dirname, "roshan-studios.html"),
       },
     },
     assetsInclude: [

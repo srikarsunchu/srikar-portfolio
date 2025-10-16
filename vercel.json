@@ -5,6 +5,10 @@
     { "source": "/about", "destination": "/about.html" },
     { "source": "/work", "destination": "/work.html" },
     { "source": "/project", "destination": "/project.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/9m-holdings", "destination": "/9m-holdings.html" },
+    { "source": "/roshan-studios", "destination": "/roshan-studios.html" },
+    { "source": "/design-ledger", "destination": "/design-ledger.html" },
+    { "source": "/nerv-studios", "destination": "/nerv-studios.html" }
   ]
 }
