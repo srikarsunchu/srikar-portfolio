@@ -258,6 +258,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Featured Project Video Hover Controls
+  const featuredCards = document.querySelectorAll(".featured-project-card");
+
+  featuredCards.forEach((card) => {
+    const video = card.querySelector(".featured-project-video");
+    let pauseTimeout;
+
+    if (!video) return;
+
+    // Mouse Enter: Play video
+    card.addEventListener("mouseenter", () => {
+      clearTimeout(pauseTimeout);
+      video.play().catch((err) => {
+        console.log("Video play prevented:", err);
+      });
+    });
+
+    // Mouse Leave: Pause after delay
+    card.addEventListener("mouseleave", () => {
+      pauseTimeout = setTimeout(() => {
+        video.pause();
+        video.currentTime = 0; // Reset to beginning
+      }, 1000); // 1 second delay
+    });
+  });
+
   // Modal Functions
   const modal = document.getElementById("contact-modal");
   const footerContactBtn = document.getElementById("footer-contact-modal");

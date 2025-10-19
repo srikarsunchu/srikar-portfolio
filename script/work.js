@@ -53,21 +53,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const slideImg = document.createElement("div");
     slideImg.className = "slide-img";
-    const img = document.createElement("img");
-    img.src = slideData.slideImg;
-    img.alt = "";
-
-    img.style.opacity = "0";
-
-    if (imagesPreloaded) {
-      img.style.opacity = "1";
+    
+    // Check if it's a video file
+    const isVideo = slideData.slideImg.match(/\.(mp4|webm|ogg)$/i);
+    
+    if (isVideo) {
+      const video = document.createElement("video");
+      video.src = slideData.slideImg;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.style.width = "100%";
+      video.style.height = "100%";
+      video.style.objectFit = "cover";
+      video.style.opacity = "1";
+      slideImg.appendChild(video);
     } else {
-      img.onload = () => {
-        gsap.to(img, { opacity: 1, duration: 0.3 });
-      };
-    }
+      const img = document.createElement("img");
+      img.src = slideData.slideImg;
+      img.alt = "";
 
-    slideImg.appendChild(img);
+      img.style.opacity = "0";
+
+      if (imagesPreloaded) {
+        img.style.opacity = "1";
+      } else {
+        img.onload = () => {
+          gsap.to(img, { opacity: 1, duration: 0.3 });
+        };
+      }
+
+      slideImg.appendChild(img);
+    }
 
     const slideHeader = document.createElement("div");
     slideHeader.className = "slide-header";
@@ -281,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       const newSlide = createSlide(currentSlide);
-      const newSlideImg = newSlide.querySelector(".slide-img img");
+      const newSlideImg = newSlide.querySelector(".slide-img img, .slide-img video");
 
       gsap.set(newSlide, {
         y: entryY,

@@ -5,23 +5,15 @@ const slides = [
       "A product studio and holding company building internal tools, dashboards, and automations for B2B clients. Systematic design meets functional engineering.",
     slideUrl: "/9m-holdings",
     slideTags: ["Product Studio", "B2B", "Internal Tools", "Dashboards"],
-    slideImg: "/gallery-images/9MThumbnail.png",
+    slideImg: "/gallery-images/9mSiteVideo.mp4",
   },
   {
     slideTitle: "Roshan Studios",
     slideDescription:
-      "A concept page for a web development and design agency. Clean layouts meet modern web standards with a focus on purposeful interactions.",
+      "A concept website for a web development agency designing applications for next-generation startups. Design systems, interface design, and creative development with Swiss design principles.",
     slideUrl: "/roshan-studios",
-    slideTags: ["Web Design", "Agency Concept", "UI/UX", "Branding"],
-    slideImg: "/gallery-images/RoshanStudios.jpg",
-  },
-  {
-    slideTitle: "Design Ledger",
-    slideDescription:
-      "An interactive CV component showcasing design engineering capabilities. Form follows function in every interaction and layout decision.",
-    slideUrl: "/design-ledger",
-    slideTags: ["Interactive CV", "Component Design", "Frontend", "UI Engineering"],
-    slideImg: "/gallery-images/DesignLedger.jpg",
+    slideTags: ["Next.js", "Web Design", "Agency Concept", "Design Systems"],
+    slideImg: "/gallery-images/RoshanStudiosBanner.mp4",
   },
   {
     slideTitle: "Nerv Studios",
@@ -29,7 +21,15 @@ const slides = [
       "A concept design studio focused on brand identity and visual systems. Strategic thinking translated into clean, systematic design solutions.",
     slideUrl: "/nerv-studios",
     slideTags: ["Branding", "Design Studio", "Concept Design", "Visual Identity"],
-    slideImg: "/gallery-images/NervStudios.png",
+    slideImg: "/gallery-images/NERVStudios.mp4",
+  },
+  {
+    slideTitle: "Helmet Shader",
+    slideDescription:
+      "An interactive 3D dithering shader with real-time adjustable effects. Computational graphics meets interactive design through WebGL and custom GLSL shaders.",
+    slideUrl: "/helmet-shader",
+    slideTags: ["WebGL", "Three.js", "Shader Programming", "3D Graphics"],
+    slideImg: "/gallery-images/HelmetShaderV2.mp4",
   },
 ];
 
