@@ -14,6 +14,7 @@ export default defineConfig({
         "nerv-studios": resolve(__dirname, "nerv-studios.html"),
         "roshan-studios": resolve(__dirname, "roshan-studios.html"),
         "helmet-shader": resolve(__dirname, "helmet-shader.html"),
+        "design-ledger": resolve(__dirname, "design-ledger.html"),
       },
     },
     assetsInclude: [

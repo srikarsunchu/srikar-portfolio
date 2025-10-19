@@ -9,6 +9,7 @@
     { "source": "/9m-holdings", "destination": "/9m-holdings.html" },
     { "source": "/roshan-studios", "destination": "/roshan-studios.html" },
     { "source": "/nerv-studios", "destination": "/nerv-studios.html" },
-    { "source": "/helmet-shader", "destination": "/helmet-shader.html" }
+    { "source": "/helmet-shader", "destination": "/helmet-shader.html" },
+    { "source": "/design-ledger", "destination": "/design-ledger.html" }
   ]
 }
