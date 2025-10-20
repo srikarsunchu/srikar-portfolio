@@ -1,482 +1,186 @@
 import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initAnimations } from "./anime";
 import slides from "./slides";
 
+gsap.registerPlugin(ScrollTrigger);
+
 document.addEventListener("DOMContentLoaded", () => {
-  const totalSlides = slides.length;
-  let currentSlide = 1;
+  initAnimations();
 
-  let isAnimating = false;
-  let scrollAllowed = false;
-  let lastScrollTime = 0;
-  let imagesPreloaded = false;
+  const workList = document.getElementById("work-list");
 
-  gsap.set(".slider", {
-    opacity: 0,
-  });
-
-  gsap.to(".slider", {
-    opacity: 1,
-    duration: 0.5,
-    ease: "power2.out",
-  });
-
-  function preloadImages() {
-    return new Promise((resolve) => {
-      let loadedCount = 0;
-      const totalImages = slides.length;
-
-      if (totalImages === 0) {
-        resolve();
-        return;
-      }
-
-      slides.forEach((slide) => {
-        const img = new Image();
-        img.onload = img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            imagesPreloaded = true;
-            resolve();
-          }
-        };
-        img.src = slide.slideImg;
-      });
-    });
+  // Check if media is a video
+  function isVideo(url) {
+    return url.match(/\.(mp4|webm|ogg)$/i);
   }
 
-  function createSlide(slideIndex) {
-    const slideData = slides[slideIndex - 1];
+  // Extract year from slide data (could add to slides.js later)
+  function getProjectYear(index) {
+    // You can customize this or add year data to slides.js
+    return index < 2 ? "2025" : "2024";
+  }
 
-    const slide = document.createElement("div");
-    slide.className = "slide";
+  // Create project item
+  function createProjectItem(project, index) {
+    const projectItem = document.createElement("article");
+    projectItem.className = "project-item";
 
-    const slideImg = document.createElement("div");
-    slideImg.className = "slide-img";
-    
-    // Check if it's a video file
-    const isVideo = slideData.slideImg.match(/\.(mp4|webm|ogg)$/i);
-    
-    if (isVideo) {
+    const projectLink = document.createElement("a");
+    projectLink.href = project.slideUrl;
+    projectLink.className = "project-link";
+
+    // Project Header (Index + Title + Year)
+    const header = document.createElement("div");
+    header.className = "project-header";
+
+    const indexEl = document.createElement("p");
+    indexEl.className = "project-index mono";
+    indexEl.textContent = `${String(index + 1).padStart(2, "0")}`;
+
+    const title = document.createElement("h2");
+    title.className = "project-title";
+    title.textContent = project.slideTitle;
+
+    const year = document.createElement("p");
+    year.className = "project-year mono";
+    year.textContent = getProjectYear(index);
+
+    header.appendChild(indexEl);
+    header.appendChild(title);
+    header.appendChild(year);
+
+    // Media Wrapper (Image/Video)
+    const mediaWrapper = document.createElement("div");
+    mediaWrapper.className = "project-media-wrapper";
+
+    const hasVideo = isVideo(project.slideImg);
+
+    if (hasVideo) {
+      // Background image (thumbnail - always visible)
+      const thumbnailImg = document.createElement("img");
+      thumbnailImg.className = "project-bg-image";
+      thumbnailImg.src = project.thumbnail || project.slideImg.replace(/\.(mp4|webm|ogg)$/i, ".png");
+      thumbnailImg.alt = project.slideTitle;
+      thumbnailImg.loading = "lazy";
+      mediaWrapper.appendChild(thumbnailImg);
+
+      // Overlay (blur effect)
+      const overlay = document.createElement("div");
+      overlay.className = "project-overlay";
+      mediaWrapper.appendChild(overlay);
+
+      // Video element (clip-path animation)
       const video = document.createElement("video");
-      video.src = slideData.slideImg;
-      video.autoplay = true;
-      video.loop = true;
+      video.className = "project-video";
+      video.src = project.slideImg;
       video.muted = true;
+      video.loop = true;
       video.playsInline = true;
-      video.style.width = "100%";
-      video.style.height = "100%";
-      video.style.objectFit = "cover";
-      video.style.opacity = "1";
-      slideImg.appendChild(video);
+      mediaWrapper.appendChild(video);
     } else {
+      // Just image (for projects without video)
       const img = document.createElement("img");
-      img.src = slideData.slideImg;
-      img.alt = "";
-
-      img.style.opacity = "0";
-
-      if (imagesPreloaded) {
-        img.style.opacity = "1";
-      } else {
-        img.onload = () => {
-          gsap.to(img, { opacity: 1, duration: 0.3 });
-        };
-      }
-
-      slideImg.appendChild(img);
+      img.className = "project-bg-image";
+      img.src = project.thumbnail || project.slideImg;
+      img.alt = project.slideTitle;
+      img.loading = "lazy";
+      mediaWrapper.appendChild(img);
     }
 
-    const slideHeader = document.createElement("div");
-    slideHeader.className = "slide-header";
+    // Project Meta (Description + Tags)
+    const meta = document.createElement("div");
+    meta.className = "project-meta";
 
-    const slideTitle = document.createElement("div");
-    slideTitle.className = "slide-title";
-    const h2 = document.createElement("h2");
-    h2.textContent = slideData.slideTitle;
-    slideTitle.appendChild(h2);
+    const description = document.createElement("p");
+    description.className = "project-description";
+    description.textContent = project.slideDescription;
 
-    const slideDescription = document.createElement("div");
-    slideDescription.className = "slide-description";
-    const p = document.createElement("p");
-    p.textContent = slideData.slideDescription;
-    slideDescription.appendChild(p);
+    const tags = document.createElement("div");
+    tags.className = "project-tags";
 
-    const slideLink = document.createElement("div");
-    slideLink.className = "slide-link";
-    const a = document.createElement("a");
-    a.href = slideData.slideUrl;
-    a.textContent = "View Project";
-    slideLink.appendChild(a);
-
-    slideHeader.appendChild(slideTitle);
-    slideHeader.appendChild(slideDescription);
-    slideHeader.appendChild(slideLink);
-
-    const slideInfo = document.createElement("div");
-    slideInfo.className = "slide-info";
-
-    const slideTags = document.createElement("div");
-    slideTags.className = "slide-tags";
-    const tagsLabel = document.createElement("p");
-    tagsLabel.className = "mono";
-    tagsLabel.textContent = "Tags";
-    slideTags.appendChild(tagsLabel);
-
-    slideData.slideTags.forEach((tag) => {
-      const tagP = document.createElement("p");
-      tagP.className = "mono";
-      tagP.textContent = tag;
-      slideTags.appendChild(tagP);
+    project.slideTags.forEach((tag) => {
+      const tagEl = document.createElement("span");
+      tagEl.className = "project-tag mono";
+      tagEl.textContent = tag;
+      tags.appendChild(tagEl);
     });
 
-    const slideIndexWrapper = document.createElement("div");
-    slideIndexWrapper.className = "slide-index-wrapper";
-    const slideIndexCopy = document.createElement("p");
-    slideIndexCopy.className = "mono";
-    slideIndexCopy.textContent = slideIndex.toString().padStart(2, "0");
-    const slideIndexSeparator = document.createElement("p");
-    slideIndexSeparator.className = "mono";
-    slideIndexSeparator.textContent = "/";
-    const slidesTotalCount = document.createElement("p");
-    slidesTotalCount.className = "mono";
-    slidesTotalCount.textContent = totalSlides.toString().padStart(2, "0");
+    meta.appendChild(description);
+    meta.appendChild(tags);
 
-    slideIndexWrapper.appendChild(slideIndexCopy);
-    slideIndexWrapper.appendChild(slideIndexSeparator);
-    slideIndexWrapper.appendChild(slidesTotalCount);
+    // Assemble project link
+    projectLink.appendChild(header);
+    projectLink.appendChild(mediaWrapper);
+    projectLink.appendChild(meta);
+    projectItem.appendChild(projectLink);
 
-    slideInfo.appendChild(slideTags);
-    slideInfo.appendChild(slideIndexWrapper);
-
-    slide.appendChild(slideImg);
-    slide.appendChild(slideHeader);
-    slide.appendChild(slideInfo);
-
-    return slide;
+    return projectItem;
   }
 
-  function splitText(slide) {
-    const slideHeader = slide.querySelector(".slide-title h2");
-    if (slideHeader) {
-      SplitText.create(slideHeader, {
-        type: "words",
-        wordsClass: "word",
-        mask: "words",
-      });
-    }
-
-    const slideContent = slide.querySelectorAll("p, a");
-    slideContent.forEach((element) => {
-      SplitText.create(element, {
-        type: "lines",
-        linesClass: "line",
-        mask: "lines",
-        reduceWhiteSpace: false,
-      });
+  // Render all projects
+  function renderProjects() {
+    workList.innerHTML = "";
+    slides.forEach((project, index) => {
+      const item = createProjectItem(project, index);
+      workList.appendChild(item);
     });
+
+    // Initialize video hover effects
+    initVideoHoverEffects();
+
+    // Initialize scroll animations
+    initScrollAnimations();
   }
 
-  function initializeFirstSlide() {
-    const slider = document.querySelector(".slider");
+  // Video hover effects
+  function initVideoHoverEffects() {
+    const projectLinks = document.querySelectorAll(".project-link");
 
-    const firstSlide = createSlide(1);
-    slider.appendChild(firstSlide);
+    projectLinks.forEach((link) => {
+      const video = link.querySelector(".project-video");
 
-    splitText(firstSlide);
+      if (!video) return;
 
-    const words = firstSlide.querySelectorAll(".word");
-    const lines = firstSlide.querySelectorAll(".line");
+      let playTimeout;
 
-    gsap.set([...words, ...lines], {
-      y: "100%",
-      force3D: true,
-    });
-
-    const tl = gsap.timeline();
-
-    const headerWords = firstSlide.querySelectorAll(".slide-title .word");
-    tl.to(
-      headerWords,
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
-        force3D: true,
-      },
-      0.5
-    );
-
-    const tagsLines = firstSlide.querySelectorAll(".slide-tags .line");
-    const indexLines = firstSlide.querySelectorAll(
-      ".slide-index-wrapper .line"
-    );
-    const descriptionLines = firstSlide.querySelectorAll(
-      ".slide-description .line"
-    );
-
-    tl.to(
-      tagsLines,
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
-      },
-      "-=0.75"
-    );
-
-    tl.to(
-      indexLines,
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
-      },
-      "<"
-    );
-
-    tl.to(
-      descriptionLines,
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
-      },
-      "<"
-    );
-
-    const linkLines = firstSlide.querySelectorAll(".slide-link .line");
-    tl.to(
-      linkLines,
-      {
-        y: "0%",
-        duration: 1,
-        ease: "power4.out",
-      },
-      "-=1"
-    );
-
-    setTimeout(() => {
-      scrollAllowed = true;
-      lastScrollTime = Date.now();
-    }, 1500);
-  }
-
-  function animateSlide(direction) {
-    if (isAnimating || !scrollAllowed) return;
-
-    isAnimating = true;
-    scrollAllowed = false;
-
-    const slider = document.querySelector(".slider");
-    const currentSlideElement = slider.querySelector(".slide");
-
-    if (direction === "down") {
-      currentSlide = currentSlide === totalSlides ? 1 : currentSlide + 1;
-    } else {
-      currentSlide = currentSlide === 1 ? totalSlides : currentSlide - 1;
-    }
-
-    const exitY = direction === "down" ? "-200vh" : "200vh";
-    const entryY = direction === "down" ? "100vh" : "-100vh";
-
-    gsap.to(currentSlideElement, {
-      scale: 0.25,
-      opacity: 0,
-      rotation: 30,
-      y: exitY,
-      duration: 2,
-      ease: "power4.inOut",
-      force3D: true,
-      onComplete: () => {
-        currentSlideElement.remove();
-      },
-    });
-
-    setTimeout(() => {
-      const newSlide = createSlide(currentSlide);
-      const newSlideImg = newSlide.querySelector(".slide-img img, .slide-img video");
-
-      gsap.set(newSlide, {
-        y: entryY,
-        force3D: true,
-      });
-
-      gsap.set(newSlideImg, {
-        scale: 2,
-        force3D: true,
-      });
-
-      slider.appendChild(newSlide);
-
-      splitText(newSlide);
-
-      const words = newSlide.querySelectorAll(".word");
-      const lines = newSlide.querySelectorAll(".line");
-
-      gsap.set([...words, ...lines], {
-        y: "100%",
-        force3D: true,
-      });
-
-      gsap.to(newSlide, {
-        y: 0,
-        duration: 1.5,
-        ease: "power4.out",
-        force3D: true,
-        onStart: () => {
-          gsap.to(newSlideImg, {
-            scale: 1,
-            duration: 1.5,
-            ease: "power4.out",
-            force3D: true,
+      link.addEventListener("mouseenter", () => {
+        clearTimeout(playTimeout);
+        playTimeout = setTimeout(() => {
+          video.play().catch((err) => {
+            console.log("Video play prevented:", err);
           });
-
-          const tl = gsap.timeline();
-
-          const headerWords = newSlide.querySelectorAll(".slide-title .word");
-          tl.to(
-            headerWords,
-            {
-              y: "0%",
-              duration: 1,
-              ease: "power4.out",
-              stagger: 0.1,
-              force3D: true,
-            },
-            0.75
-          );
-
-          const tagsLines = newSlide.querySelectorAll(".slide-tags .line");
-          const indexLines = newSlide.querySelectorAll(
-            ".slide-index-wrapper .line"
-          );
-          const descriptionLines = newSlide.querySelectorAll(
-            ".slide-description .line"
-          );
-
-          tl.to(
-            tagsLines,
-            {
-              y: "0%",
-              duration: 1,
-              ease: "power4.out",
-              stagger: 0.1,
-            },
-            "-=0.75"
-          );
-
-          tl.to(
-            indexLines,
-            {
-              y: "0%",
-              duration: 1,
-              ease: "power4.out",
-              stagger: 0.1,
-            },
-            "<"
-          );
-
-          tl.to(
-            descriptionLines,
-            {
-              y: "0%",
-              duration: 1,
-              ease: "power4.out",
-              stagger: 0.1,
-            },
-            "<"
-          );
-
-          const linkLines = newSlide.querySelectorAll(".slide-link .line");
-          tl.to(
-            linkLines,
-            {
-              y: "0%",
-              duration: 1,
-              ease: "power4.out",
-            },
-            "-=1"
-          );
-        },
-        onComplete: () => {
-          isAnimating = false;
-          setTimeout(() => {
-            scrollAllowed = true;
-            lastScrollTime = Date.now();
-          }, 100);
-        },
+        }, 100);
       });
-    }, 750);
-  }
 
-  function handleScroll(direction) {
-    const now = Date.now();
-
-    if (isAnimating || !scrollAllowed) return;
-    if (now - lastScrollTime < 1000) return;
-
-    lastScrollTime = now;
-    animateSlide(direction);
-  }
-
-  async function init() {
-    try {
-      await preloadImages();
-    } catch (error) {
-      console.warn("Image preloading failed", error);
-    }
-
-    initializeFirstSlide();
-
-    window.addEventListener(
-      "wheel",
-      (e) => {
-        e.preventDefault();
-        const direction = e.deltaY > 0 ? "down" : "up";
-        handleScroll(direction);
-      },
-      { passive: false }
-    );
-
-    let touchStartY = 0;
-    let isTouchActive = false;
-
-    window.addEventListener(
-      "touchstart",
-      (e) => {
-        touchStartY = e.touches[0].clientY;
-        isTouchActive = true;
-      },
-      { passive: false }
-    );
-
-    window.addEventListener(
-      "touchmove",
-      (e) => {
-        e.preventDefault();
-        if (!isTouchActive || isAnimating || !scrollAllowed) return;
-
-        const touchCurrentY = e.touches[0].clientY;
-        const difference = touchStartY - touchCurrentY;
-
-        if (Math.abs(difference) > 50) {
-          isTouchActive = false;
-          const direction = difference > 0 ? "down" : "up";
-          handleScroll(direction);
-        }
-      },
-      { passive: false }
-    );
-
-    window.addEventListener("touchend", () => {
-      isTouchActive = false;
+      link.addEventListener("mouseleave", () => {
+        clearTimeout(playTimeout);
+        video.pause();
+        video.currentTime = 0;
+      });
     });
   }
 
-  init();
+  // Scroll animations
+  function initScrollAnimations() {
+    const projectItems = document.querySelectorAll(".project-item");
+
+    projectItems.forEach((item, index) => {
+      gsap.to(item, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    });
+  }
+
+  // Initialize
+  renderProjects();
 });

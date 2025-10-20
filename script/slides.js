@@ -2,26 +2,20 @@ const slides = [
   {
     slideTitle: "9M Holdings Inc.",
     slideDescription:
-      "A product studio and holding company building internal tools, dashboards, and automations for B2B clients. Systematic design meets functional engineering.",
+      "Co-founded B2B SaaS automating client reporting for sales agencies. Built 6 dashboards, onboarded 10 clients, exited via multiple six-figure buyout.",
     slideUrl: "/9m-holdings",
-    slideTags: ["Product Studio", "B2B", "Internal Tools", "Dashboards"],
+    slideTags: ["B2B SaaS", "Automation", "Dashboards"],
     slideImg: "/gallery-images/9mSiteVideo.mp4",
+    thumbnail: "/gallery-images/9MThumbnail.png",
   },
   {
     slideTitle: "Roshan Studios",
     slideDescription:
-      "A concept website for a web development agency designing applications for next-generation startups. Design systems, interface design, and creative development with Swiss design principles.",
+      "A web development agency designing websites, branding, and landing pages for the next generation of startups.",
     slideUrl: "/roshan-studios",
-    slideTags: ["Next.js", "Web Design", "Agency Concept", "Design Systems"],
+    slideTags: ["Next.js", "Web Design", "Landing Pages", "Design Systems"],
     slideImg: "/gallery-images/RoshanStudiosBanner.mp4",
-  },
-  {
-    slideTitle: "Nerv Studios",
-    slideDescription:
-      "A concept design studio focused on brand identity and visual systems. Strategic thinking translated into clean, systematic design solutions.",
-    slideUrl: "/nerv-studios",
-    slideTags: ["Branding", "Design Studio", "Concept Design", "Visual Identity"],
-    slideImg: "/gallery-images/NERVStudios.mp4",
+    thumbnail: "/gallery-images/RoshanStudios.jpg",
   },
   {
     slideTitle: "Helmet Shader",
@@ -30,6 +24,25 @@ const slides = [
     slideUrl: "/helmet-shader",
     slideTags: ["WebGL", "Three.js", "Shader Programming", "3D Graphics"],
     slideImg: "/gallery-images/HelmetShaderV2.mp4",
+    thumbnail: "/work/helmetshaderimg.png",
+  },
+  {
+    slideTitle: "Interactive Resume",
+    slideDescription:
+      "Reinventing the resume as an interactive web experience.",
+    slideUrl: "/srikar-cv",
+    slideTags: ["Vue.js", "Web Design", "Swiss Design", "PDF Generation"],
+    slideImg: "/gallery-images/srikar-cv-hero.png",
+    thumbnail: "/gallery-images/srikar-cv-hero.png",
+  },
+  {
+    slideTitle: "Nerv Studios",
+    slideDescription:
+      "A concept design studio focused on brand identity and visual systems.",
+    slideUrl: "/nerv-studios",
+    slideTags: ["Branding", "Design Studio", "Showcase", "Motion Design"],
+    slideImg: "/gallery-images/NERVStudios.mp4",
+    thumbnail: "/gallery-images/NervStudios.png",
   },
 ];
 

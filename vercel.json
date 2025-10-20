@@ -12,6 +12,7 @@
     { "source": "/project", "destination": "/project.html" },
     { "source": "/contact", "destination": "/contact.html" },
     { "source": "/9m-holdings", "destination": "/9m-holdings.html" },
+    { "source": "/srikar-cv", "destination": "/srikar-cv.html" },
     { "source": "/roshan-studios", "destination": "/roshan-studios.html" },
     { "source": "/nerv-studios", "destination": "/nerv-studios.html" },
     { "source": "/helmet-shader", "destination": "/helmet-shader.html" },

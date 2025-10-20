@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/transition.css" />
     <link rel="stylesheet" href="/css/menu.css" />
     <link rel="stylesheet" href="/css/work.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
     <div class="transition">
@@ -50,10 +51,109 @@
       </div>
     </nav>
 
-    <div class="slider"></div>
+    <!-- Work Archive -->
+    <section class="work-archive">
+      <div class="work-archive-header">
+        <div class="container">
+          <div class="work-archive-top-bar">
+            <p class="mono"><span>&#9654;</span> Work Archive</p>
+            <p class="mono">/ 2024-2025</p>
+          </div>
+          <h1
+            data-animate-type="reveal"
+            data-animate-delay="0.25"
+          >
+            Selected Works
+          </h1>
+          <div class="work-archive-meta">
+            <p class="mono">5 Projects</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project List -->
+      <div class="work-list" id="work-list">
+        <!-- Projects will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-col">
+            <p class="mono"><span>&#9654;</span> Get in touch</p>
+            <div class="footer-email-container">
+              <form id="footer-email-form" class="footer-email-row">
+                <label for="footer-email" class="visually-hidden">Email address</label>
+                <input
+                  type="email"
+                  id="footer-email"
+                  name="email"
+                  placeholder="your@email.com"
+                  required
+                  aria-label="Enter your email address"
+                />
+                <button type="submit" aria-label="Submit email">
+                  <img src="/global/footer-right-arrow.png" alt="" />
+                </button>
+              </form>
+              <div class="footer-email-feedback" id="footer-email-feedback" role="status" aria-live="polite"></div>
+            </div>
+            <p class="footer-email-helper">
+              Stay updated on new projects and ideas. For project inquiries,
+              <a href="/contact" class="footer-contact-link">let's talk →</a>
+            </p>
+          </div>
+          <div class="footer-col"></div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-col">
+            <div class="footer-logo">
+              <img src="/global/logo.png" alt="" />
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-sub-col">
+              <p class="mono">Explore</p>
+              <div class="footer-links">
+                <p><a href="/">Index</a></p>
+                <p><a href="/about">About Me</a></p>
+                <p><a href="/work">Selected Works</a></p>
+                <p><a href="/contact">Contact</a></p>
+              </div>
+            </div>
+            <div class="footer-sub-col">
+              <p class="mono">Stalk Me</p>
+              <div class="footer-copy">
+                <p>San Francisco, CA</p>
+                <br />
+                <p><a href="https://www.instagram.com/sunchusrikar?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                <p><a href="https://www.linkedin.com/in/srikar-sunchu-651314220/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+                <p><a href="https://x.com/srikarsunchu" target="_blank" rel="noopener noreferrer">Twitter</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="footer-col">
+            <p class="mono">October 2025</p>
+          </div>
+          <div class="footer-col">
+            <div class="footer-sub-col">
+              <p class="mono">Designed By Sri</p>
+            </div>
+            <div class="footer-sub-col">
+              <p class="mono">&copy; 2025 All Rights Reserved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <script type="module" src="/script/lenis-scroll.js"></script>
     <script type="module" src="/script/transition.js"></script>
     <script type="module" src="/script/menu.js"></script>
     <script type="module" src="/script/work.js"></script>
+    <script type="module" src="/script/footer.js"></script>
   </body>
 </html>
