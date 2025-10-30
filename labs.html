@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Work | Srikar Sunchu | Design Engineer</title>
+    <title>Labs | Srikar Sunchu | Creative Experiments</title>
     <link rel="icon" href="/global/site-icon.png" />
     <link rel="stylesheet" href="/globals.css" />
     <link rel="stylesheet" href="/css/transition.css" />
     <link rel="stylesheet" href="/css/menu.css" />
-    <link rel="stylesheet" href="/css/work.css" />
+    <link rel="stylesheet" href="/css/labs.css" />
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
@@ -52,31 +52,55 @@
       </div>
     </nav>
 
-    <!-- Work Archive -->
-    <section class="work-archive">
-      <div class="work-archive-header">
+    <!-- Labs Archive -->
+    <section class="labs-archive">
+      <div class="labs-archive-header">
         <div class="container">
-          <div class="work-archive-top-bar">
-            <p class="mono"><span>&#9654;</span> Work Archive</p>
-            <p class="mono">/ 2024-2025</p>
+          <div class="labs-archive-top-bar">
+            <p class="mono"><span>&#9654;</span> Creative Lab</p>
+            <p class="mono">/ Experiments</p>
           </div>
           <h1
             data-animate-type="reveal"
             data-animate-delay="0.25"
           >
-            Selected Works
+            Labs
           </h1>
-          <div class="work-archive-meta">
-            <p class="mono">5 Projects</p>
+          <div class="labs-archive-meta">
+            <p class="mono" id="project-count">Loading projects...</p>
           </div>
         </div>
       </div>
 
-      <!-- Project List -->
-      <div class="work-list" id="work-list">
+      <!-- Swiss Grid -->
+      <div class="labs-grid" id="labs-grid">
         <!-- Projects will be dynamically inserted here -->
       </div>
     </section>
+
+    <!-- Modal for detailed views -->
+    <div class="labs-modal" id="labs-modal" aria-hidden="true">
+      <div class="modal-overlay" id="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="terminal-controls">
+            <button class="terminal-dot close-dot" id="modal-close" aria-label="Close"></button>
+            <span class="terminal-dot minimize-dot"></span>
+            <span class="terminal-dot maximize-dot"></span>
+          </div>
+          <p class="modal-title mono" id="modal-title"></p>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <!-- Dynamic content here -->
+        </div>
+        <div class="modal-footer" id="modal-footer">
+          <div class="modal-meta" id="modal-meta"></div>
+          <div class="modal-actions" id="modal-actions">
+            <!-- Links: View Live, Source Code, etc -->
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer>
       <div class="container">
@@ -155,7 +179,8 @@
     <script type="module" src="/script/lenis-scroll.js"></script>
     <script type="module" src="/script/transition.js"></script>
     <script type="module" src="/script/menu.js"></script>
-    <script type="module" src="/script/work.js"></script>
+    <script type="module" src="/script/labs.js"></script>
     <script type="module" src="/script/footer.js"></script>
   </body>
 </html>
+
