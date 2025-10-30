@@ -9,6 +9,7 @@
   "rewrites": [
     { "source": "/about", "destination": "/about.html" },
     { "source": "/work", "destination": "/work.html" },
+    { "source": "/labs", "destination": "/labs.html" },
     { "source": "/project", "destination": "/project.html" },
     { "source": "/contact", "destination": "/contact.html" },
     { "source": "/9m-holdings", "destination": "/9m-holdings.html" },
