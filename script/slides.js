@@ -1,8 +1,26 @@
 const slides = [
   {
+    slideTitle: "Baroque Museum",
+    slideDescription:
+      "A digital mini-museum exploring Baroque art masterpieces through an interactive carousel experience. Features nine paintings spanning two centuries of European art with smooth animations and detailed artwork pages.",
+    slideUrl: "/baroque-museum",
+    slideTags: ["Vite", "GSAP", "Lenis", "Web Design"],
+    slideImg: "/gallery-images/baroquepiecesvideo.mp4",
+    thumbnail: "/gallery-images/baroque-pieces.png",
+  },
+  {
+    slideTitle: "PointPal",
+    slideDescription:
+      "AI-powered travel platform that finds flights 40-90% cheaper using credit card points. Searches 200+ airlines to optimize point transfers and redemptions. 40,000+ flights booked.",
+    slideUrl: "/pointpal",
+    slideTags: ["Next.js", "TypeScript", "AI/ML", "Web Design"],
+    slideImg: "/gallery-images/pointpal-video.mp4",
+    thumbnail: "/gallery-images/pointpal-thumbnail.png",
+  },
+  {
     slideTitle: "9M Holdings Inc.",
     slideDescription:
-      "Co-founded B2B SaaS automating client reporting for sales agencies. Built 6 dashboards, onboarded 10 clients, exited via multiple six-figure buyout.",
+      "Co-founded B2B software development agency. Exited via two IP buyouts including a client reporting dashboard platform and CS2 skin trading marketplace API.",
     slideUrl: "/9m-holdings",
     slideTags: ["B2B SaaS", "Automation", "Dashboards"],
     slideImg: "/gallery-images/9mSiteVideo.mp4",
@@ -25,24 +43,6 @@ const slides = [
     slideTags: ["WebGL", "Three.js", "Shader Programming", "3D Graphics"],
     slideImg: "/gallery-images/HelmetShaderV2.mp4",
     thumbnail: "/work/helmetshaderimg.png",
-  },
-  {
-    slideTitle: "Interactive Resume",
-    slideDescription:
-      "Reinventing the resume as an interactive web experience.",
-    slideUrl: "/srikar-cv",
-    slideTags: ["Vue.js", "Web Design", "Swiss Design", "PDF Generation"],
-    slideImg: "/gallery-images/srikar-cv-hero.png",
-    thumbnail: "/gallery-images/srikar-cv-hero.png",
-  },
-  {
-    slideTitle: "Nerv Studios",
-    slideDescription:
-      "A concept design studio focused on brand identity and visual systems.",
-    slideUrl: "/nerv-studios",
-    slideTags: ["Branding", "Design Studio", "Showcase", "Motion Design"],
-    slideImg: "/gallery-images/NERVStudios.mp4",
-    thumbnail: "/gallery-images/NervStudios.png",
   },
 ];
 

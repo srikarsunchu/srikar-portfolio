@@ -14,9 +14,9 @@
     "description": "Amazing how one tiny region set the standard for international typography and design"
   },
   "building": {
-    "title": "Restaurant Management System",
-    "description": "Real-time POS, inventory, and analytics platform",
-    "stack": ["React", "Node.js", "PostgreSQL", "WebSocket"],
+    "title": "PointPal",
+    "description": "AI travel platform optimizing credit card points for cheaper flights",
+    "stack": ["React", "Next.js", "TypeScript", "AI/ML"],
     "status": "IN PRODUCTION"
   },
   "terminal": {
@@ -100,12 +100,12 @@
         "output": [
           "CURRENT TECH STACK:",
           "",
-          "> Building: Restaurant Management System",
+          "> Building: PointPal",
           "> Technologies:",
           "  • React - Frontend framework",
-          "  • Node.js - Backend runtime",
-          "  • PostgreSQL - Database",
-          "  • WebSocket - Real-time updates",
+          "  • Next.js - Full-stack framework",
+          "  • TypeScript - Type safety",
+          "  • AI/ML - Point optimization",
           "",
           "> Status: IN PRODUCTION"
         ]
@@ -144,10 +144,10 @@
         "output": [
           "projects/",
           "  9m-holdings/",
-          "  nerv-studios/",
+          "  pointpal/",
           "  roshan-studios/",
           "  helmet-shader/",
-          "  restaurant-pos/",
+          "  baroque-museum/",
           "",
           "See work.html for details ↗"
         ]

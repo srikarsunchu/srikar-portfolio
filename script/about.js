@@ -810,7 +810,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Run auto-demo
-    runAutoDemo();
+    // runAutoDemo();
   }
 
   // Fetch and populate Currently data
@@ -869,7 +869,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCurrentlyData();
 
-  // Currently section scroll animations - Enhanced
+  // Currently section scroll animations - Simple fade in
   ScrollTrigger.create({
     trigger: ".currently",
     start: "top 80%",
@@ -877,31 +877,21 @@ document.addEventListener("DOMContentLoaded", () => {
     onEnter: () => {
       const cards = gsap.utils.toArray(".currently-card");
       
-      cards.forEach((card, index) => {
-        // Alternate entrance directions
-        const fromLeft = index % 2 === 0;
-        
-        gsap.fromTo(card, 
-          {
-            x: fromLeft ? -60 : 60,
-            y: 40,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: "power2.out",
-          }
-        );
-      });
+      gsap.fromTo(cards, 
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        }
+      );
 
       // Animate header separately
       gsap.fromTo(".currently-header h2",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: "power2.out" }
       );
     },
   });
