@@ -15,7 +15,6 @@ export default defineConfig({
         contact: resolve(__dirname, "contact.html"),
         "9m-holdings": resolve(__dirname, "9m-holdings.html"),
         "srikar-cv": resolve(__dirname, "srikar-cv.html"),
-        "nerv-studios": resolve(__dirname, "nerv-studios.html"),
         "roshan-studios": resolve(__dirname, "roshan-studios.html"),
         "helmet-shader": resolve(__dirname, "helmet-shader.html"),
         "design-ledger": resolve(__dirname, "design-ledger.html"),
