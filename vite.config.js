@@ -18,6 +18,8 @@ export default defineConfig({
         "roshan-studios": resolve(__dirname, "roshan-studios.html"),
         "helmet-shader": resolve(__dirname, "helmet-shader.html"),
         "design-ledger": resolve(__dirname, "design-ledger.html"),
+        "pointpal": resolve(__dirname, "pointpal.html"),
+        "baroque-museum": resolve(__dirname, "baroque-museum.html"),
       },
     },
     assetsInclude: [
