@@ -22,20 +22,6 @@ export const labsProjects = [
   },
 
   {
-    id: "dithering-globe",
-    title: "Dithering Globe",
-    category: "code",
-    gridSize: "2x2",
-
-    mediaType: "component",
-    component: "DitheringSphere",
-
-    description: "Made in React",
-    tools: ["React", "WebGL", "GLSL"],
-    year: "2025",
-  },
-
-  {
     id: "school-of-athens",
     title: "The School of Athens",
     category: "art",
@@ -46,6 +32,20 @@ export const labsProjects = [
 
     description: "Made with Paper.design",
     tools: ["Paper.design", ],
+    year: "2025",
+  },
+
+  {
+    id: "dithering-globe",
+    title: "Dithering Globe",
+    category: "code",
+    gridSize: "2x2",
+
+    mediaType: "component",
+    component: "DitheringSphere",
+
+    description: "Made in React",
+    tools: ["React", "WebGL", "GLSL"],
     year: "2025",
   },
 
