@@ -17,7 +17,6 @@ export default defineConfig({
         "srikar-cv": resolve(__dirname, "srikar-cv.html"),
         "roshan-studios": resolve(__dirname, "roshan-studios.html"),
         "helmet-shader": resolve(__dirname, "helmet-shader.html"),
-        "design-ledger": resolve(__dirname, "design-ledger.html"),
         "pointpal": resolve(__dirname, "pointpal.html"),
         "baroque-museum": resolve(__dirname, "baroque-museum.html"),
       },
