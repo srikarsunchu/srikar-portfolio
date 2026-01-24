@@ -392,8 +392,14 @@
 }
 
 .anime-text-container .anime-text .word span.keyword.adobe::before,
-.anime-text-container .anime-text .word span.keyword.interfaces::before {
+.anime-text-container .anime-text .word span.keyword.interfaces::before,
+.anime-text-container .anime-text .word span.keyword.design::before,
+.anime-text-container .anime-text .word span.keyword.engineer::before {
   background-color: var(--accent-1);
+}
+
+.anime-text-container .anime-text .word span.keyword.filmmaker::before {
+  background-color: var(--accent-2);
 }
 
 .anime-text-container .anime-text .word span.keyword.films::before,

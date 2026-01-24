@@ -1,4 +1,9 @@
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -113,76 +118,161 @@ class FooterEmailForm {
 
   trackSubmission(email) {
     // Add your analytics tracking here
-    // Example: gtag('event', 'newsletter_signup', { email });
     console.log("Email submitted:", email);
   }
 }
 
-// Alternative: Use EmailJS instead of Formspree
-// Uncomment and configure if you prefer EmailJS
-/*
-class FooterEmailFormEmailJS {
+// Footer 3D Scene Class
+class Footer3DScene {
   constructor() {
-    this.form = document.getElementById("footer-email-form");
-    this.input = document.getElementById("footer-email");
-    this.button = this.form?.querySelector('button[type="submit"]');
-    this.feedback = document.getElementById("footer-email-feedback");
+    this.container = document.getElementById("footer-canvas");
+    this.footerContainer = document.querySelector(".footer-container");
     
-    // EmailJS configuration
-    this.PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-    this.SERVICE_ID = "YOUR_SERVICE_ID";
-    this.TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    if (!this.container || !this.footerContainer) return;
     
-    if (this.form) {
-      this.initEmailJS();
-      this.init();
-    }
+    this.mouse = { x: 0, y: 0 };
+    this.model = null;
+    this.modelBaseRotationX = 0.5;
+    this.modelBaseZ = -1;
+    
+    this.init();
   }
 
-  initEmailJS() {
-    // Load EmailJS script
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    script.onload = () => {
-      emailjs.init(this.PUBLIC_KEY);
-    };
-    document.head.appendChild(script);
+  init() {
+    // Scene setup
+    this.scene = new THREE.Scene();
+    
+    // Camera setup
+    this.camera = new THREE.PerspectiveCamera(
+      50,
+      this.container.offsetWidth / this.container.offsetHeight,
+      0.1,
+      1000
+    );
+    this.camera.position.set(0, 0, 0.75);
+
+    // Renderer setup
+    this.renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+    });
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.container.appendChild(this.renderer.domElement);
+
+    // Lighting
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+    directionalLight.position.set(1, 1, 0);
+    this.scene.add(directionalLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.scene.add(ambientLight);
+
+    // Load 3D model
+    this.loadModel();
+
+    // Setup scroll animation
+    this.setupScrollAnimation();
+
+    // Mouse tracking
+    this.setupMouseTracking();
+
+    // Handle resize
+    this.setupResize();
+
+    // Start animation loop
+    this.animate();
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
+  loadModel() {
+    const loader = new GLTFLoader();
+    
+    loader.load(
+      "/model.glb",
+      (gltf) => {
+        this.model = gltf.scene;
 
-    const email = this.input.value.trim();
+        // Center and scale the model
+        const box = new THREE.Box3().setFromObject(this.model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
 
-    if (!this.validateEmail(email)) {
-      this.showFeedback("Please enter a valid email address", "error");
-      return;
-    }
+        this.model.position.sub(center);
+        this.model.position.y = 0;
+        this.model.position.z = -1;
+        this.model.rotation.x = 0.5;
 
-    this.setLoadingState(true);
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        this.model.scale.setScalar(scale);
 
-    try {
-      await emailjs.send(this.SERVICE_ID, this.TEMPLATE_ID, {
-        user_email: email,
-        to_email: "your@email.com", // Your email
-      });
-
-      this.showFeedback("Thanks! You're on the list ✓", "success");
-      this.form.reset();
-    } catch (error) {
-      console.error("EmailJS error:", error);
-      this.showFeedback("Something went wrong. Please try again.", "error");
-    } finally {
-      this.setLoadingState(false);
-    }
+        this.scene.add(this.model);
+      },
+      (progress) => {
+        // Loading progress
+        const percent = (progress.loaded / progress.total) * 100;
+        console.log(`Loading 3D model: ${percent.toFixed(0)}%`);
+      },
+      (error) => {
+        console.warn("Could not load 3D model:", error);
+      }
+    );
   }
 
-  // ... rest of the methods same as above
+  setupScrollAnimation() {
+    ScrollTrigger.create({
+      trigger: "footer",
+      start: "top bottom",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const yValue = -35 * (1 - progress);
+        gsap.set(this.footerContainer, { y: `${yValue}%` });
+
+        // Update model position based on scroll
+        this.modelBaseZ = -1 * (1 - progress);
+        this.modelBaseRotationX = 0.5 * (1 - progress);
+      },
+    });
+  }
+
+  setupMouseTracking() {
+    window.addEventListener("mousemove", (e) => {
+      this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+  }
+
+  setupResize() {
+    window.addEventListener("resize", () => {
+      if (!this.container) return;
+      
+      this.camera.aspect = this.container.offsetWidth / this.container.offsetHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    });
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+
+    if (this.model) {
+      // Smooth mouse-following rotation
+      const targetRotationY = this.mouse.x * 0.3;
+      const targetRotationX = -this.mouse.y * 0.2 + this.modelBaseRotationX;
+
+      this.model.rotation.y += (targetRotationY - this.model.rotation.y) * 0.05;
+      this.model.rotation.x += (targetRotationX - this.model.rotation.x) * 0.05;
+      this.model.position.z += (this.modelBaseZ - this.model.position.z) * 0.05;
+    }
+
+    this.renderer.render(this.scene, this.camera);
+  }
 }
-*/
 
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   new FooterEmailForm();
+  new Footer3DScene();
 });
-

@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const wordHighlightBgColor = "191, 188, 180";
 
   const keywords = [
-    "addict",
+    "design",
+    "engineer",
+    "filmmaker",
     "Adobe",
     "films",
     "jazz",
