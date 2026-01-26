@@ -362,11 +362,14 @@ document.addEventListener("DOMContentLoaded", () => {
     scrub: 1,
   });
 
-  // Film gallery video interactions
+  // Film gallery video interactions (supports both native video and YouTube iframes)
   const filmCards = document.querySelectorAll(".film-card-video");
 
   filmCards.forEach((filmCard) => {
     const video = filmCard.querySelector("video");
+    
+    // Skip if no native video element (e.g., YouTube iframe)
+    if (!video) return;
 
     // Ensure autoplay works on load
     video.play().catch(() => {
