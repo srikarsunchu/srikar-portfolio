@@ -29,26 +29,64 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   animeTextParagraphs.forEach((paragraph) => {
+    // Extract links before processing
+    const links = {};
+    const linkElements = paragraph.querySelectorAll('a');
+    linkElements.forEach((link, index) => {
+      const placeholder = `__LINK_${index}__`;
+      links[placeholder] = link.cloneNode(true);
+      link.replaceWith(placeholder);
+    });
+
     const text = paragraph.textContent;
     const words = text.split(/\s+/);
     paragraph.innerHTML = "";
 
     words.forEach((word) => {
       if (word.trim()) {
-        const wordContainer = document.createElement("div");
-        wordContainer.className = "word";
+        // Check if this word contains a link placeholder (might have punctuation attached)
+        const linkMatch = word.match(/__LINK_(\d+)__/);
+        if (linkMatch) {
+          const placeholder = linkMatch[0];
+          const linkElement = links[placeholder];
+          const punctuation = word.replace(placeholder, ''); // Get any punctuation like comma
+          
+          const wordContainer = document.createElement("div");
+          wordContainer.className = "word";
+          
+          const linkText = linkElement.textContent;
+          const wordText = document.createElement("span");
+          wordText.appendChild(linkElement);
+          
+          // Add punctuation after link if present
+          if (punctuation) {
+            wordText.appendChild(document.createTextNode(punctuation));
+          }
+          
+          const normalizedWord = linkText.toLowerCase().replace(/[.,!?;:"]/g, "");
+          if (keywords.includes(normalizedWord)) {
+            wordContainer.classList.add("keyword-wrapper");
+            wordText.classList.add("keyword", normalizedWord);
+          }
+          
+          wordContainer.appendChild(wordText);
+          paragraph.appendChild(wordContainer);
+        } else {
+          const wordContainer = document.createElement("div");
+          wordContainer.className = "word";
 
-        const wordText = document.createElement("span");
-        wordText.textContent = word;
+          const wordText = document.createElement("span");
+          wordText.textContent = word;
 
-        const normalizedWord = word.toLowerCase().replace(/[.,!?;:"]/g, "");
-        if (keywords.includes(normalizedWord)) {
-          wordContainer.classList.add("keyword-wrapper");
-          wordText.classList.add("keyword", normalizedWord);
+          const normalizedWord = word.toLowerCase().replace(/[.,!?;:"]/g, "");
+          if (keywords.includes(normalizedWord)) {
+            wordContainer.classList.add("keyword-wrapper");
+            wordText.classList.add("keyword", normalizedWord);
+          }
+
+          wordContainer.appendChild(wordText);
+          paragraph.appendChild(wordContainer);
         }
-
-        wordContainer.appendChild(wordText);
-        paragraph.appendChild(wordContainer);
       }
     });
   });
