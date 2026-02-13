@@ -19,6 +19,7 @@ export default defineConfig({
         "helmet-shader": resolve(__dirname, "helmet-shader.html"),
         "pointpal": resolve(__dirname, "pointpal.html"),
         "baroque-museum": resolve(__dirname, "baroque-museum.html"),
+        "viral-engine": resolve(__dirname, "viral-engine.html"),
       },
     },
     assetsInclude: [

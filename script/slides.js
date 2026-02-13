@@ -18,6 +18,15 @@ const slides = [
     thumbnail: "/gallery-images/pointpal-thumbnail.png",
   },
   {
+    slideTitle: "Viral Engine",
+    slideDescription:
+      "Landing page for 24Labs' UGC creator management platform. Designed and built a conversion-focused page that translates a complex CRM dashboard into a clear product narrative for brands scaling user-generated content.",
+    slideUrl: "/viral-engine",
+    slideTags: ["React", "TypeScript", "Vite", "SaaS"],
+    slideImg: "/gallery-images/viral-engine-video.mp4",
+    thumbnail: "/gallery-images/viral-engine-thumbnail.png",
+  },
+  {
     slideTitle: "9M Holdings Inc.",
     slideDescription:
       "Co-founded B2B software development agency. Exited via two IP buyouts including a client reporting dashboard platform and CS2 skin trading marketplace API.",

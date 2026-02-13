@@ -122,13 +122,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 60% center;
   display: block;
-  transform: scale(1.05);
+  transform: scale(1.2);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-link:hover .project-bg-image {
-  transform: scale(1);
+  transform: scale(1.15);
 }
 
 /* Overlay (Blur effect on hover) */
