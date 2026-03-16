@@ -406,31 +406,15 @@
   text-decoration-color: var(--accent-2);
 }
 
-.anime-text-container .anime-text .word span.keyword.adobe::before,
-.anime-text-container .anime-text .word span.keyword.interfaces::before,
 .anime-text-container .anime-text .word span.keyword.design::before,
-.anime-text-container .anime-text .word span.keyword.engineer::before {
+.anime-text-container .anime-text .word span.keyword.engineer::before,
+.anime-text-container .anime-text .word span.keyword.interfaces::before {
   background-color: var(--accent-1);
 }
 
-.anime-text-container .anime-text .word span.keyword.filmmaker::before {
+.anime-text-container .anime-text .word span.keyword.storytelling::before,
+.anime-text-container .anime-text .word span.keyword.narrative::before {
   background-color: var(--accent-2);
-}
-
-.anime-text-container .anime-text .word span.keyword.films::before,
-.anime-text-container .anime-text .word span.keyword.jazz::before,
-.anime-text-container .anime-text .word span.keyword.espresso::before {
-  background-color: var(--accent-2);
-}
-
-.anime-text-container .anime-text .word span.keyword.addict::before,
-.anime-text-container .anime-text .word span.keyword.typography::before,
-.anime-text-container .anime-text .word span.keyword.invisible::before,
-.anime-text-container .anime-text .word span.keyword.honest::before,
-.anime-text-container .anime-text .word span.keyword.intention::before,
-.anime-text-container .anime-text .word span.keyword.craft::before,
-.anime-text-container .anime-text .word span.keyword.obsessing::before {
-  background-color: var(--accent-3);
 }
 
 .anime-text-container .anime-text .word,
@@ -713,11 +697,21 @@
 
 .currently-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  row-gap: 3rem;
+}
+
+.currently-card-building {
+  grid-column: span 4;
+}
+
+.currently-card-building + .currently-card {
+  grid-column: span 2;
 }
 
 .currently-card {
+  grid-column: span 3;
   position: relative;
   background: #101010;
   border: 1px dashed var(--base-secondary-fade);
@@ -1025,7 +1019,7 @@
 
 /* Bookshelf Card - Full Width */
 .currently-card-bookshelf {
-  grid-column: span 2;
+  grid-column: span 6;
   padding: 0;
   background: transparent;
   border: none;
@@ -1418,7 +1412,7 @@
 
 /* Terminal Hire Interface */
 .currently-card-terminal {
-  grid-column: span 2;
+  grid-column: span 6;
   padding: 0;
   background: transparent;
   border: none;
@@ -1811,6 +1805,7 @@
   }
 
   .currently-card {
+    grid-column: span 1;
     padding: 2rem;
   }
 

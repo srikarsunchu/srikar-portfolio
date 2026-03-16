@@ -126,21 +126,22 @@
         <div class="copy-container">
           <div class="anime-text">
             <p>
-              I'm Srikar—design engineer and filmmaker based 
-              in San Francisco. I'm the Media Director at Elide, an open-source 
-              polyglot runtime, where I lead creative direction, produce content, 
-              and shape how the product is seen. I also worked  with <a href="https://24labs.ai" target="_blank">24labs</a>, building interfaces and brands for early-stage 
-              software companies. Studied Graphic Design at San Jose State, 
-              interned in UX Research at Adobe, and somewhere in between fell 
-              in love with building interfaces that feel as good as they function.
+              Srikar is a design engineer and filmmaker based in San Francisco.
+              He is the Design/Media lead at
+              <a href="https://elide.dev" target="_blank">Elide</a>, where he
+              builds the visual and narrative layer around a next-generation
+              polyglot runtime.
             </p>
             <p>
-              When I'm not debugging React, or designing in figma, 
-              you'll find me making short films, hunting down obscure Japanese 
-              jazz records, or obsessing over typography that nobody asked me to 
-              fix. I believe great design is invisible and great code is honest. 
-              Everything here was built with intention, craft, and probably too 
-              much espresso.
+              Previously he was a design engineer at
+              <a href="https://24labs.ai" target="_blank">24labs</a>, helping
+              build and scale bootstrapped SaaS products to $200K MRR. He's also contracted with
+              design agencies on interfaces and interactive web experiences,
+              and produced films and edited video for YouTubers and streamers.
+            </p>
+            <p>
+              Somewhere along the way he fell in love with building interfaces
+              that feel as good as they function. He hasn't stopped since.
             </p>
           </div>
         </div>
@@ -197,95 +198,23 @@
       </div>
     </section>
 
-    <section class="about-film-gallery">
-      <div class="film-gallery-header">
-        <h3
-          data-animate-type="line-reveal"
-          data-animate-delay="0.2"
-          data-animate-on-scroll="true"
-        >
-          Moving Pictures
-        </h3>
-        <p class="mono">Selected film work</p>
-      </div>
-      <div class="home-spotlight-top-bar">
-        <div class="container">
-          <div class="symbols-container">
-            <div class="symbol">
-              <img src="/symbols/s1-dark.png" alt="Symbol" />
-            </div>
-            <div class="symbol">
-              <img src="/symbols/s2-dark.png" alt="Symbol" />
-            </div>
-            <div class="symbol">
-              <img src="/symbols/s3-dark.png" alt="Symbol" />
-            </div>
-          </div>
-          <div class="symbols-container">
-            <div class="symbol">
-              <img src="/symbols/s1-dark.png" alt="Symbol" />
-            </div>
-            <div class="symbol">
-              <img src="/symbols/s2-dark.png" alt="Symbol" />
-            </div>
-            <div class="symbol">
-              <img src="/symbols/s3-dark.png" alt="Symbol" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="home-spotlight-bottom-bar">
-        <div class="container">
-          <p
-            class="mono"
-            data-animate-type="scramble"
-            data-animate-delay="0.2"
-            data-animate-on-scroll="true"
-          >
-            <span>&#9654;</span> Film Archive
-          </p>
-          <p
-            class="mono"
-            data-animate-type="scramble"
-            data-animate-delay="0.25"
-            data-animate-on-scroll="true"
-          >
-            / Director's Cut
-          </p>
-        </div>
-      </div>
-      <div class="film-gallery-container">
-        <div class="film-card">
-          <div class="film-card-video">
-            <iframe 
-              src="https://www.youtube.com/embed/vPAz8BNdu1A?rel=0&modestbranding=1"
-              title="Film 1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-        <div class="film-card">
-          <div class="film-card-video">
-            <iframe 
-              src="https://www.youtube.com/embed/5i76l4VLUJg?rel=0&modestbranding=1"
-              title="Film 2"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <section class="currently">
       <div class="container">
         <div class="currently-header">
-          <h2 class="mono"><span>&#9654;</span> CURRENTLY_EXECUTING</h2>
+          <h2 class="mono"><span>&#9654;</span> CURRENTLY</h2>
         </div>
         <div class="currently-grid">
+          <!-- Building -->
+          <div class="currently-card currently-card-building">
+            <p class="currently-label mono">BUILDING:</p>
+            <h3 class="currently-title" id="building-title">Loading...</h3>
+            <p class="currently-desc" id="building-desc"></p>
+            <div class="tech-stack" id="building-stack"></div>
+            <div class="status-badge" id="building-status"></div>
+          </div>
+
           <!-- Learning -->
           <div class="currently-card">
             <p class="currently-label mono">LEARNING:</p>
@@ -310,15 +239,6 @@
             <p class="currently-label mono">OBSESSING OVER:</p>
             <h3 class="currently-title" id="obsessing-title">Loading...</h3>
             <p class="currently-desc" id="obsessing-desc"></p>
-          </div>
-
-          <!-- Building -->
-          <div class="currently-card currently-card-building">
-            <p class="currently-label mono">BUILDING:</p>
-            <h3 class="currently-title" id="building-title">Loading...</h3>
-            <p class="currently-desc" id="building-desc"></p>
-            <div class="tech-stack" id="building-stack"></div>
-            <div class="status-badge" id="building-status"></div>
           </div>
 
           <!-- Terminal Interface -->

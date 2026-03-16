@@ -1,8 +1,8 @@
 {
   "learning": {
-    "title": "WebGPU",
-    "description": "Building a browser-based game with GPU-accelerated rendering",
-    "progress": 63
+    "title": "Live Podcast Production",
+    "description": "Live audio/video production for podcasts and streams",
+    "progress": 75
   },
   "listening": {
     "title": "Lady Brown",
@@ -10,8 +10,8 @@
     "spotifyUrl": "https://open.spotify.com/track/0JL9TZip7mL7iwC5EOkALS"
   },
   "obsessing": {
-    "title": "Swiss Design and the Bauhaus Movement",
-    "description": "Amazing how one tiny region set the standard for international typography and design"
+    "title": "Color Theory",
+    "description": "Studying how color drives decisions in interfaces and film"
   },
   "building": {
     "title": "PointPal",

@@ -14,18 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const keywords = [
     "design",
     "engineer",
-    "filmmaker",
-    "Adobe",
-    "films",
-    "jazz",
-    "typography",
-    "invisible",
-    "honest",
-    "intention",
-    "craft",
-    "espresso",
+    "storytelling",
     "interfaces",
-    "obsessing",
+    "narrative",
   ];
 
   animeTextParagraphs.forEach((paragraph) => {
