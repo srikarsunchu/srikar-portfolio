@@ -19,6 +19,7 @@
     { "source": "/design-ledger", "destination": "/design-ledger.html" },
     { "source": "/pointpal", "destination": "/pointpal.html" },
     { "source": "/baroque-museum", "destination": "/baroque-museum.html" },
-    { "source": "/viral-engine", "destination": "/viral-engine.html" }
+    { "source": "/viral-engine", "destination": "/viral-engine.html" },
+    { "source": "/elide-dev", "destination": "/elide-dev.html" }
   ]
 }

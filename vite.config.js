@@ -2,8 +2,45 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 
+/** Match Vercel rewrites so /work, /elide-dev, etc. work with `vite` (not only .html URLs). */
+function extensionlessHtmlRoutes() {
+  const map = new Map([
+    ["/about", "/about.html"],
+    ["/work", "/work.html"],
+    ["/labs", "/labs.html"],
+    ["/project", "/project.html"],
+    ["/contact", "/contact.html"],
+    ["/9m-holdings", "/9m-holdings.html"],
+    ["/srikar-cv", "/srikar-cv.html"],
+    ["/roshan-studios", "/roshan-studios.html"],
+    ["/helmet-shader", "/helmet-shader.html"],
+    ["/design-ledger", "/design-ledger.html"],
+    ["/pointpal", "/pointpal.html"],
+    ["/baroque-museum", "/baroque-museum.html"],
+    ["/viral-engine", "/viral-engine.html"],
+    ["/elide-dev", "/elide-dev.html"],
+  ]);
+  return {
+    name: "extensionless-html-routes",
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const raw = req.url;
+        if (!raw) return next();
+        const pathOnly = raw.split("?")[0];
+        if (pathOnly.includes(".")) return next();
+        const dest = map.get(pathOnly);
+        if (dest) {
+          const qs = raw.includes("?") ? raw.slice(raw.indexOf("?")) : "";
+          req.url = dest + qs;
+        }
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), extensionlessHtmlRoutes()],
   build: {
     rollupOptions: {
       input: {
@@ -20,6 +57,7 @@ export default defineConfig({
         "pointpal": resolve(__dirname, "pointpal.html"),
         "baroque-museum": resolve(__dirname, "baroque-museum.html"),
         "viral-engine": resolve(__dirname, "viral-engine.html"),
+        "elide-dev": resolve(__dirname, "elide-dev.html"),
       },
     },
     assetsInclude: [

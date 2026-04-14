@@ -5,6 +5,32 @@
 
 export const labsProjects = [
   {
+    id: "baroque-museum",
+    title: "Baroque Museum",
+    category: "code",
+    gridSize: "2x2",
+    mediaType: "video",
+    media: "/gallery-images/baroquepiecesvideo.mp4",
+    description: "A digital mini-museum exploring Baroque art masterpieces through an interactive carousel experience.",
+    tools: ["Vite", "GSAP", "Lenis"],
+    year: "2025",
+    externalLink: "/baroque-museum",
+  },
+
+  {
+    id: "helmet-shader",
+    title: "Helmet Shader",
+    category: "code",
+    gridSize: "2x2",
+    mediaType: "video",
+    media: "/gallery-images/HelmetShaderV2.mp4",
+    description: "An interactive 3D dithering shader with real-time adjustable effects via WebGL and custom GLSL shaders.",
+    tools: ["WebGL", "Three.js", "GLSL"],
+    year: "2024",
+    externalLink: "/helmet-shader",
+  },
+
+  {
     id: "gradient-cards",
     title: "Gradient Cards",
     category: "code",

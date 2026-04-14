@@ -1,15 +1,20 @@
+import elideCardVideo from "../assets/elide.mp4";
+import elideCardImage from "../assets/elide1.jpg";
+
 const slides = [
   {
-    slideTitle: "Baroque Museum",
+    slideTitle: "Elide",
+    year: "2026",
     slideDescription:
-      "A digital mini-museum exploring Baroque art masterpieces through an interactive carousel experience. Features nine paintings spanning two centuries of European art with smooth animations and detailed artwork pages.",
-    slideUrl: "/baroque-museum",
-    slideTags: ["Vite", "GSAP", "Lenis", "Web Design"],
-    slideImg: "/gallery-images/baroquepiecesvideo.mp4",
-    thumbnail: "/gallery-images/baroque-pieces.png",
+      "Marketing site for Elide — a polyglot runtime and build toolchain. One binary, ~5ms cold starts, 100x faster than Next.js. Hand-rolled with Bun, LightningCSS, and Cloudflare Workers. Dark-first design system, auto-cycling code demos, animated benchmarks, and i18n for 8 languages.",
+    slideUrl: "/elide-dev",
+    slideTags: ["Web Design", "Marketing", "Developer Tools", "Performance"],
+    slideImg: elideCardVideo,
+    thumbnail: elideCardImage,
   },
   {
     slideTitle: "PointPal",
+    year: "2025",
     slideDescription:
       "AI-powered travel platform that finds flights 40-90% cheaper using credit card points. Searches 200+ airlines to optimize point transfers and redemptions. 40,000+ flights booked.",
     slideUrl: "/pointpal",
@@ -19,6 +24,7 @@ const slides = [
   },
   {
     slideTitle: "Viral Engine",
+    year: "2025",
     slideDescription:
       "Landing page for 24Labs' UGC creator management platform. Designed and built a conversion-focused page that translates a complex CRM dashboard into a clear product narrative for brands scaling user-generated content.",
     slideUrl: "/viral-engine",
@@ -28,6 +34,7 @@ const slides = [
   },
   {
     slideTitle: "9M Holdings Inc.",
+    year: "2024",
     slideDescription:
       "Co-founded B2B software development agency. Exited via two IP buyouts including a client reporting dashboard platform and CS2 skin trading marketplace API.",
     slideUrl: "/9m-holdings",
@@ -37,21 +44,13 @@ const slides = [
   },
   {
     slideTitle: "Roshan Studios",
+    year: "2024",
     slideDescription:
       "A web development agency designing websites, branding, and landing pages for the next generation of startups.",
     slideUrl: "/roshan-studios",
     slideTags: ["Next.js", "Web Design", "Landing Pages", "Design Systems"],
     slideImg: "/gallery-images/RoshanStudiosBanner.mp4",
     thumbnail: "/gallery-images/RoshanStudios.jpg",
-  },
-  {
-    slideTitle: "Helmet Shader",
-    slideDescription:
-      "An interactive 3D dithering shader with real-time adjustable effects. Computational graphics meets interactive design through WebGL and custom GLSL shaders.",
-    slideUrl: "/helmet-shader",
-    slideTags: ["WebGL", "Three.js", "Shader Programming", "3D Graphics"],
-    slideImg: "/gallery-images/HelmetShaderV2.mp4",
-    thumbnail: "/work/helmetshaderimg.png",
   },
 ];
 

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const year = document.createElement("p");
     year.className = "project-year mono";
-    year.textContent = getProjectYear(index);
+    year.textContent = project.year ?? getProjectYear(index);
 
     header.appendChild(indexEl);
     header.appendChild(title);
