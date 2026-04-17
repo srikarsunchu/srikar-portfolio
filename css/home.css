@@ -44,7 +44,10 @@
   width: 90%;
   margin: 0 auto;
   text-align: center;
-  padding-top: 15svh;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero .hero-content .hero-header h1 {
