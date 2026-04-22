@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "-=1.3"
     )
     .from(".about-hero-plate figcaption", { y: 10, opacity: 0, duration: 0.5 }, "-=0.3")
-    .from(".about-hero-footrule", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
+    .from([".about-hero-headrule", ".about-hero-footrule"], { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
 
   const animeTextParagraphs = document.querySelectorAll(".anime-text p");
   const wordHighlightBgColor = "191, 188, 180";
