@@ -86,14 +86,11 @@
   display: flex;
   flex-direction: column;
   justify-self: end;
-  width: min(100%, 520px);
-  max-width: 520px;
 }
 
 .about-hero-plate-frame {
-  aspect-ratio: 3 / 4;
-  height: min(62svh, 680px);
-  max-width: 100%;
+  width: min(380px, 36vw);
+  height: min(60svh, 520px);
   border: 1px solid var(--base-300);
   padding: 0.75rem;
   background: var(--base-200);
