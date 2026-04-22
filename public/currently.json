@@ -230,6 +230,36 @@
       "author": "Rumi",
       "coverUrl": "/gallery-images/masnavi.jpg",
       "description": "A foundational Sufi poem on love, ego, and spiritual awakening, told through layered stories and parables."
+    },
+    {
+      "title": "Ender's Game",
+      "author": "Orson Scott Card",
+      "coverUrl": "/gallery-images/endersgame.jpg",
+      "description": "A child soldier trained through simulations to fight humanity's war—only to discover the game was always real."
+    },
+    {
+      "title": "Atlas Shrugged",
+      "author": "Ayn Rand",
+      "coverUrl": "/gallery-images/atlas.jpg",
+      "description": "Rand's monument to rational self-interest: a world collapsing as its creators go on strike."
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "coverUrl": "/gallery-images/1984.jpeg",
+      "description": "The definitive text on surveillance, doublethink, and the mechanics of totalitarian control."
+    },
+    {
+      "title": "The Prophet",
+      "author": "Kahlil Gibran",
+      "coverUrl": "/gallery-images/theprophet.jpg",
+      "description": "Prose poems on love, work, freedom, and death—spare, luminous, and quietly devastating."
+    },
+    {
+      "title": "The Romanovs",
+      "author": "Simon Sebag Montefiore",
+      "coverUrl": "/gallery-images/tsar.jpg",
+      "description": "Three centuries of autocracy, paranoia, and excess through the rise and fall of Russia's imperial dynasty."
     }
   ]
 }

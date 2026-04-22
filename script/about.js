@@ -3,8 +3,45 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { initAnimations } from "./anime";
 
+function scrambleOnHover(elements) {
+  const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+
+  elements.forEach((el) => {
+    const originalText = el.getAttribute("aria-label") || el.textContent.trim();
+    const chars = originalText.split("");
+    let isScrambling = false;
+
+    el.addEventListener("mouseenter", () => {
+      if (isScrambling) return;
+      isScrambling = true;
+
+      let iteration = 0;
+
+      const interval = setInterval(() => {
+        el.textContent = chars
+          .map((char, i) => {
+            if (char === " ") return char;
+            if (i < Math.floor(iteration)) return chars[i];
+            return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          })
+          .join("");
+
+        iteration += 1.2;
+
+        if (iteration >= chars.length) {
+          clearInterval(interval);
+          el.textContent = originalText;
+          isScrambling = false;
+        }
+      }, 45);
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  scrambleOnHover(document.querySelectorAll(".home-spotlight-bottom-bar p.mono .scramble-text"));
 
   initAnimations();
 
@@ -487,6 +524,47 @@ document.addEventListener("DOMContentLoaded", () => {
         updateDescription(defaultIndex);
       }
     }, 100);
+
+    // ── Scroll-driven horizontal pan ──────────────────────────────────
+    if (window.innerWidth >= 768) {
+      // Wait one frame so DOM has laid out and scrollWidth is accurate
+      requestAnimationFrame(() => {
+        const booksWrapper   = document.querySelector(".books-wrapper");
+        const bookShadow     = document.querySelector(".book-shadow");
+        const container      = document.querySelector(".bookshelf-container");
+        if (!booksWrapper || !container) return;
+
+        const containerWidth = container.offsetWidth;
+        const totalWidth     = booksWrapper.scrollWidth;
+
+        // Start: books left-aligned; End: last book at right edge
+        const startX = 0;
+        const endX   = containerWidth - totalWidth;
+
+        gsap.set([booksWrapper, bookShadow], { x: startX });
+
+        const pinEnd = `+=${window.innerHeight * 2.5}`;
+
+        ScrollTrigger.create({
+          trigger: ".currently",
+          start: "top top",
+          end: pinEnd,
+          pin: true,
+          pinSpacing: true,
+        });
+
+        gsap.to([booksWrapper, bookShadow], {
+          x: endX,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".currently",
+            start: "top top",
+            end: pinEnd,
+            scrub: 3,
+          },
+        });
+      });
+    }
   }
 
   // Fetch and populate Currently data
