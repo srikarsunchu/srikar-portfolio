@@ -3,8 +3,46 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { initAnimations } from "./anime";
 
+function scrambleOnHover(elements) {
+  const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+
+  elements.forEach((el) => {
+    const originalText = el.getAttribute("aria-label") || el.textContent.trim();
+    const chars = originalText.split("");
+    let isScrambling = false;
+
+    el.addEventListener("mouseenter", () => {
+      if (isScrambling) return;
+      isScrambling = true;
+
+      let iteration = 0;
+
+      const interval = setInterval(() => {
+        el.textContent = chars
+          .map((char, i) => {
+            if (char === " ") return char;
+            if (i < Math.floor(iteration)) return chars[i];
+            return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          })
+          .join("");
+
+        iteration += 1.2;
+
+        if (iteration >= chars.length) {
+          clearInterval(interval);
+          el.textContent = originalText;
+          isScrambling = false;
+        }
+      }, 45);
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initAnimations();
+
+  // Hover scramble on hero footer links and services bottom bar label
+  scrambleOnHover(document.querySelectorAll(".hero-footer-tags a.mono, .home-services-bottom-bar p.mono"));
 
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
