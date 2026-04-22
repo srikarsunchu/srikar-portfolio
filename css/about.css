@@ -74,7 +74,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: clamp(1.25rem, 1.6vw, 1.75rem);
-  line-height: 1.25;
+  line-height: 1.45;
   max-width: 40ch;
   margin-top: 2.5rem;
   color: var(--base-secondary-dark);
@@ -86,16 +86,57 @@
   display: flex;
   flex-direction: column;
   justify-self: end;
+  position: relative;
+  --frame-height: min(60svh, 520px);
 }
 
 .about-hero-plate-frame {
-  width: min(380px, 36vw);
-  height: min(60svh, 520px);
+  width: clamp(320px, 34vw, 520px);
+  height: var(--frame-height);
   border: 1px solid var(--base-300);
   padding: 0.75rem;
   background: var(--base-200);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.about-hero-plate-frame::before,
+.about-hero-plate-frame::after,
+.about-hero-plate::before,
+.about-hero-plate::after {
+  content: "+";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--base-300);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.about-hero-plate-frame::before {
+  top: -7px;
+  left: -7px;
+}
+
+.about-hero-plate-frame::after {
+  top: -7px;
+  right: -7px;
+}
+
+.about-hero-plate::before {
+  top: calc(var(--frame-height) - 7px);
+  left: -7px;
+}
+
+.about-hero-plate::after {
+  top: calc(var(--frame-height) - 7px);
+  right: -7px;
 }
 
 .about-hero-plate-frame img {
@@ -112,6 +153,17 @@
   font-weight: 500;
   text-transform: uppercase;
   color: var(--base-secondary-dark);
+}
+
+/* --- top rule + meta --- */
+.about-hero-headrule {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
+
+.about-hero-headrule .about-hero-divider {
+  margin: 0;
 }
 
 /* --- bottom rule + meta --- */
@@ -299,6 +351,10 @@
   color: var(--base-100);
 }
 
+.pin-spacer:has(> .currently) {
+  background-color: var(--base-300) !important;
+}
+
 .currently::before {
   content: "";
   position: absolute;
@@ -324,7 +380,7 @@
 .currently-editorial-top {
   display: flex;
   flex-direction: column;
-  padding: 0 0 4rem;
+  padding: 0 0 2rem;
 }
 
 .currently-reading-topbar {
@@ -379,7 +435,7 @@
 .bookshelf-container {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 280px;
   background: var(--base-300);
   overflow: hidden;
 }
@@ -398,7 +454,7 @@
 /* Shelf Wrapper */
 .shelf-wrapper {
   position: absolute;
-  bottom: 150px;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 220px;
@@ -598,14 +654,12 @@
 
 /* Book Descriptions */
 .book-descriptions {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   width: 90%;
   max-width: 700px;
-  z-index: 5;
   height: 100px;
+  margin-top: 16px;
+  z-index: 5;
 }
 
 .book-description {
