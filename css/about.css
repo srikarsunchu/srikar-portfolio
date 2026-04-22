@@ -619,6 +619,7 @@
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--base-100);
+  text-align: left;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
