@@ -126,6 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
       workList.appendChild(item);
     });
 
+    // Update project count in header
+    const metaEl = document.querySelector(".work-archive-meta p");
+    if (metaEl) {
+      metaEl.innerHTML = `<span>&#9654;</span> ${slides.length} Projects`;
+    }
+
     // Initialize video hover effects
     initVideoHoverEffects();
 

@@ -9,6 +9,33 @@
   min-height: 100vh;
 }
 
+/* Continuous column — rails run full page height */
+.work-column {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+.work-column::before,
+.work-column::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-1)  0%,
+    var(--accent-2) 33%,
+    var(--accent-3) 66%,
+    var(--accent-1) 100%
+  );
+}
+
+.work-column::before { left: 0; }
+.work-column::after  { right: 0; }
+
 .work-archive-header {
   padding: 8rem 0 4rem;
   border-bottom: 1px dashed var(--base-300);
@@ -19,20 +46,19 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--base-300);
 }
 
 .work-archive-header h1 {
   font-size: clamp(4rem, 12vw, 12rem);
   line-height: 0.9;
+  letter-spacing: -0.02em;
   margin-bottom: 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .work-archive-meta {
-  text-align: center;
-  opacity: 0.6;
+  text-align: left;
+  letter-spacing: 0.12em;
 }
 
 /* ========================================
@@ -40,9 +66,7 @@
    ======================================== */
 
 .work-list {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  /* sizing now inherited from .work-column */
 }
 
 /* Individual Project Item */
@@ -77,6 +101,7 @@
 .project-index {
   font-size: 0.875rem;
   color: var(--base-secondary-dark);
+  letter-spacing: 0.12em;
   white-space: nowrap;
   min-width: 3rem;
 }
@@ -84,6 +109,7 @@
 .project-title {
   font-size: clamp(2rem, 4vw, 4rem);
   line-height: 1;
+  letter-spacing: -0.02em;
   margin: 0;
   flex: 1;
   transition: opacity 0.3s ease;
@@ -96,6 +122,7 @@
 .project-year {
   font-size: 0.875rem;
   color: var(--base-secondary-dark);
+  letter-spacing: 0.12em;
   white-space: nowrap;
 }
 
@@ -110,8 +137,7 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--base-300);
-  border: 1px dashed rgba(249, 244, 235, 0.2);
-  border-radius: 0;
+  border: 1px dashed var(--border-light-dashed);
   margin-bottom: 2rem;
 }
 
@@ -124,19 +150,19 @@
   object-fit: cover;
   object-position: 60% center;
   display: block;
-  transform: scale(1.2);
+  transform: scale(1);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-link:hover .project-bg-image {
-  transform: scale(1.15);
+  transform: scale(1.05);
 }
 
 /* Overlay (Blur effect on hover) */
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--overlay-dark);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
@@ -193,8 +219,7 @@
   flex: 2;
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--base-300);
-  opacity: 0.75;
+  color: var(--base-secondary-dark);
   max-width: 600px;
 }
 
@@ -212,7 +237,7 @@
   border: 1px dashed var(--base-300);
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   transition: all 0.3s ease;
 }
 
@@ -222,14 +247,33 @@
   border-style: solid;
 }
 
+/* Accent tag highlight on hover, cycling accents */
+.project-item:nth-child(3n + 1) .project-link:hover .project-tag {
+  background-color: var(--accent-1);
+  color: var(--base-300);
+  border-color: var(--accent-1);
+}
+
+.project-item:nth-child(3n + 2) .project-link:hover .project-tag {
+  background-color: var(--accent-2);
+  color: var(--base-300);
+  border-color: var(--accent-2);
+}
+
+.project-item:nth-child(3n) .project-link:hover .project-tag {
+  background-color: var(--accent-3);
+  color: var(--base-300);
+  border-color: var(--accent-3);
+}
+
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */
 
 /* Large Desktop */
 @media (min-width: 1400px) {
-  .work-list {
-    padding: 0 4rem;
+  .work-column {
+    padding: 0 6rem;
   }
 }
 
@@ -286,8 +330,8 @@
     gap: 0.5rem;
   }
 
-  .work-list {
-    padding: 0 1.5rem;
+  .work-column {
+    padding: 0 2rem;
   }
 
   .project-item {

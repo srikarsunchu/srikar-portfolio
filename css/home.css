@@ -5,6 +5,20 @@
   overflow: hidden;
 }
 
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  opacity: 0.85;
+}
+
 /* Profile Picture - Swiss Grid Aligned */
 .hero-profile-picture {
   position: absolute;
@@ -33,6 +47,8 @@
 }
 
 .hero .hero-content {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: flex;
@@ -52,6 +68,7 @@
 
 .hero .hero-content .hero-header h1 {
   font-size: 16vw;
+  letter-spacing: -0.02em;
 }
 
 .hero .hero-content .hero-footer {
@@ -79,6 +96,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  z-index: 2;
 }
 
 .hero .hero-cards .card {
@@ -238,10 +256,20 @@
 
 .home-services-header {
   position: relative;
+  z-index: 10;
   width: 100%;
   text-align: center;
   transform: translateY(300%);
   will-change: transform;
+}
+
+.home-services-title {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .home-services .cards {
@@ -574,6 +602,11 @@
   will-change: transform, opacity;
 }
 
+.home-featured-work h2 {
+  font-size: clamp(5rem, 11vw, 13rem);
+  letter-spacing: -0.02em;
+}
+
 /* Projects Container */
 /* Projects Grid (2 columns) */
 .home-featured-work .featured-projects-grid {
@@ -690,7 +723,7 @@
 
 .home-featured-work .featured-project-title {
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 900;
   color: var(--base-100);
   margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
@@ -897,7 +930,9 @@
   display: block;
   margin-bottom: 0.5rem;
   color: rgba(249, 244, 235, 0.8);
+  font-family: "DM Mono", monospace;
   font-size: 0.8rem;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1065,6 +1100,8 @@
 }
 
 .outro .container {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1073,6 +1110,8 @@
 .outro h3 {
   width: 50%;
   text-align: center;
+  font-size: clamp(4rem, 8vw, 10rem);
+  letter-spacing: -0.02em;
 }
 
 .outro .outro-strips {
@@ -1166,6 +1205,7 @@
 
   .hero .hero-content .hero-header h1 {
     font-size: 20vw;
+    letter-spacing: -0.02em;
   }
 
   .hero .hero-cards {

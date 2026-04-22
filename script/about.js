@@ -8,6 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initAnimations();
 
+  // Broadsheet editorial hero entrance
+  const heroTl = gsap.timeline({ defaults: { ease: "expo.out" } });
+  heroTl
+    .from(".about-hero-eyebrow", { y: 20, opacity: 0, duration: 0.6 })
+    .from(".about-hero-name span", { y: 80, opacity: 0, duration: 0.9, stagger: 0.08 }, "-=0.3")
+    .from(".about-hero-role", { y: 20, opacity: 0, duration: 0.6 }, "-=0.5")
+    .from(".about-hero-quote", { y: 20, opacity: 0, duration: 0.7 }, "-=0.4")
+    .fromTo(
+      ".about-hero-plate-frame img",
+      { scale: 1.08, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1.2 },
+      "-=1.3"
+    )
+    .from(".about-hero-plate figcaption", { y: 10, opacity: 0, duration: 0.5 }, "-=0.3")
+    .from(".about-hero-footrule", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
+
   const animeTextParagraphs = document.querySelectorAll(".anime-text p");
   const wordHighlightBgColor = "191, 188, 180";
 
@@ -188,251 +204,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const animateOnScroll = true;
-
-  const config = {
-    gravity: { x: 0, y: 1 },
-    restitution: 0.5,
-    friction: 0.15,
-    frictionAir: 0.02,
-    density: 0.002,
-    wallThickness: 200,
-  };
-
-  let engine,
-    runner,
-    bodies = [],
-    topWall = null;
-
-  function clamp(val, min, max) {
-    return Math.max(min, Math.min(max, val));
-  }
-
-  function initPhysics(container) {
-    engine = Matter.Engine.create();
-    engine.gravity = config.gravity;
-
-    engine.constraintIterations = 15;
-    engine.positionIterations = 25;
-    engine.velocityIterations = 20;
-
-    engine.enableSleeping = true;
-    engine.timing.timeScale = 1;
-
-    const containerRect = container.getBoundingClientRect();
-    const wallThickness = config.wallThickness;
-    const floorOffset = 8;
-
-    const walls = [
-      Matter.Bodies.rectangle(
-        containerRect.width / 2,
-        containerRect.height - floorOffset + wallThickness / 2,
-        containerRect.width + wallThickness * 2,
-        wallThickness,
-        { isStatic: true }
-      ),
-      Matter.Bodies.rectangle(
-        -wallThickness / 2,
-        containerRect.height / 2,
-        wallThickness,
-        containerRect.height + wallThickness * 2,
-        { isStatic: true }
-      ),
-      Matter.Bodies.rectangle(
-        containerRect.width + wallThickness / 2,
-        containerRect.height / 2,
-        wallThickness,
-        containerRect.height + wallThickness * 2,
-        { isStatic: true }
-      ),
-    ];
-    Matter.World.add(engine.world, walls);
-
-    const objects = container.querySelectorAll(".object");
-    objects.forEach((obj, index) => {
-      const objRect = obj.getBoundingClientRect();
-
-      const startX =
-        Math.random() * (containerRect.width - objRect.width) +
-        objRect.width / 2;
-      const startY = -500 - index * 200;
-      const startRotation = (Math.random() - 0.5) * Math.PI;
-
-      const body = Matter.Bodies.rectangle(
-        startX,
-        startY,
-        objRect.width,
-        objRect.height,
-        {
-          restitution: config.restitution,
-          friction: config.friction,
-          frictionAir: config.frictionAir,
-          density: config.density,
-          chamfer: { radius: 10 },
-          slop: 0.02,
-        }
-      );
-
-      Matter.Body.setAngle(body, startRotation);
-
-      bodies.push({
-        body: body,
-        element: obj,
-        width: objRect.width,
-        height: objRect.height,
-      });
-
-      Matter.World.add(engine.world, body);
-    });
-
-    Matter.Events.on(engine, "beforeUpdate", function () {
-      bodies.forEach(({ body }) => {
-        const maxVelocity = 250;
-
-        if (Math.abs(body.velocity.x) > maxVelocity) {
-          Matter.Body.setVelocity(body, {
-            x: body.velocity.x > 0 ? maxVelocity : -maxVelocity,
-            y: body.velocity.y,
-          });
-        }
-        if (Math.abs(body.velocity.y) > maxVelocity) {
-          Matter.Body.setVelocity(body, {
-            x: body.velocity.x,
-            y: body.velocity.y > 0 ? maxVelocity : -maxVelocity,
-          });
-        }
-      });
-    });
-
-    setTimeout(() => {
-      topWall = Matter.Bodies.rectangle(
-        containerRect.width / 2,
-        -wallThickness / 2,
-        containerRect.width + wallThickness * 2,
-        wallThickness,
-        { isStatic: true }
-      );
-      Matter.World.add(engine.world, topWall);
-    }, 3000);
-
-    setInterval(() => {
-      if (bodies.length > 0 && Math.random() < 0.3) {
-        const randomBody = bodies[Math.floor(Math.random() * bodies.length)];
-        const randomForce = {
-          x: (Math.random() - 0.5) * 0.02,
-          y: (Math.random() - 0.5) * 0.01,
-        };
-        Matter.Body.applyForce(
-          randomBody.body,
-          randomBody.body.position,
-          randomForce
-        );
-      }
-    }, 2000);
-
-    runner = Matter.Runner.create();
-    Matter.Runner.run(runner, engine);
-
-    function updatePositions() {
-      bodies.forEach(({ body, element, width, height }) => {
-        const x = clamp(
-          body.position.x - width / 2,
-          0,
-          containerRect.width - width
-        );
-        const y = clamp(
-          body.position.y - height / 2,
-          -height * 3,
-          containerRect.height - height - floorOffset
-        );
-
-        element.style.left = x + "px";
-        element.style.top = y + "px";
-        element.style.transform = `rotate(${body.angle}rad)`;
-      });
-
-      requestAnimationFrame(updatePositions);
-    }
-    updatePositions();
-  }
-
-  if (animateOnScroll) {
-    document.querySelectorAll("section").forEach((section) => {
-      if (section.querySelector(".object-container")) {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top bottom",
+  const bioIllustration = document.querySelector(".anime-text-illustration");
+  if (bioIllustration) {
+    gsap.fromTo(
+      bioIllustration,
+      { opacity: 0, y: 16 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".anime-text-container",
+          start: "top 82%",
           once: true,
-          onEnter: () => {
-            const container = section.querySelector(".object-container");
-            if (container && !engine) {
-              initPhysics(container);
-            }
-          },
-        });
+        },
       }
-    });
-  } else {
-    window.addEventListener("load", () => {
-      const container = document.querySelector(".object-container");
-      if (container) {
-        initPhysics(container);
-      }
-    });
+    );
   }
 
-  // Skills section pin
-  ScrollTrigger.create({
-    trigger: ".about-skills",
-    start: "top top",
-    end: `+=${window.innerHeight * 3}px`,
-    pin: true,
-    pinSpacing: true,
-    scrub: 1,
-  });
-
-  // Film gallery video interactions (supports both native video and YouTube iframes)
-  const filmCards = document.querySelectorAll(".film-card-video");
-
-  filmCards.forEach((filmCard) => {
-    const video = filmCard.querySelector("video");
-    
-    // Skip if no native video element (e.g., YouTube iframe)
-    if (!video) return;
-
-    // Ensure autoplay works on load
-    video.play().catch(() => {
-      // If autoplay fails (some browsers block it), show the play button
-      filmCard.classList.remove("playing");
-    });
-
-    filmCard.addEventListener("click", () => {
-      if (video.paused) {
-        // Play this video
-        video.play();
-        filmCard.classList.add("playing");
-      } else {
-        // Pause this video
-        video.pause();
-        filmCard.classList.remove("playing");
-      }
-    });
-
-    // Handle play/pause events
-    video.addEventListener("play", () => {
-      filmCard.classList.add("playing");
-    });
-
-    video.addEventListener("pause", () => {
-      filmCard.classList.remove("playing");
-    });
-  });
+  // Set currently section hidden initially; animate in when it enters the viewport
+  gsap.set(".currently", { opacity: 0, y: 24 });
+  gsap.fromTo(
+    ".currently",
+    { opacity: 0, y: 24 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".currently",
+        start: "top 85%",
+        once: true,
+      },
+    }
+  );
 
   // Bookshelf generation and animation
   function generateBookshelf(books) {
     const booksWrapper = document.getElementById("books-wrapper");
     const descriptionsContainer = document.getElementById("book-descriptions");
-    const overlayText = document.querySelector(".book-title-text");
     
     let activeBookIndex = null;
     let activeTimeline = null;
@@ -564,7 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
           activeTimeline = hoverIn;
           hoverIn.play();
 
-          overlayText.textContent = bookTitle;
           updateDescription(index);
         });
       });
@@ -575,7 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
         activeBookIndex = defaultIndex;
         activeTimeline = bookTimelines[defaultIndex];
         bookTimelines[defaultIndex].play();
-        overlayText.textContent = books[defaultIndex].title;
       }
 
       // Handle mouse leaving bookshelf
@@ -588,7 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (defaultIndex !== -1) {
           activeTimeline = bookTimelines[defaultIndex];
           bookTimelines[defaultIndex].play();
-          overlayText.textContent = books[defaultIndex].title;
           updateDescription(defaultIndex);
         }
       });
@@ -680,222 +489,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
-  // Terminal Interface Initialization
-  function initTerminal(terminalData) {
-    const terminalOutput = document.getElementById("terminal-output");
-    const terminalInput = document.getElementById("terminal-input");
-    const terminalCursor = document.getElementById("terminal-cursor");
-    
-    let commandHistory = [];
-    let historyIndex = -1;
-    let isTyping = false;
-
-    // Combine regular commands and easter eggs
-    const allCommands = {
-      ...terminalData.commands,
-      ...terminalData.easterEggs
-    };
-
-    // Type text with animation
-    function typeText(text, callback) {
-      isTyping = true;
-      const line = document.createElement("div");
-      line.classList.add("terminal-line");
-      terminalOutput.appendChild(line);
-      
-      let charIndex = 0;
-      const typeInterval = setInterval(() => {
-        if (charIndex < text.length) {
-          line.textContent += text[charIndex];
-          charIndex++;
-          scrollToBottom();
-        } else {
-          clearInterval(typeInterval);
-          isTyping = false;
-          if (callback) callback();
-        }
-      }, 10);
-    }
-
-    // Add output lines
-    function addOutput(lines) {
-      lines.forEach((line, index) => {
-        setTimeout(() => {
-          const lineElement = document.createElement("div");
-          lineElement.classList.add("terminal-line");
-          lineElement.textContent = line;
-          terminalOutput.appendChild(lineElement);
-          scrollToBottom();
-        }, index * 30);
-      });
-    }
-
-    // Show command in terminal
-    function showCommand(command) {
-      const commandLine = document.createElement("div");
-      commandLine.classList.add("terminal-command");
-      commandLine.innerHTML = `<span class="terminal-prompt">$</span> ${command}`;
-      terminalOutput.appendChild(commandLine);
-      scrollToBottom();
-    }
-
-    // Execute command
-    function executeCommand(command) {
-      const trimmedCommand = command.trim().toLowerCase();
-      
-      if (!trimmedCommand) return;
-
-      showCommand(command);
-      commandHistory.push(command);
-      historyIndex = commandHistory.length;
-
-      const commandData = allCommands[trimmedCommand];
-
-      if (commandData) {
-        if (commandData.action === "clear") {
-          terminalOutput.innerHTML = "";
-        } else if (commandData.output) {
-          addOutput(commandData.output);
-        }
-      } else {
-        addOutput([
-          `Command not found: ${trimmedCommand}`,
-          "Type 'help' to see available commands."
-        ]);
-      }
-
-      terminalInput.value = "";
-      scrollToBottom();
-    }
-
-    // Scroll terminal to bottom
-    function scrollToBottom() {
-      const terminalBody = document.getElementById("terminal-body");
-      terminalBody.scrollTop = terminalBody.scrollHeight;
-    }
-
-    // Auto-demo on load
-    function runAutoDemo() {
-      setTimeout(() => {
-        // Show $ help being typed
-        const helpCommand = "help";
-        let charIndex = 0;
-        
-        const commandLine = document.createElement("div");
-        commandLine.classList.add("terminal-command");
-        commandLine.innerHTML = `<span class="terminal-prompt">$</span> `;
-        terminalOutput.appendChild(commandLine);
-        
-        const typingInterval = setInterval(() => {
-          if (charIndex < helpCommand.length) {
-            commandLine.innerHTML = `<span class="terminal-prompt">$</span> ${helpCommand.substring(0, charIndex + 1)}`;
-            charIndex++;
-            scrollToBottom();
-          } else {
-            clearInterval(typingInterval);
-            // Show help output
-            setTimeout(() => {
-              addOutput(terminalData.commands.help.output);
-              // Focus input after demo (preventScroll to avoid jumping)
-              setTimeout(() => {
-                terminalInput.focus({ preventScroll: true });
-                terminalCursor.classList.add("active");
-              }, 500);
-            }, 300);
-          }
-        }, 80);
-      }, 1000);
-    }
-
-    // Handle Enter key
-    terminalInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !isTyping) {
-        executeCommand(terminalInput.value);
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (historyIndex > 0) {
-          historyIndex--;
-          terminalInput.value = commandHistory[historyIndex];
-        }
-      } else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (historyIndex < commandHistory.length - 1) {
-          historyIndex++;
-          terminalInput.value = commandHistory[historyIndex];
-        } else {
-          historyIndex = commandHistory.length;
-          terminalInput.value = "";
-        }
-      }
-    });
-
-    // Show/hide cursor based on focus
-    terminalInput.addEventListener("focus", () => {
-      terminalCursor.classList.add("active");
-    });
-
-    terminalInput.addEventListener("blur", () => {
-      terminalCursor.classList.remove("active");
-    });
-
-    // Click terminal to focus input
-    document.getElementById("terminal-body").addEventListener("click", () => {
-      terminalInput.focus({ preventScroll: true });
-    });
-
-    // Run auto-demo
-    // runAutoDemo();
-  }
-
   // Fetch and populate Currently data
   async function loadCurrentlyData() {
     try {
       const response = await fetch("/currently.json");
       const data = await response.json();
 
-      // Learning
-      document.getElementById("learning-title").textContent = data.learning.title;
-      document.getElementById("learning-desc").textContent =
-        data.learning.description;
-      document.getElementById("learning-progress").style.width =
-        data.learning.progress + "%";
-      document.getElementById("learning-percent").textContent =
-        data.learning.progress + "%";
-
-      // Listening
-      document.getElementById("listening-title").textContent =
-        data.listening.title;
-      document.getElementById("listening-artist").textContent =
-        data.listening.artist;
-
-      // Create Spotify embed
-      const trackId = data.listening.spotifyUrl.split("/track/")[1].split("?")[0];
-      const spotifyEmbed = document.getElementById("spotify-embed");
-      spotifyEmbed.innerHTML = `<iframe style="border-radius:8px" src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-
-      // Obsessing
-      document.getElementById("obsessing-title").textContent =
-        data.obsessing.title;
-      document.getElementById("obsessing-desc").textContent =
-        data.obsessing.description;
-
-      // Building
-      document.getElementById("building-title").textContent = data.building.title;
-      document.getElementById("building-desc").textContent = data.building.description;
-      
-      const stackContainer = document.getElementById("building-stack");
-      stackContainer.innerHTML = data.building.stack
-        .map((tech) => `<span class="tech-tag mono">${tech}</span>`)
-        .join("");
-      
-      document.getElementById("building-status").innerHTML = 
-        `<span class="status-dot"></span><span class="mono">${data.building.status}</span>`;
-
-      // Terminal Interface
-      initTerminal(data.terminal);
-
       // Reading - Generate bookshelf
       generateBookshelf(data.reading);
+
+      const activeBookEl = document.getElementById("currently-active-book");
+      if (activeBookEl) {
+        activeBookEl.textContent = "Books that shape my taste";
+      }
     } catch (error) {
       console.error("Error loading currently data:", error);
     }
@@ -903,48 +509,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCurrentlyData();
 
-  // Currently section scroll animations - Simple fade in
-  ScrollTrigger.create({
-    trigger: ".currently",
-    start: "top 80%",
-    once: true,
-    onEnter: () => {
-      const cards = gsap.utils.toArray(".currently-card");
-      
-      gsap.fromTo(cards, 
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-        }
-      );
+  // Currently section entry animation
+  gsap.fromTo(
+    ".currently-reading-headline",
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: { trigger: ".currently", start: "top 75%" },
+    }
+  );
 
-      // Animate header separately
-      gsap.fromTo(".currently-header h2",
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6, ease: "power2.out" }
-      );
-    },
-  });
+  gsap.fromTo(
+    ".currently-editorial-index",
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: { trigger: ".currently", start: "top 75%" },
+    }
+  );
 
-  // Add individual card micro-interactions (removed scale to avoid conflicts)
-
-  // Gallery scroll animations
-  ScrollTrigger.create({
-    trigger: ".life-gallery",
-    start: "top 80%",
-    once: true,
-    onEnter: () => {
-      gsap.from(".gallery-item", {
-        y: 40,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
-    },
-  });
 });

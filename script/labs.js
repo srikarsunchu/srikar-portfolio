@@ -71,10 +71,6 @@ function createProjectCard(project, index) {
   card.dataset.category = project.category;
   card.dataset.projectId = project.id;
   
-  if (project.featured) {
-    card.classList.add("featured");
-  }
-  
   // Set custom grid position if specified
   if (project.gridColumn) {
     card.style.gridColumn = project.gridColumn;
@@ -419,7 +415,7 @@ function initScrollAnimations() {
 function updateProjectCount() {
   const countEl = document.getElementById("project-count");
   const total = getTotalProjects();
-  countEl.textContent = `${total} Project${total !== 1 ? 's' : ''}`;
+  countEl.innerHTML = `<span>&#9654;</span> ${total} Project${total !== 1 ? 's' : ''}`;
 }
 
 // Cleanup on page unload

@@ -140,10 +140,10 @@ export function initAnimations() {
       if (animateOnScroll) {
         gsap.set(element, { opacity: 0 });
 
-        const parentSection = element.closest("section");
+        const parentSection = element.closest("section, footer");
         if (!parentSection) {
           console.warn(
-            "No parent section found for scroll animation:",
+            "No parent section or footer found for scroll animation:",
             element
           );
           return;
@@ -152,10 +152,12 @@ export function initAnimations() {
         if (!sectionsWithScrollElements.has(parentSection)) {
           sectionsWithScrollElements.add(parentSection);
 
+          const isFooter = parentSection.tagName.toLowerCase() === "footer";
+
           const observer = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                if (entry.isIntersecting && (isFooter || entry.intersectionRatio > 0.3)) {
                   const sectionElements = entry.target.querySelectorAll(
                     '[data-animate-on-scroll="true"]'
                   );

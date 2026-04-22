@@ -180,26 +180,56 @@
       "title": "Man and His Symbols",
       "author": "Carl Jung",
       "coverUrl": "/gallery-images/manandhissymbols.jpg",
-      "description": "Jung's exploration of dreams, symbols, and the unconscious mind through art and analysis.",
+      "description": "Jung's accessible map of symbols, dreams, and archetypes as bridges between conscious life and the unconscious.",
       "defaultOpen": true
     },
     {
       "title": "The Book of Five Rings",
       "author": "Miyamoto Musashi",
       "coverUrl": "/gallery-images/thebookoffiverings.jpg",
-      "description": "Ancient samurai wisdom on strategy, combat, and the way of the warrior."
+      "description": "Musashi's field manual on timing, discipline, and strategy—principles for conflict from duels to business."
     },
     {
       "title": "Grid Systems in Graphic Design",
       "author": "Josef Müller-Brockmann",
       "coverUrl": "/gallery-images/gridsystems.jpg",
-      "description": "The definitive guide to grid-based design systems and Swiss typography."
+      "description": "The Swiss grid bible: structure as a tool for clarity, rhythm, and objective visual communication."
     },
     {
       "title": "Autobiography of a Yogi",
       "author": "Paramahansa Yogananda",
       "coverUrl": "/gallery-images/yogi.jpg",
-      "description": "A spiritual journey through yoga, meditation, and Eastern philosophy."
+      "description": "A spiritual memoir that introduced Kriya Yoga to global readers through discipline, devotion, and inner practice."
+    },
+    {
+      "title": "Barbarians at the Gate",
+      "author": "Bryan Burrough & John Helyar",
+      "coverUrl": "/gallery-images/barbsatthegate.jpg",
+      "description": "The RJR Nabisco buyout as high-finance drama—ego, leverage, and power games on a historic scale."
+    },
+    {
+      "title": "Do Androids Dream of Electric Sheep?",
+      "author": "Philip K. Dick",
+      "coverUrl": "/gallery-images/do-androids-dream-of-electric-sheep.jpg",
+      "description": "A post-apocalyptic noir where empathy becomes the test of humanity and the line between human and machine blurs."
+    },
+    {
+      "title": "Thus Spoke Zarathustra",
+      "author": "Friedrich Nietzsche",
+      "coverUrl": "/gallery-images/zarathustra.jpg",
+      "description": "Nietzsche in prophetic mode: self-overcoming, value creation, and life affirmed through eternal recurrence."
+    },
+    {
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "coverUrl": "/gallery-images/neuromancer.jpg",
+      "description": "The cyberpunk origin text that coined cyberspace—AI, corporate dystopia, and networked identity before the web era."
+    },
+    {
+      "title": "The Masnavi, Book One",
+      "author": "Rumi",
+      "coverUrl": "/gallery-images/masnavi.jpg",
+      "description": "A foundational Sufi poem on love, ego, and spiritual awakening, told through layered stories and parables."
     }
   ]
 }

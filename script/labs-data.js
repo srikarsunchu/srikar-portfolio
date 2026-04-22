@@ -39,7 +39,7 @@ export const labsProjects = [
     mediaType: "component",
     component: "ColorPanels",
 
-    description: "Made in React",
+    description: "Interactive color panels rendered with WebGL shaders. Each card runs a live gradient field in the browser.",
     tools: ["React", "WebGL"],
     year: "2025",
 
@@ -56,8 +56,8 @@ export const labsProjects = [
     mediaType: "component",
     component: "ImageDitheringPink",
 
-    description: "Made with Paper.design",
-    tools: ["Paper.design", ],
+    description: "Raphael's School of Athens run through a real-time dithering filter. WebGL pixel shader, no post-processing.",
+    tools: ["Paper.design"],
     year: "2025",
   },
 
@@ -70,7 +70,7 @@ export const labsProjects = [
     mediaType: "component",
     component: "DitheringSphere",
 
-    description: "Made in React",
+    description: "A 3D sphere rendered with a GLSL dithering shader. No textures — just geometry, light, and ordered noise.",
     tools: ["React", "WebGL", "GLSL"],
     year: "2025",
   },
@@ -84,8 +84,8 @@ export const labsProjects = [
     mediaType: "component",
     component: "ImageDitheringGreen",
 
-    description: "Made with Paper.design",
-    tools: ["Paper.design",],
+    description: "A Gandharan Bodhisattva sculpture processed through a real-time dithering shader. Same as School of Athens, different source image.",
+    tools: ["Paper.design"],
     year: "2025",
   },
 ];
