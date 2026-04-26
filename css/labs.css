@@ -358,19 +358,128 @@
   border: none;
 }
 
-/* React components in modal */
+/* ---- Mini case study layout (per-project, opt-in via labs-data.caseStudy) ---- */
+.modal-case-study {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.modal-cs-hero {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px dashed var(--base-300);
+  background: var(--base-200);
+}
+
+/* Component hero: live React component sized via inline aspect-ratio / min-height.
+   Use absolute positioning for the inner React-rendered element so it fills the
+   parent regardless of how the parent's height is resolved (avoids the flex
+   percentage-height pitfall that affects shader canvases). */
+.modal-cs-hero-component {
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-cs-hero-component > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-cs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0;
+  padding: 1rem 0;
+  border-top: 1px dashed var(--base-300);
+  border-bottom: 1px dashed var(--base-300);
+}
+
+.modal-cs-meta > div {
+  flex: 1 1 auto;
+  min-width: 140px;
+  padding: 0 1.25rem;
+  border-right: 1px dashed var(--base-300);
+}
+
+.modal-cs-meta > div:last-child {
+  border-right: none;
+}
+
+.modal-cs-meta dt {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  margin-bottom: 0.4rem;
+}
+
+.modal-cs-meta dd {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.modal-cs-body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.modal-cs-stack p.mono,
+.modal-cs-copy p.mono {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.75rem 0;
+  opacity: 0.7;
+}
+
+.modal-cs-stack ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: "DM Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.9;
+}
+
+.modal-cs-stack li {
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed rgba(10, 10, 10, 0.18);
+}
+
+.modal-cs-copy p:not(.mono) {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+.modal-cs-snapshot {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px dashed var(--base-300);
+  background: var(--base-200);
+}
+
+/* React components in modal — sizing is controlled inline by labs.js per-project
+   (min-height: 500px for square components, aspect-ratio for wide ones). */
 .modal-body > div[id^="modal-react-mount"] {
   flex-shrink: 0;
   width: 100%;
-  aspect-ratio: auto;
-  min-height: 500px;
   max-height: none;
 }
 
 .modal-body > div[id^="modal-react-mount"] > div {
   width: 100%;
-  height: auto;
-  min-height: 500px;
+  height: 100%;
 }
 
 .modal-footer {
@@ -475,6 +584,22 @@
   .modal-footer {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .modal-cs-body {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .modal-cs-meta > div {
+    flex: 1 1 100%;
+    border-right: none;
+    border-bottom: 1px dashed var(--base-300);
+    padding: 0.75rem 0;
+  }
+
+  .modal-cs-meta > div:last-child {
+    border-bottom: none;
   }
 }
 

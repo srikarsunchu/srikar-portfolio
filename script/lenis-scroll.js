@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
   let lenis = new Lenis(scrollSettings);
+  // Expose globally so other modules (e.g. the labs modal) can pause smooth scroll
+  window.__lenis = lenis;
 
   lenis.on("scroll", ScrollTrigger.update);
 
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
           };
 
       lenis = new Lenis(newScrollSettings);
+      window.__lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
     }
   };

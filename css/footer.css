@@ -13,20 +13,6 @@
 .footer-accent-seg-2 { background: linear-gradient(to right, var(--accent-2) 65%, var(--accent-3)); }
 .footer-accent-seg-3 { background-color: var(--accent-3); }
 
-/* --- symbol bar matching page section pattern --- */
-.footer-top-bar {
-  border-bottom: 1px solid rgba(249, 244, 235, 0.12);
-}
-
-.footer-top-bar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  height: auto;
-}
-
 footer {
   position: relative;
   width: 100vw;

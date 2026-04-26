@@ -990,12 +990,12 @@
 .form-group input.error,
 .form-group select.error,
 .form-group textarea.error {
-  border-color: var(--accent-2);
+  border-color: var(--error);
 }
 
 .form-error {
   display: none;
-  color: var(--accent-2);
+  color: var(--error);
   font-size: 0.75rem;
   margin-top: 0.4rem;
   font-family: "DM Mono";
@@ -1075,9 +1075,9 @@
 }
 
 .form-feedback.error {
-  background: rgba(242, 172, 172, 0.15);
-  border: 1px solid var(--accent-2);
-  color: var(--accent-2);
+  background: rgba(212, 87, 110, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
 }
 
 @keyframes slideDown {

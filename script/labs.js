@@ -13,7 +13,8 @@ import {
   ImageDitheringPink,
   ImageDitheringGreen,
   DitheringSphere,
-  ColorPanels
+  ColorPanels,
+  AsciiWordmark
 } from '../components/paper-art';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,6 +25,7 @@ const COMPONENT_MAP = {
   'ImageDitheringGreen': ImageDitheringGreen,
   'DitheringSphere': DitheringSphere,
   'ColorPanels': ColorPanels,
+  'AsciiWordmark': AsciiWordmark,
 };
 
 // State
@@ -256,8 +258,17 @@ function openModal(project) {
   body.innerHTML = "";
   meta.innerHTML = "";
   actions.innerHTML = "";
-  
-  // Render modal content based on media type
+
+  // If a caseStudy is provided, render a custom mini case study layout in the
+  // modal and skip the default media rendering for this project.
+  if (project.caseStudy) {
+    renderCaseStudy(project, body, meta, actions);
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    if (window.__lenis) window.__lenis.stop();
+    return;
+  }
+
   switch (project.mediaType) {
     case "image":
       const img = document.createElement("img");
@@ -286,17 +297,23 @@ function openModal(project) {
       break;
       
     case "component":
-      // Mount React component in modal
       const componentContainer = document.createElement("div");
       componentContainer.id = `modal-react-mount-${project.id}`;
       componentContainer.style.width = "100%";
-      componentContainer.style.height = "auto";
-      componentContainer.style.minHeight = "500px";
-      componentContainer.style.aspectRatio = "auto";
       componentContainer.style.borderRadius = "8px";
-      componentContainer.style.overflow = "visible";
+      componentContainer.style.overflow = "hidden";
+      // Per-project sizing: components with a fixed aspect ratio (e.g. wordmark)
+      // use it; everything else falls back to min-height for square-ish content
+      if (project.modalAspectRatio) {
+        componentContainer.style.aspectRatio = project.modalAspectRatio;
+        componentContainer.style.height = "auto";
+        componentContainer.style.minHeight = "0";
+      } else {
+        componentContainer.style.minHeight = "500px";
+        componentContainer.style.aspectRatio = "auto";
+      }
       body.appendChild(componentContainer);
-      
+
       setTimeout(() => {
         mountModalReactComponent(project);
       }, 100);
@@ -338,9 +355,157 @@ function openModal(project) {
     actions.appendChild(codeBtn);
   }
   
-  // Open modal
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  if (window.__lenis) window.__lenis.stop();
+}
+
+function renderCaseStudy(project, body, meta, actions) {
+  const cs = project.caseStudy;
+
+  const wrap = document.createElement("div");
+  wrap.className = "modal-case-study";
+
+  // Hero media: video, image, or live React component
+  if (cs.hero) {
+    if (cs.hero.type === "video" && cs.hero.src) {
+      const v = document.createElement("video");
+      v.src = cs.hero.src;
+      v.className = "modal-cs-hero";
+      v.autoplay = true;
+      v.loop = true;
+      v.muted = true;
+      v.playsInline = true;
+      v.setAttribute("playsinline", "");
+      wrap.appendChild(v);
+    } else if (cs.hero.type === "image" && cs.hero.src) {
+      const img = document.createElement("img");
+      img.src = cs.hero.src;
+      img.alt = `${project.title} hero`;
+      img.className = "modal-cs-hero";
+      wrap.appendChild(img);
+    } else if (cs.hero.type === "component" && cs.hero.component) {
+      const heroContainer = document.createElement("div");
+      heroContainer.className = "modal-cs-hero modal-cs-hero-component";
+      heroContainer.id = `modal-react-mount-${project.id}`;
+      if (cs.hero.aspectRatio) {
+        heroContainer.style.aspectRatio = cs.hero.aspectRatio;
+        heroContainer.style.height = "auto";
+        heroContainer.style.minHeight = "0";
+      } else {
+        heroContainer.style.minHeight = cs.hero.minHeight || "500px";
+      }
+      wrap.appendChild(heroContainer);
+
+      // Defer mount so the container is in the DOM
+      const componentName = cs.hero.component;
+      setTimeout(() => {
+        const Component = COMPONENT_MAP[componentName];
+        if (!Component) {
+          console.error(`Hero component "${componentName}" not in COMPONENT_MAP`);
+          return;
+        }
+        try {
+          const root = createRoot(heroContainer);
+          root.render(React.createElement(Component));
+          reactRoots.set(`modal-${project.id}`, root);
+        } catch (error) {
+          console.error(`Error mounting case study hero component:`, error);
+        }
+      }, 100);
+    }
+  }
+
+  // Meta strip
+  if (Array.isArray(cs.meta) && cs.meta.length > 0) {
+    const dl = document.createElement("dl");
+    dl.className = "modal-cs-meta mono";
+    cs.meta.forEach(({ label, value }) => {
+      const cell = document.createElement("div");
+      const dt = document.createElement("dt");
+      dt.textContent = label;
+      const dd = document.createElement("dd");
+      dd.textContent = value;
+      cell.appendChild(dt);
+      cell.appendChild(dd);
+      dl.appendChild(cell);
+    });
+    wrap.appendChild(dl);
+  }
+
+  // Two-column body: stack list + background copy
+  const hasStack = Array.isArray(cs.stack) && cs.stack.length > 0;
+  const hasBackground = typeof cs.background === "string" && cs.background.length > 0;
+  if (hasStack || hasBackground) {
+    const csBody = document.createElement("div");
+    csBody.className = "modal-cs-body";
+
+    if (hasStack) {
+      const stackCol = document.createElement("div");
+      stackCol.className = "modal-cs-stack";
+      const stackLabel = document.createElement("p");
+      stackLabel.className = "mono";
+      stackLabel.innerHTML = "<span>&#9654;</span> Stack";
+      stackCol.appendChild(stackLabel);
+      const ul = document.createElement("ul");
+      cs.stack.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      stackCol.appendChild(ul);
+      csBody.appendChild(stackCol);
+    }
+
+    if (hasBackground) {
+      const copyCol = document.createElement("div");
+      copyCol.className = "modal-cs-copy";
+      const copyLabel = document.createElement("p");
+      copyLabel.className = "mono";
+      copyLabel.innerHTML = "<span>&#9654;</span> Background";
+      copyCol.appendChild(copyLabel);
+      const p = document.createElement("p");
+      p.textContent = cs.background;
+      copyCol.appendChild(p);
+      csBody.appendChild(copyCol);
+    }
+
+    wrap.appendChild(csBody);
+  }
+
+  // Snapshot image
+  if (cs.snapshot) {
+    const snap = document.createElement("img");
+    snap.src = cs.snapshot;
+    snap.alt = `${project.title} snapshot`;
+    snap.className = "modal-cs-snapshot";
+    snap.loading = "lazy";
+    wrap.appendChild(snap);
+  }
+
+  body.appendChild(wrap);
+
+  // Footer meta + actions (reuse existing modal-meta / modal-actions)
+  meta.innerHTML = `<p class="mono">${project.tools.join(" / ")} · ${project.year}</p>`;
+
+  if (project.externalLink) {
+    const viewBtn = document.createElement("a");
+    viewBtn.href = project.externalLink;
+    viewBtn.target = "_blank";
+    viewBtn.rel = "noopener noreferrer";
+    viewBtn.className = "modal-action-btn";
+    viewBtn.textContent = "View Live ↗";
+    actions.appendChild(viewBtn);
+  }
+  if (project.codeLink) {
+    const codeBtn = document.createElement("a");
+    codeBtn.href = project.codeLink;
+    codeBtn.target = "_blank";
+    codeBtn.rel = "noopener noreferrer";
+    codeBtn.className = "modal-action-btn";
+    codeBtn.textContent = "View Source ↗";
+    actions.appendChild(codeBtn);
+  }
 }
 
 function mountModalReactComponent(project) {
@@ -375,7 +540,8 @@ function closeModal() {
   
   modal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  
+  if (window.__lenis) window.__lenis.start();
+
   // Clear body content after transition
   setTimeout(() => {
     body.innerHTML = "";
