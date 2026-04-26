@@ -47,7 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  revealTransition();
+  if (document.querySelector("[data-landing-intro]")) {
+    gsap.set(".transition-overlay", { scaleY: 0 });
+  } else {
+    revealTransition();
+  }
 
   function revealTransition() {
     return new Promise((resolve) => {

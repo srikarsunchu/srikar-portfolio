@@ -1,0 +1,148 @@
+.landing-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-color: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+.landing-intro p {
+  text-transform: uppercase;
+  font-family: "DM Mono";
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.landing-intro p .line {
+  position: relative;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+.landing-intro-backdrop,
+.landing-intro-panel,
+.landing-intro-anchor {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-intro-backdrop {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--base-100);
+  color: var(--base-secondary-dark);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  will-change: clip-path;
+  backface-visibility: hidden;
+}
+
+.landing-intro-backdrop-row,
+.landing-intro-panel-row {
+  width: 100%;
+  padding: 2.75rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.landing-intro-backdrop-row:nth-child(2) {
+  align-items: flex-end;
+}
+
+.landing-intro-brand {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.35rem;
+  border: 1px dashed currentColor;
+  color: inherit;
+}
+
+.landing-intro-brand svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+.landing-intro-panel {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--base-300);
+  color: var(--base-100);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  will-change: clip-path;
+  backface-visibility: hidden;
+}
+
+.landing-intro-panel-col {
+  display: flex;
+  gap: 6rem;
+  align-items: flex-end;
+}
+
+.landing-intro-anchor {
+  z-index: 3;
+  display: flex;
+  pointer-events: none;
+}
+
+.landing-intro-anchor .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-intro-anchor-inner {
+  width: 90%;
+  text-align: center;
+}
+
+.landing-intro-anchor h1 {
+  font-family: "Barlow Condensed";
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 16vw;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  color: var(--base-100);
+}
+
+@media (max-width: 1000px) {
+  .landing-intro-backdrop-row,
+  .landing-intro-panel-row {
+    padding: 1.25rem;
+  }
+
+  .landing-intro-backdrop-row .landing-intro-col:nth-child(1),
+  .landing-intro-backdrop-row .landing-intro-col:nth-child(2),
+  .landing-intro-backdrop-row .landing-intro-col:nth-child(5) {
+    display: none;
+  }
+
+  .landing-intro-panel-col {
+    gap: 1.25rem;
+  }
+
+  .landing-intro-panel-col > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .landing-intro-anchor h1 {
+    font-size: 22.5vw;
+  }
+}

@@ -106,6 +106,7 @@
     </script>
     <link rel="stylesheet" href="/globals.css" />
     <link rel="stylesheet" href="/css/transition.css" />
+    <link rel="stylesheet" href="/css/landing-animation.css" />
     <link rel="stylesheet" href="/css/menu.css" />
     <link rel="stylesheet" href="/css/home.css" />
     <link rel="stylesheet" href="/css/footer.css" />
@@ -119,6 +120,91 @@
     </div>
     <div class="mask-transition"></div>
     <div class="mask-bg-overlay"></div>
+
+    <div class="landing-intro" data-landing-intro aria-hidden="true">
+      <div class="landing-intro-backdrop">
+        <div class="landing-intro-backdrop-row">
+          <div class="landing-intro-col">
+            <p>Srikar Sunchu</p>
+            <p>Design Systems</p>
+            <p>Interactive Web</p>
+            <p>Creative Engineering</p>
+            <p>Portfolio Index</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>Practice / Interface</p>
+            <p>Signal / Visual Systems</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>Material / Motion</p>
+            <p>Status / Warming Up</p>
+          </div>
+          <div class="landing-intro-col">
+            <div class="landing-intro-brand" aria-label="Srikar Sunchu logo">
+              <svg viewBox="0 0 800 693" aria-hidden="true">
+                <path d="M800 515.749L501.926 343.832V0H297.482V343.832L0 515.749L101.926 693L399.408 521.084L697.482 693L800 515.749Z" />
+              </svg>
+            </div>
+          </div>
+          <div class="landing-intro-col">
+            <p>Index / 2026</p>
+          </div>
+        </div>
+
+        <div class="landing-intro-backdrop-row">
+          <div class="landing-intro-col">
+            <p>Selected Work</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>Research / Build / Ship</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>System Load > 67%</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>Grids Aligning</p>
+            <p>Cards Rendering</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>Home Sequence</p>
+            <p>Layer Zero</p>
+          </div>
+          <div class="landing-intro-col">
+            <p>SS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-intro-panel">
+        <div class="landing-intro-panel-row">
+          <p>Srikar Sunchu / Index 2026</p>
+        </div>
+        <div class="landing-intro-panel-row">
+          <div class="landing-intro-panel-col">
+            <div>
+              <p>Phase 01</p>
+              <p>Portfolio Shell</p>
+            </div>
+            <div>
+              <p>Signal Scan</p>
+              <p>05 Sections</p>
+            </div>
+          </div>
+          <div class="landing-intro-panel-col">
+            <p>NY / PDT</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="landing-intro-anchor" aria-hidden="true">
+        <div class="container">
+          <div class="landing-intro-anchor-inner">
+            <h1>Srikar <span>Sunchu</span></h1>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <nav class="menu">
       <div class="menu-header">
@@ -922,6 +1008,7 @@
 
     <script type="module" src="/script/lenis-scroll.js"></script>
     <script type="module" src="/script/transition.js"></script>
+    <script type="module" src="/script/landing-animation.js"></script>
     <script type="module" src="/script/menu.js"></script>
     <script type="module" src="/script/home.js"></script>
     <script type="module" src="/script/footer.js"></script>

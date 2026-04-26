@@ -39,6 +39,16 @@ function scrambleOnHover(elements) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const hasLandingIntro = !!document.querySelector("[data-landing-intro]");
+
+  if (hasLandingIntro) {
+    const heroHeading = document.querySelector(".hero .hero-header h1[data-animate-type]");
+    if (heroHeading) {
+      heroHeading.removeAttribute("data-animate-type");
+      heroHeading.removeAttribute("data-animate-delay");
+    }
+  }
+
   initAnimations();
 
   // Hover scramble on hero footer links and services bottom bar label
@@ -48,17 +58,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   gsap.set(".hero .hero-cards .card", { transformOrigin: "center center" });
 
-  gsap.to(".hero .hero-cards .card", {
-    scale: 1,
-    duration: 0.75,
-    delay: 0.25,
-    stagger: 0.1,
-    ease: "power4.out",
-    onComplete: () => {
-      gsap.set("#hero-card-1", { transformOrigin: "top right" });
-      gsap.set("#hero-card-3", { transformOrigin: "top left" });
-    },
-  });
+  const animateHeroCards = () => {
+    gsap.to(".hero .hero-cards .card", {
+      scale: 1,
+      duration: 0.75,
+      delay: hasLandingIntro ? 0 : 0.25,
+      stagger: 0.1,
+      ease: "power4.out",
+      onComplete: () => {
+        gsap.set("#hero-card-1", { transformOrigin: "top right" });
+        gsap.set("#hero-card-3", { transformOrigin: "top left" });
+      },
+    });
+  };
+
+  if (hasLandingIntro && !window.__landingIntroComplete) {
+    window.addEventListener("landingAnimationComplete", animateHeroCards, { once: true });
+  } else {
+    animateHeroCards();
+  }
 
   const smoothStep = (p) => p * p * (3 - 2 * p);
 
