@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /project
 
-Sitemap: https://srikarsunchu.com/sitemap.xml
+Sitemap: https://www.srikarsunchu.com/sitemap.xml
