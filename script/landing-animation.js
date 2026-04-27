@@ -6,7 +6,7 @@ gsap.registerPlugin(SplitText, CustomEase);
 CustomEase.create("hop", "0.9, 0, 0.1, 1");
 CustomEase.create("glide", "0.8, 0, 0.2, 1");
 
-const SEEN_STORAGE_KEY = "srikar:landing-intro-seen";
+const SEEN_STORAGE_KEY = "srikar:landing-intro-seen-v2";
 
 function hasSeenIntro() {
   try {
@@ -47,6 +47,62 @@ function announceComplete() {
   window.dispatchEvent(new CustomEvent("landingAnimationComplete"));
 }
 
+function buildDigitRoller(el) {
+  const target = (el.dataset.counterTarget || el.textContent || "").trim();
+  el.textContent = "";
+  const tracks = [];
+  // Each digit track holds 0-9 twice so every digit visibly cycles once
+  // before landing on its target — even if the target is 0.
+  const cyclesBeforeLanding = 1;
+  for (const ch of target) {
+    const slot = document.createElement("span");
+    slot.className = "intro-counter-slot";
+    const track = document.createElement("span");
+    track.className = "intro-counter-track";
+    const isDigit = /\d/.test(ch);
+    if (isDigit) {
+      for (let cycle = 0; cycle <= cyclesBeforeLanding; cycle++) {
+        for (let i = 0; i < 10; i++) {
+          const cell = document.createElement("span");
+          cell.className = "intro-counter-cell";
+          cell.textContent = String(i);
+          track.appendChild(cell);
+        }
+      }
+    } else {
+      const cell = document.createElement("span");
+      cell.className = "intro-counter-cell";
+      cell.textContent = ch;
+      track.appendChild(cell);
+    }
+    slot.appendChild(track);
+    el.appendChild(slot);
+    if (isDigit)
+      tracks.push({
+        el: track,
+        target: parseInt(ch, 10) + 10 * cyclesBeforeLanding,
+      });
+  }
+  return tracks;
+}
+
+function formatPacificTime(date = new Date()) {
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).formatToParts(date);
+    const get = (t) => parts.find((p) => p.type === t)?.value ?? "00";
+    return `${get("hour")}:${get("minute")}:${get("second")}`;
+  } catch {
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const intro = document.querySelector("[data-landing-intro]");
   if (!intro) {
@@ -72,10 +128,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const anchorTitle = intro.querySelector(
     ".landing-intro-anchor .landing-intro-title",
   );
-  const panelParagraphs = intro.querySelectorAll(".landing-intro-panel p");
+  const panelParagraphs = intro.querySelectorAll(
+    ".landing-intro-panel p:not(.intro-clock-row)",
+  );
   const backdropParagraphs = intro.querySelectorAll(
     ".landing-intro-backdrop p",
   );
+
+  const clockEl = intro.querySelector("[data-intro-clock]");
+  let clockInterval = null;
+  if (clockEl) {
+    const tick = () => {
+      clockEl.textContent = `Local ${formatPacificTime()}`;
+    };
+    tick();
+    clockInterval = setInterval(tick, 100);
+  }
+
+  const counterRollEl = intro.querySelector(".intro-counter-roll");
+  const counterTracks = counterRollEl ? buildDigitRoller(counterRollEl) : [];
 
   panelParagraphs.forEach((element) => {
     new SplitText(element, {
@@ -95,19 +166,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const anchorSplit = anchorTitle
     ? new SplitText(anchorTitle, {
-        type: "words",
+        type: "words, chars",
         wordsClass: "word",
-        mask: "words",
+        charsClass: "char",
       })
     : null;
 
   if (anchorSplit) {
-    gsap.set(anchorSplit.words, { yPercent: 110 });
+    gsap.set(anchorTitle, { opacity: 1 });
+    gsap.set(anchorSplit.chars, { opacity: 0, fontWeight: 100 });
+  }
+
+  if (clockEl) {
+    gsap.set(clockEl, { y: 18, opacity: 0 });
   }
 
   const tl = gsap.timeline({
     delay: 0.25,
     onComplete: () => {
+      if (clockInterval) clearInterval(clockInterval);
       intro.remove();
       markIntroSeen();
       unlockScroll();
@@ -122,27 +199,61 @@ document.addEventListener("DOMContentLoaded", () => {
     stagger: 0.06,
   });
 
+  if (counterTracks.length) {
+    tl.fromTo(
+      counterTracks.map((t) => t.el),
+      { y: 0 },
+      {
+        y: (i) => `-${counterTracks[i].target}em`,
+        duration: 0.85,
+        ease: "expo.out",
+        stagger: { each: 0.05, from: "start" },
+      },
+      "<+0.15",
+    );
+  }
+
+  if (clockEl) {
+    tl.to(
+      clockEl,
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.55,
+        ease: "power3.out",
+      },
+      "<+0.1",
+    );
+  }
+
   if (anchorSplit) {
     tl.to(
-      anchorSplit.words,
+      anchorSplit.chars,
       {
-        yPercent: 0,
-        duration: 0.9,
+        opacity: 1,
+        fontWeight: 900,
+        duration: 0.85,
         ease: "glide",
-        stagger: 0.08,
+        stagger: { each: 0.04, from: "start" },
       },
-      "-=0.45",
+      "-=0.5",
     );
   }
 
   tl.to({}, { duration: 0.2 });
 
+  // Shutter wipe: bands retract in alternating directions (L, R, L, R) with stagger.
+  // Reads as deliberate engineered geometry, not a single rehearsed sweep.
+  const collapseLeft = "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)";
+  const collapseRight = "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)";
+
   tl.to(
-    ".landing-intro-panel",
+    ".landing-intro-panel-band",
     {
-      clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-      duration: 1.05,
+      clipPath: (i) => (i % 2 === 0 ? collapseLeft : collapseRight),
+      duration: 0.95,
       ease: "hop",
+      stagger: { each: 0.12, from: "start" },
     },
     ">",
   )
@@ -159,11 +270,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .to(
       ".landing-intro-backdrop",
       {
-        clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
+        clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
         duration: 1.05,
         ease: "hop",
       },
-      "<+0.12",
+      "<+0.18",
     )
     .to(
       ".landing-intro-anchor",

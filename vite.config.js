@@ -1,6 +1,47 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
+import { execSync } from "node:child_process";
 import react from "@vitejs/plugin-react";
+
+/** Inject real git build metadata (SHA, commit count, last-commit date) into HTML at dev + build time. */
+function buildMetaPlugin() {
+  function git(args) {
+    try {
+      return execSync(`git ${args}`, {
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim();
+    } catch {
+      return "";
+    }
+  }
+
+  function readMeta() {
+    const sha = git("rev-parse --short=7 HEAD").toUpperCase() || "DEV0000";
+    const countRaw = git("rev-list --count HEAD");
+    const count = countRaw ? String(countRaw).padStart(4, "0") : "0000";
+    const iso = git("log -1 --format=%cI");
+    let date = "—";
+    const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (m) date = `${m[3]}.${m[2]}.${m[1]}`;
+    return { sha, count, date };
+  }
+
+  return {
+    name: "build-meta",
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        const meta = readMeta();
+        return html
+          .replaceAll("__BUILD_SHA__", meta.sha)
+          .replaceAll("__BUILD_COUNT__", meta.count)
+          .replaceAll("__BUILD_DATE__", meta.date);
+      },
+    },
+  };
+}
 
 /** Match Vercel rewrites so /work, /elide-dev, etc. work with `vite` (not only .html URLs). */
 function extensionlessHtmlRoutes() {
@@ -40,7 +81,7 @@ function extensionlessHtmlRoutes() {
 }
 
 export default defineConfig({
-  plugins: [react(), extensionlessHtmlRoutes()],
+  plugins: [react(), extensionlessHtmlRoutes(), buildMetaPlugin()],
   build: {
     rollupOptions: {
       input: {

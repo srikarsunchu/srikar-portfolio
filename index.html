@@ -14,7 +14,7 @@
       (function () {
         var seen = false;
         try {
-          seen = sessionStorage.getItem("srikar:landing-intro-seen") === "1";
+          seen = sessionStorage.getItem("srikar:landing-intro-seen-v2") === "1";
         } catch (e) {}
         var reducedMotion = false;
         try {
@@ -203,25 +203,33 @@
       </div>
 
       <div class="landing-intro-panel">
-        <div class="landing-intro-panel-row">
-          <p>Srikar Sunchu / Index 2026</p>
+        <div class="landing-intro-panel-bands" aria-hidden="true">
+          <div class="landing-intro-panel-band"></div>
+          <div class="landing-intro-panel-band"></div>
         </div>
-        <div class="landing-intro-panel-row">
-          <div class="landing-intro-panel-col">
-            <div>
-              <p>Phase 01</p>
-              <p>Portfolio Shell</p>
+        <div class="landing-intro-panel-content">
+          <div class="landing-intro-panel-row">
+            <p>Srikar Sunchu / Index 2026</p>
+          </div>
+          <div class="landing-intro-panel-row">
+            <div class="landing-intro-panel-col">
+              <div>
+                <p>Build __BUILD_SHA__</p>
+                <p>Commit <span class="intro-counter-roll" data-counter-target="__BUILD_COUNT__">__BUILD_COUNT__</span></p>
+              </div>
+              <div>
+                <p class="intro-clock-row"><span data-intro-clock>Local --:--:--</span></p>
+                <p>Shipped __BUILD_DATE__</p>
+              </div>
             </div>
-            <div>
-              <p>Signal Scan</p>
-              <p>05 Sections</p>
+            <div class="landing-intro-panel-col">
+              <div>
+                <p>SF / PT</p>
+                <p>37.7749 N / 122.4194 W</p>
+              </div>
             </div>
           </div>
-          <div class="landing-intro-panel-col">
-            <p>SF / PT</p>
-          </div>
         </div>
-
       </div>
 
       <div class="landing-intro-anchor" aria-hidden="true">

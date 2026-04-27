@@ -1,7 +1,12 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { initAnimations } from "./anime";
+import {
+  initAnimations,
+  scrambleAnimation,
+  revealAnimation,
+  lineRevealAnimation,
+} from "./anime";
 
 function scrambleOnHover(elements) {
   const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
@@ -41,12 +46,35 @@ function scrambleOnHover(elements) {
 document.addEventListener("DOMContentLoaded", () => {
   const hasLandingIntro = !!document.querySelector("[data-landing-intro]");
 
+  const heroDeferredAnimations = [];
+
   if (hasLandingIntro) {
+    // The landing intro covers the hero h1 with its own SRIKAR SUNCHU title,
+    // so the h1 doesn't need its own reveal — strip its data-animate attrs
+    // so initAnimations() skips it.
     const heroHeading = document.querySelector(".hero .hero-header h1[data-animate-type]");
     if (heroHeading) {
       heroHeading.removeAttribute("data-animate-type");
       heroHeading.removeAttribute("data-animate-delay");
     }
+
+    // The hero footer copy + tag links are NOT covered by the intro. If we
+    // let initAnimations() handle them at DOMContentLoaded, SplitText
+    // measures line breaks against a still-settling layout (intro overlay
+    // up, scroll lock toggling, fonts mid-swap) and produces mask wrappers
+    // that don't match the final visual line count, causing overlap when
+    // the intro retracts. Defer until after landingAnimationComplete so
+    // SplitText measures against the final layout.
+    const deferredEls = document.querySelectorAll(
+      ".hero .hero-footer [data-animate-type]"
+    );
+    deferredEls.forEach((el) => {
+      const type = el.getAttribute("data-animate-type");
+      el.removeAttribute("data-animate-type");
+      el.removeAttribute("data-animate-delay");
+      gsap.set(el, { opacity: 0 });
+      heroDeferredAnimations.push({ el, type });
+    });
   }
 
   initAnimations();
@@ -72,10 +100,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  const animateHeroDeferred = () => {
+    heroDeferredAnimations.forEach(({ el, type }) => {
+      gsap.set(el, { opacity: 1 });
+      if (type === "scramble") scrambleAnimation(el, 0);
+      else if (type === "reveal") revealAnimation(el, 0);
+      else if (type === "line-reveal") lineRevealAnimation(el, 0);
+    });
+  };
+
   if (hasLandingIntro && !window.__landingIntroComplete) {
-    window.addEventListener("landingAnimationComplete", animateHeroCards, { once: true });
+    window.addEventListener(
+      "landingAnimationComplete",
+      () => {
+        animateHeroCards();
+        animateHeroDeferred();
+      },
+      { once: true }
+    );
   } else {
     animateHeroCards();
+    animateHeroDeferred();
   }
 
   const smoothStep = (p) => p * p * (3 - 2 * p);
