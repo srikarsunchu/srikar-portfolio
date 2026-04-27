@@ -3,6 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html.intro-seen .landing-intro { display: none !important; }
+    </style>
+    <script>
+      // Pre-paint check: if the landing intro has already played this
+      // session — or the user prefers reduced motion — mark <html> so the
+      // CSS rule above hides the overlay before first paint (no flash on
+      // reload).
+      (function () {
+        var seen = false;
+        try {
+          seen = sessionStorage.getItem("srikar:landing-intro-seen") === "1";
+        } catch (e) {}
+        var reducedMotion = false;
+        try {
+          reducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+        } catch (e) {}
+        if (seen || reducedMotion) {
+          document.documentElement.classList.add("intro-seen");
+        }
+      })();
+    </script>
     <title>Srikar Sunchu | Design Engineer & Brand Strategist for Startups</title>
     <meta name="description" content="San Francisco design engineer and creative director helping startups ship high-converting brands, websites, and design systems with motion-driven UX. Available for freelance and contract work." />
     <meta name="keywords" content="design engineer, brand strategist, creative director, freelance designer, startup designer, SaaS design, design systems, GSAP motion, web developer, San Francisco" />
@@ -104,6 +128,9 @@
       ]
     }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Instrument+Serif:ital@0;1&display=swap" />
     <link rel="stylesheet" href="/globals.css" />
     <link rel="stylesheet" href="/css/transition.css" />
     <link rel="stylesheet" href="/css/landing-animation.css" />
@@ -191,7 +218,7 @@
             </div>
           </div>
           <div class="landing-intro-panel-col">
-            <p>NY / PDT</p>
+            <p>SF / PT</p>
           </div>
         </div>
 
@@ -200,7 +227,7 @@
       <div class="landing-intro-anchor" aria-hidden="true">
         <div class="container">
           <div class="landing-intro-anchor-inner">
-            <h1>Srikar <span>Sunchu</span></h1>
+            <div class="landing-intro-title">Srikar Sunchu</div>
           </div>
         </div>
       </div>
@@ -232,7 +259,7 @@
             <a href="https://www.linkedin.com/in/srikar-sunchu-651314220/" target="_blank" rel="noopener noreferrer"><span>&#9654;</span> LinkedIn</a>
             <a href="https://x.com/srikarsunchu" target="_blank" rel="noopener noreferrer"><span>&#9654;</span> Twitter</a>
           </div>
-          <div class="menu-time">23:24:02 NY</div>
+          <div class="menu-time">23:24:02 LOCAL</div>
         </div>
       </div>
     </nav>
@@ -1006,6 +1033,24 @@
       </div>
     </footer>
 
+    <script>
+      // Landing-intro watchdog: if the module fails to load or its timeline
+      // never completes within 8s, force-remove the overlay, restore scroll,
+      // and notify listeners so the rest of the page can hydrate normally.
+      setTimeout(function () {
+        if (window.__landingIntroComplete) return;
+        var intro = document.querySelector("[data-landing-intro]");
+        if (intro) intro.remove();
+        document.documentElement.style.overflow = "";
+        try {
+          window.__lenis && window.__lenis.start();
+        } catch (e) {}
+        window.__landingIntroComplete = true;
+        try {
+          window.dispatchEvent(new CustomEvent("landingAnimationComplete"));
+        } catch (e) {}
+      }, 8000);
+    </script>
     <script type="module" src="/script/lenis-scroll.js"></script>
     <script type="module" src="/script/transition.js"></script>
     <script type="module" src="/script/landing-animation.js"></script>
