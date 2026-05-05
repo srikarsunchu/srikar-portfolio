@@ -174,7 +174,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (anchorSplit) {
     gsap.set(anchorTitle, { opacity: 1 });
-    gsap.set(anchorSplit.chars, { opacity: 0, fontWeight: 100 });
+    // Drive the variable font's wght axis via a CSS custom property the
+    // .char selector consumes inside font-variation-settings. Animating a
+    // variable axis reuses one in-memory font instance (no file swap, no
+    // glyph rasterization), which is what fixes the Chrome stutter.
+    gsap.set(anchorSplit.chars, { opacity: 0, "--anchor-wght": 30 });
   }
 
   if (clockEl) {
@@ -231,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
       anchorSplit.chars,
       {
         opacity: 1,
-        fontWeight: 900,
+        "--anchor-wght": 188,
         duration: 0.85,
         ease: "glide",
         stagger: { each: 0.04, from: "start" },

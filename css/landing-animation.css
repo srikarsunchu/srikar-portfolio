@@ -1,3 +1,18 @@
+/* Self-hosted Barlow as a variable font (weight + width axes). Used only
+   for the landing-intro title so we can animate the weight axis smoothly
+   via font-variation-settings instead of swapping between 9 discrete
+   weight files of the static Google-Fonts Barlow Condensed (which causes
+   per-frame re-rasterization stutter on Chrome). Axis values are the
+   font's native design-space coordinates: wght 30≈Thin, 188≈Black;
+   wdth 300=Condensed, 500=Normal. */
+@font-face {
+  font-family: "Barlow Var";
+  src: url("/fonts/BarlowGX.woff2") format("woff2-variations");
+  font-weight: 1 1000;
+  font-style: normal;
+  font-display: block;
+}
+
 .landing-intro {
   position: fixed;
   inset: 0;
@@ -166,8 +181,9 @@
 }
 
 .landing-intro-anchor .landing-intro-title {
-  font-family: "Barlow Condensed";
-  font-weight: 900;
+  font-family: "Barlow Var", "Barlow Condensed", sans-serif;
+  font-weight: normal;
+  font-variation-settings: "wght" var(--anchor-wght, 188), "wdth" 300;
   text-transform: uppercase;
   font-size: 16vw;
   letter-spacing: -0.02em;
@@ -178,6 +194,14 @@
 
 .landing-intro-anchor .landing-intro-title .word {
   display: block !important;
+}
+
+/* Each split char carries its own --anchor-wght so we can stagger the
+   weight transition per character. font-variation-settings re-resolves the
+   var() on every change, and the variable font keeps a single in-memory
+   instance — no font swap, no glyph rasterization storm. */
+.landing-intro-anchor .landing-intro-title .char {
+  font-variation-settings: "wght" var(--anchor-wght, 188), "wdth" 300;
 }
 
 @media (max-width: 1000px) {
